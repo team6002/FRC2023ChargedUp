@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.OIConstants;
 import frc.robot.auto.AUTO_BalanceStation;
+import frc.robot.auto.AUTO_DriveOverChargingStation;
 import frc.robot.auto.AUTO_Trajectories;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,7 +72,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new AUTO_BalanceStation(m_trajectories, m_robotDrive);
+    return //new AUTO_DriveOverChargingStation(m_trajectories, m_robotDrive);
+     new AUTO_BalanceStation(m_trajectories, m_robotDrive);
   }
 
   public void zeroHeading(){

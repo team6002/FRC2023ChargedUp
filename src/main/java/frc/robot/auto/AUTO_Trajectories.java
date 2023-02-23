@@ -56,7 +56,7 @@ public class AUTO_Trajectories {
         BackOnChargeStationTrajectory = TrajectoryGenerator.generateTrajectory(
             new Pose2d(Units.inchesToMeters(96), 0, new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(43), 0, new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(0), 0, new Rotation2d(0)),
             configReversed); 
     }
   

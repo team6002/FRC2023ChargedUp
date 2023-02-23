@@ -19,7 +19,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
-      new WaitCommand(5),
+      new WaitCommand(1),
       new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
     );
   }
