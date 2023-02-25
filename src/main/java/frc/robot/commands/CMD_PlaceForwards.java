@@ -55,9 +55,9 @@ public class CMD_PlaceForwards extends SequentialCommandGroup {
           new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
         )
       ),
-      new CMD_IntakeDrop(m_intake, m_variables),
-      new WaitCommand(.5),
-      new CMD_Stow(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)
+      new CMD_IntakeDrop(m_intake, m_variables)
+      // new WaitCommand(.5),
+      // new CMD_Stow(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)
     );
   }
 }

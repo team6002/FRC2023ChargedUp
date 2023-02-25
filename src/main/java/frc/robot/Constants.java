@@ -125,8 +125,8 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 4;
-    public static final double kChargeStationSpeed = 1.75;
-    public static final double kChargeStationAcceleration = 1.75;
+    public static final double kChargeStationSpeed = 1.1;
+    public static final double kChargeStationAcceleration = 1.1;
 
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -176,7 +176,7 @@ public final class Constants {
     public static final double kElevatorHome = 1;
     public static final double kElevatorStow = 1;
     public static final double kElevatorGround = 1;
-    public static final double kElevatorPrep = 20;//Position for safely moving elbow to score
+    public static final double kElevatorPrep = 19;//Position for safely moving elbow to score
     public static final double kElevatorSafety = 15;//maximum value to check if moving wrist endagers robot
     public static final double kElevatorTolerance = 3;
     

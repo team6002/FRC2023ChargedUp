@@ -4,15 +4,13 @@
 
 package frc.robot.auto;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.GlobalConstants;
-import frc.robot.commands.CMD_AdjustBalance;
-import frc.robot.commands.CMD_PlaceForwards;
-import frc.robot.commands.CMD_SpinInPlace;
-import frc.robot.commands.CMD_setDropLevel;
+import frc.robot.commands.*;
 import frc.robot.subsystems.SUB_Drivetrain;
 import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
@@ -34,10 +32,18 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
     addCommands(
       new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
       new CMD_PlaceForwards(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
-      new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
+      new WaitCommand(0.5),
+      new ParallelCommandGroup(
+        new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
+        new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain)
+      ),
       new CMD_SpinInPlace(p_drivetrain, 180),
-      new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
-      // new CMD_AdjustBalance(p_drivetrain)
+      new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain),
+      //do a until hit angle and then run the set distance
+      new WaitCommand(1),
+      new CMD_AdjustBalanceBackwards(p_drivetrain)
+      // new WaitCommand(1),
+      // new CMD_AdjustBalanceForwards(p_drivetrain)
     );
   }
 }

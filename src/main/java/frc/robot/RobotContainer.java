@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -85,12 +86,16 @@ public class RobotContainer {
       );
     m_driverController.rightBumper().onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.a().onTrue(new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables));
-    m_driverController.b().onTrue(new CMD_PrepIntakeGroundForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables));
+    m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
     m_driverController.y().onTrue(new CMD_PrepIntakeShelf(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables));
-    m_driverController.x().onTrue(new CMD_PlaceForwards(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables));
+    m_driverController.x().onTrue(new SequentialCommandGroup(
+      new CMD_PlaceForwards(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables),
+      new WaitCommand(.5),
+      new CMD_Stow(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)
+    ));
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.pov(90).onTrue(new CMD_ToggleIntakeState(m_variables));
-    // m_driverController.start().onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
+    // m_driverController.pov(90).onTrue(new CMD_ToggleIntakeState(m_variables));
+    // m_driverController.start().onTrue(new CMD_AdjustBalanceBackwards(m_drivetrain));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
 
