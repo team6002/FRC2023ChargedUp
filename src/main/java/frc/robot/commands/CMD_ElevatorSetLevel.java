@@ -20,10 +20,8 @@ public class CMD_ElevatorSetLevel extends CommandBase {
   public CMD_ElevatorSetLevel(SUB_Elevator p_elevator, GlobalVariables p_variables) {
     m_elevator = p_elevator;
     m_variables = p_variables;
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     if (m_variables.getDropLevel() == GlobalConstants.kElevator3rdLevel){

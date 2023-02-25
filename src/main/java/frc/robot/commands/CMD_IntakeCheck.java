@@ -15,11 +15,13 @@ public class CMD_IntakeCheck extends CommandBase {
   boolean m_detected = false;
   boolean m_pressed = false;
   double m_timer = 0;
+  double m_checkTime = 0;
   CommandXboxController m_driverController;
   public CMD_IntakeCheck(SUB_Intake p_intake, CommandXboxController p_driverController) {
     m_driverController = p_driverController;
     m_intake = p_intake;
     m_timer = 0;
+    m_checkTime = 0;
     // Use addRequirements() here to declare subsystem dependencies.
     // addRequirements(m_intake);
   }
@@ -28,6 +30,7 @@ public class CMD_IntakeCheck extends CommandBase {
   @Override
   public void initialize() {
     m_timer = 0;
+    m_checkTime = 0;
     m_pressed = false;
     m_detected = false;
   }
@@ -35,6 +38,8 @@ public class CMD_IntakeCheck extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_checkTime += .02;
+
     if (m_driverController.back().getAsBoolean()){
       m_pressed = true;
     }
@@ -62,6 +67,6 @@ public class CMD_IntakeCheck extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_detected || m_pressed;
+    return m_detected || m_pressed || m_checkTime > 1;
   }
 }

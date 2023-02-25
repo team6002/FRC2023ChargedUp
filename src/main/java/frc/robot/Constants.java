@@ -209,7 +209,7 @@ public final class Constants {
     public static final double kElbowUp = 175;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
     public static final double kElbowPrepareDrop = 250;// Not quite all the way forwards, allows cones to clear the pole
-    public static final double kElbowBackwards = 100;// straight back
+    public static final double kElbowBackwards = 90;// straight back
 
     public static final double kElbowTolerance = 1;
   }

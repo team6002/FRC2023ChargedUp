@@ -13,6 +13,7 @@ public class CMD_ElbowSetPosition extends CommandBase {
   SUB_Elbow m_elbow;
   double m_position;
   double m_tolerance = 5;
+  double m_timer = 0;
 
   public CMD_ElbowSetPosition(SUB_Elbow p_elbow, double p_position) {
     m_elbow = p_elbow;
@@ -24,11 +25,12 @@ public class CMD_ElbowSetPosition extends CommandBase {
   public void initialize() {
     m_elbow.setElbowOn(true);
     m_elbow.setReference(m_position);
+    m_timer = 0;
   }
 
   @Override
   public void execute() {
-  
+    m_timer += .02;
   }
 
   @Override
@@ -37,6 +39,6 @@ public class CMD_ElbowSetPosition extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return Math.abs(m_elbow.getPosition() - m_position) < m_tolerance;//checks to see if elbow is at the wanted position
+    return true;
   }
 }

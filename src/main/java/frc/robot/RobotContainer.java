@@ -3,12 +3,10 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.OIConstants;
 import frc.robot.auto.AUTO_BalanceStation;
-import frc.robot.auto.AUTO_DriveOverChargingStation;
+import frc.robot.auto.AUTO_CubeRun;
 import frc.robot.auto.AUTO_Trajectories;
 import frc.robot.commands.*;
 import frc.robot.subsystems.SUB_Drivetrain;
@@ -19,7 +17,6 @@ import frc.robot.subsystems.SUB_Intake;
 import frc.robot.subsystems.SUB_Wrist;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -100,7 +97,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables);
+    return new AUTO_CubeRun(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
   public void zeroHeading(){
