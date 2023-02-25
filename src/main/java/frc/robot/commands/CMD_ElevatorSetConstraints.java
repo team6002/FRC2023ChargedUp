@@ -4,25 +4,25 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.SUB_Drivetrain;
+import frc.robot.subsystems.SUB_Elevator;
 
-public class CMD_SetInitalOdometry extends CommandBase {
-  /** Creates a new CMD_ResetOdometry. */
-  SUB_Drivetrain m_drivetrain;
-  Trajectory m_trajectory;
-
-  public CMD_SetInitalOdometry(SUB_Drivetrain p_drivetrain, Trajectory p_trajectory) {
-    m_drivetrain = p_drivetrain;
-    m_trajectory = p_trajectory;
+public class CMD_ElevatorSetConstraints extends CommandBase {
+  /** Creates a new CMD_ElevatorSetConstraints. */
+  SUB_Elevator m_elevator;
+  double m_acceleration;
+  double m_velocity;
+  public CMD_ElevatorSetConstraints(SUB_Elevator p_elevator, double p_velocity, double p_acceleration) {
+    m_elevator = p_elevator;
+    m_acceleration = p_acceleration;
+    m_velocity = p_velocity;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drivetrain.resetOdometry(m_trajectory.getInitialPose());
+    m_elevator.setElevatorConstraints(m_velocity, m_acceleration);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,4 +38,5 @@ public class CMD_SetInitalOdometry extends CommandBase {
   public boolean isFinished() {
     return true;
   }
+
 }

@@ -125,6 +125,9 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 4;
+    public static final double kChargeStationSpeed = 1.75;
+    public static final double kChargeStationAcceleration = 1.75;
+
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
@@ -140,4 +143,111 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+
+  public static final class IntakeConstants{
+    public static final int kIntakeMotorCanID = 12;
+    //intake powers
+    public static final double kIntakeForwardPower = .7;
+    public static final double kIntakeHoldPower = .07;
+    public static final double kIntakeDropCone = -0.7;
+    public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
+    public static final double kIntakeShoot = 1;
+    //intake currents
+    public static final double kIntakeCurrent = 35;
+    public static final double kHoldCurrent = 5;
+
+    public static final double kIntakeConeDetectedCurrent = 30;
+
+  }
+
+  public static final class ElevatorConstants{
+    public static final int kElevatorMotorCanID = 17;
+    public static final double kElevatorP = 0.5;
+    public static final double kElevatorI = 0;
+    public static final double kElevatorD = 0.;
+    public static final double kElevatorF = 0.0;
+    public static final double kElevatorOffset = -.487;
+
+    public static final double kElevatorMax = 48;
+    public static final double kElevatorShelf = 44;
+    public static final double kElevatorFirstLevel = 21;// for placeing forwards
+    public static final double kElevatorSecondLevel = 26;  
+    public static final double kElevatorThirdLevel = 44;
+    public static final double kElevatorHome = 0;
+    public static final double kElevatorStow = 0;
+    public static final double kElevatorGround = 0;
+    public static final double kElevatorPrep = 30;//Position for safely moving elbow to score
+    public static final double kElevatorSafety = 15;//maximum value to check if moving wrist endagers robot
+    public static final double kElevatorTolerance = 3;
+    
+    public static final double kElevatorHomeCurrent = 10;
+
+    public static final double kElevatorMaxVelocity = 70;
+    public static final double kElevatorMaxAcceleration = 65;
+    public static final double kElevatorHomeAcceleration = 3;
+    public static final double kElevatorHomeVelocity = 3;
+    
+  }
+
+  public static final class ElbowConstants{
+    public static final int kElbowMotorCanID = 11;
+    public static final double kElbowUp = 175;// about 90 degrees up
+    public static final double kElbowForwards = 270;// stright forwards
+    public static final double kElbowBackwards = 100;// straight back
+    public static final double kElbowP = .0075;//.0075
+    public static final double kElbowI = 0;
+    public static final double kElbowD = 0.0;
+    public static final double kElbowF = 0.0;
+    public static final double kElbowS = 0.04;
+    public static final double kElbowMaxVelocity = 600;
+    public static final double kElbowMaxAcceleration = 600;
+    public static final double kElbowMinOutput = -1;
+    public static final double kElbowMaxOutput = 1;
+    public static final double kElbowStowBackwards = 220;//when wrist faces backwards
+    public static final double kElbowStowForwards = 212;// when wrist faces forwards
+    public static final double kElbowSaftey = 190;//maximum safe value for rotating wrist
+    public static final double kElbowLift = 200;
+    public static final double kElbowPlaceBack = 110; // for placing on ground
+    public static final double kElbowTolerance = 1;
+  }
+  
+  
+
+  public static final class WristConstants{
+    public static final int kWristMotorCanID = 10;
+    public static final double kWristP = 0.011;
+    public static final double kWristI = 0;
+    public static final double kWristD = 0.0;
+    public static final double kWristF = 0.0;
+    public static final double kWristMaxOutput = 1;
+    public static final double kWristMinOutput = -1;
+
+    public static final double kWristGround = 90;//back
+    public static final double kWristShelf = 270;//front
+    
+    public static final double kWristTolerance = 5;
+  
+    public static final double kWristMaxVelocity = 800;
+    public static final double kWristMaxAcceleration = 800;
+    public static final double kWristTestVelocity = 1;
+    public static final double kWristTestAcceleration = 1;
+  }
+
+  public static final class GlobalConstants{
+    public static final int kPickBackGroundMode = 0;
+    public static final int kPickForwardsShelfMode = 1;
+    public static final int kPickForwardsGroundMode = 2;
+
+    public static final int kStowGroundMode = 0;
+    public static final int kStowShelfMode = 1;
+
+    public static final int kElevator1stLevel = 1;
+    public static final int kElevator2ndLevel = 2;
+    public static final int kElevator3rdLevel = 3;
+
+    public static final boolean kConeMode = true;
+    public static final boolean kCubeMode = false;
+  }
+
+
 }

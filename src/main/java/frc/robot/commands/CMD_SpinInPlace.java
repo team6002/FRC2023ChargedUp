@@ -4,38 +4,40 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SUB_Drivetrain;
 
-public class CMD_SetInitalOdometry extends CommandBase {
-  /** Creates a new CMD_ResetOdometry. */
+public class CMD_SpinInPlace extends CommandBase {
+  /** Creates a new CMD_SpinInPlace. */
   SUB_Drivetrain m_drivetrain;
-  Trajectory m_trajectory;
-
-  public CMD_SetInitalOdometry(SUB_Drivetrain p_drivetrain, Trajectory p_trajectory) {
+  double m_angle;
+  double m_tolerance = 5;
+  public CMD_SpinInPlace(SUB_Drivetrain p_drivetrain, double p_angle) {
     m_drivetrain = p_drivetrain;
-    m_trajectory = p_trajectory;
+    m_angle = p_angle;
+    addRequirements(m_drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_drivetrain.resetOdometry(m_trajectory.getInitialPose());
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_drivetrain.drive(0, 0, Math.copySign(.5, m_angle), false, false);
+   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drivetrain.drive(0, 0, 0, false, false);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return Math.abs(m_drivetrain.getHeading() - m_angle) <= m_tolerance;
   }
 }

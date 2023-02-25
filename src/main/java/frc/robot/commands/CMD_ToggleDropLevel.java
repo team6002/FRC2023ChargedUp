@@ -4,25 +4,24 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.SUB_Drivetrain;
+import frc.robot.GlobalVariables;
+import frc.robot.Constants.GlobalConstants;
 
-public class CMD_SetInitalOdometry extends CommandBase {
-  /** Creates a new CMD_ResetOdometry. */
-  SUB_Drivetrain m_drivetrain;
-  Trajectory m_trajectory;
-
-  public CMD_SetInitalOdometry(SUB_Drivetrain p_drivetrain, Trajectory p_trajectory) {
-    m_drivetrain = p_drivetrain;
-    m_trajectory = p_trajectory;
+public class CMD_ToggleDropLevel extends CommandBase {
+  /** Creates a new CMD_ToggleDropLevel. */
+  GlobalVariables m_variables;
+  public CMD_ToggleDropLevel(GlobalVariables p_variables) {
+    m_variables = p_variables;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drivetrain.resetOdometry(m_trajectory.getInitialPose());
+    if (m_variables.getDropLevel() == GlobalConstants.kElevator3rdLevel){
+      m_variables.setDropLevel(GlobalConstants.kElevator1stLevel);
+    }else m_variables.setDropLevel(m_variables.getDropLevel() + 1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

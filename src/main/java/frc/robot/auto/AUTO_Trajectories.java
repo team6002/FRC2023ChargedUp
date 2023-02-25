@@ -18,17 +18,32 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.SUB_Drivetrain;
 /** Add your docs here. */
 
 public class AUTO_Trajectories {
     public Trajectory OverChargeStationTrajectory;
     public Trajectory BackOnChargeStationTrajectory;
     Trajectory FirstRedBall = new Trajectory();
-    private DriveSubsystem m_drivetrain;
+    private SUB_Drivetrain m_drivetrain;
 
-    public AUTO_Trajectories(DriveSubsystem drivetrain){
+    public AUTO_Trajectories(SUB_Drivetrain drivetrain){
         m_drivetrain = drivetrain;
+
+        TrajectoryConfig ChargeStationConfig =
+            new TrajectoryConfig(
+                AutoConstants.kChargeStationSpeed,
+                AutoConstants.kChargeStationAcceleration)
+                // Add kinematics to ensure max speed is actually obeyed
+                .setKinematics(DriveConstants.kDriveKinematics);
+
+        TrajectoryConfig ChargeStationConfigReversesd =
+            new TrajectoryConfig(
+                AutoConstants.kChargeStationSpeed,
+                AutoConstants.kChargeStationAcceleration)
+                // Add kinematics to ensure max speed is actually obeyed
+                .setKinematics(DriveConstants.kDriveKinematics)
+                .setReversed(true);
 
         TrajectoryConfig config =
             new TrajectoryConfig(
@@ -50,14 +65,14 @@ public class AUTO_Trajectories {
         OverChargeStationTrajectory = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(96), 0, new Rotation2d(0)),
-            config);
+            new Pose2d(Units.inchesToMeters(-200), 0, new Rotation2d(0)),
+            ChargeStationConfigReversesd);
  
         BackOnChargeStationTrajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.inchesToMeters(96), 0, new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(-200), 0, new Rotation2d(Units.degreesToRadians(180))),
             List.of(),
-            new Pose2d(Units.inchesToMeters(0), 0, new Rotation2d(0)),
-            configReversed); 
+            new Pose2d(Units.inchesToMeters(-77), 0, new Rotation2d(Units.degreesToRadians(180))),
+            ChargeStationConfigReversesd); 
     }
   
     public Command driveTrajectory(Trajectory trajectory) {

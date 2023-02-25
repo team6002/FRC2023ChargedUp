@@ -4,26 +4,24 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.SUB_Drivetrain;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.subsystems.SUB_Elevator;
 
-public class CMD_SetInitalOdometry extends CommandBase {
-  /** Creates a new CMD_ResetOdometry. */
-  SUB_Drivetrain m_drivetrain;
-  Trajectory m_trajectory;
-
-  public CMD_SetInitalOdometry(SUB_Drivetrain p_drivetrain, Trajectory p_trajectory) {
-    m_drivetrain = p_drivetrain;
-    m_trajectory = p_trajectory;
+public class CMD_ElevatorCheck extends CommandBase {
+  /** Creates a new CMD_ElevatorCheck. */
+  SUB_Elevator m_elevator;
+  double m_wantedPosition;
+  double m_tolerance = ElevatorConstants.kElevatorTolerance;
+  public CMD_ElevatorCheck(SUB_Elevator p_elevator, double p_wantedPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_elevator = p_elevator;
+    m_wantedPosition = p_wantedPosition;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_drivetrain.resetOdometry(m_trajectory.getInitialPose());
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -36,6 +34,6 @@ public class CMD_SetInitalOdometry extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return m_elevator.getPosition() - m_wantedPosition <= m_tolerance;
   }
 }
