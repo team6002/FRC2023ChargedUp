@@ -43,13 +43,13 @@ public class CMD_PlaceForwards extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
-      new SequentialCommandGroup(
-        new CMD_ElevatorCheck(p_elevator, ElevatorConstants.kElevatorPrep),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift)//ground position
-      ),
       new ParallelCommandGroup(
         new CMD_ElevatorSetLevel(p_elevator, p_variables),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowForwards),
+        new SequentialCommandGroup(
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift),
+          new CMD_ElevatorSafteyCheck(p_elevator),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)
+      ),
         new SequentialCommandGroup(
           new CMD_CheckWristSafe(p_elbow, p_elevator),
           new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)

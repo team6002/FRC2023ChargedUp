@@ -28,7 +28,7 @@ public class CMD_WristSetPosition extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    System.out.println("WRIST WRIST");
+    // System.out.println("WRIST WRIST");
   }
 
   @Override

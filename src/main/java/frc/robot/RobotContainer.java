@@ -1,7 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
+//NOTE THE RADIO IS LOOSING  CONNECTION
 package frc.robot;
 
 import java.util.function.BooleanSupplier;
@@ -93,7 +90,7 @@ public class RobotContainer {
     m_driverController.x().onTrue(new CMD_PlaceForwards(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables));
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.pov(90).onTrue(new CMD_ToggleIntakeState(m_variables));
-    m_driverController.start().onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
+    // m_driverController.start().onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
 

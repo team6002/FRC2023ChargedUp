@@ -27,12 +27,12 @@ public class CMD_IntakeShelf extends SequentialCommandGroup {
    ) {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.INTAKE),
-      new SequentialCommandGroup(
-        new CMD_ElevatorCheck(p_elevator, ElevatorConstants.kElevatorPrep),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift)//ground position
-      ),
       new ParallelCommandGroup(
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowForwards),
+        new SequentialCommandGroup(
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift),
+          new CMD_ElevatorSafteyCheck(p_elevator),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowForwards)
+        ),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelf),
         new SequentialCommandGroup(
           new CMD_CheckWristSafe(p_elbow, p_elevator),

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -26,7 +27,10 @@ public class CMD_Stow extends SequentialCommandGroup {
       new CMD_setState(p_finiteStateMachine, RobotState.STOW),
       new CMD_IntakeOff(p_intake),
       new ParallelCommandGroup(
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift),
+        new ParallelDeadlineGroup(
+         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift),
+         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorPrep)
+        ),
         new SequentialCommandGroup(
           new CMD_CheckWristSafe(p_elbow, p_elevator),
           new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)

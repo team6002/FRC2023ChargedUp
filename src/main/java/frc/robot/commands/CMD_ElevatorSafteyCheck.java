@@ -8,15 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.SUB_Elevator;
 
-public class CMD_ElevatorCheck extends CommandBase {
+public class CMD_ElevatorSafteyCheck extends CommandBase {
   /** Creates a new CMD_ElevatorCheck. */
   SUB_Elevator m_elevator;
   double m_wantedPosition;
   double m_tolerance = ElevatorConstants.kElevatorTolerance;
-  public CMD_ElevatorCheck(SUB_Elevator p_elevator, double p_wantedPosition) {
+  public CMD_ElevatorSafteyCheck(SUB_Elevator p_elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_elevator = p_elevator;
-    m_wantedPosition = p_wantedPosition;
   }
 
   // Called when the command is initially scheduled.
@@ -34,6 +33,6 @@ public class CMD_ElevatorCheck extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_elevator.getPosition() - m_wantedPosition) <= m_tolerance;
+    return m_elevator.getPosition() > ElevatorConstants.kElevatorPrep;
   }
 }

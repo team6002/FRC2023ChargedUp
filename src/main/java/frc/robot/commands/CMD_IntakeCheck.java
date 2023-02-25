@@ -40,7 +40,7 @@ public class CMD_IntakeCheck extends CommandBase {
     }
 
     if (m_intake.getCurrent() >= IntakeConstants.kIntakeConeDetectedCurrent) {
-      if (m_timer == 30) {
+      if (m_timer == 20) {
         m_detected = true;
       } else {
         m_timer += 1;
