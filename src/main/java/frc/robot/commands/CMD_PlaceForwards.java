@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.GlobalVariables;
@@ -46,10 +47,10 @@ public class CMD_PlaceForwards extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new CMD_ElevatorSetLevel(p_elevator, p_variables),
         new SequentialCommandGroup(
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift),
-          new CMD_ElevatorSafteyCheck(p_elevator),
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)
-      ),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
+          new WaitCommand(.2),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelf)
+        ),
         new SequentialCommandGroup(
           new CMD_CheckWristSafe(p_elbow, p_elevator),
           new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)

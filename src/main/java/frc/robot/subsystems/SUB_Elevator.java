@@ -125,7 +125,7 @@ public class SUB_Elevator extends SubsystemBase {
   // double m_acceleration =0;
   // double m_wantedPosition = 0;
   public void telemetry(){
-    SmartDashboard.putNumber("elevatorCurrent", getElevatorCurrent());
+    // SmartDashboard.putNumber("elevatorCurrent", getElevatorCurrent());
     SmartDashboard.putNumber("elevator Position", m_elevatorEncoder.getPosition());
     // m_P = SmartDashboard.getNumber("P", m_P);
     // m_I = SmartDashboard.getNumber("I", m_I);
