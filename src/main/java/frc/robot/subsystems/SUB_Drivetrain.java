@@ -83,7 +83,6 @@ public class SUB_Drivetrain extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
-    SmartDashboard.putNumber("roll", getRoll());
     SmartDashboard.putNumber("X", m_odometry.getPoseMeters().getX());
     SmartDashboard.putNumber("Y", m_odometry.getPoseMeters().getY());
     SmartDashboard.putNumber("Yaw", m_odometry.getPoseMeters().getRotation().getDegrees());
@@ -262,9 +261,5 @@ public class SUB_Drivetrain extends SubsystemBase {
     (m_frontLeft.getVelocity() + m_frontRight.getVelocity()
       + m_rearLeft.getVelocity() + m_rearRight.getVelocity())/4;
     return p_velocity;
-  }
-
-  public double getRoll(){
-    return m_gyro.getRoll();
   }
 }
