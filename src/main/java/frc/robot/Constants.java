@@ -125,8 +125,8 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 4;
-    public static final double kChargeStationSpeed = 1.75;
-    public static final double kChargeStationAcceleration = 1.75;
+    public static final double kChargeStationSpeed = 1.1;
+    public static final double kChargeStationAcceleration = 1.1;
 
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -169,21 +169,27 @@ public final class Constants {
     public static final double kElevatorOffset = -.487;
 
     public static final double kElevatorMax = 48;
-    public static final double kElevatorShelf = 44.5;
-    public static final double kElevatorFirstLevel = 21;// for placeing forwards
-    public static final double kElevatorSecondLevel = 26;  
-    public static final double kElevatorThirdLevel = 43;
-    public static final double kElevatorHome = 1;
-    public static final double kElevatorStow = 1;
-    public static final double kElevatorGround = 1;
-    public static final double kElevatorPrep = 20;//Position for safely moving elbow to score
-    public static final double kElevatorSafety = 15;//maximum value to check if moving wrist endagers robot
+    public static final double kElevatorShelfCone = 33.5;
+    public static final double kElevatorShelfCube = 33.5;
+    public static final double kElevatorFirstConeLevel = 21;// for placeing forwards
+    public static final double kElevatorSecondConeLevel = 26;  
+    public static final double kElevatorThirdConeLevel = 43;
+    public static final double kElevatorFirstCubeLevel = 21;// for placeing forwards
+    public static final double kElevatorSecondCubeLevel = 26;  
+    public static final double kElevatorThirdCubeLevel = 43;
+    public static final double kElevatorHome = 0;
+    public static final double kElevatorStow = 0;
+    public static final double kElevatorGround = 0;
+    public static final double kElevatorPrep = 19;//Position for safely moving elbow to score
+    public static final double kElevatorSafety = 12;//maximum value to check if moving elbow endagers robot
     public static final double kElevatorTolerance = 3;
-    
+    public static final double kElevatorShelfBack = 18;
+    public static final double kElevatorShelfBackAway = 24;// moves the elevator up to avoid hitting the wall
+
     public static final double kElevatorHomeCurrent = 10;
 
     public static final double kElevatorMaxVelocity = 60;
-    public static final double kElevatorMaxAcceleration = 60;
+    public static final double kElevatorMaxAcceleration = 80;
     public static final double kElevatorHomeAcceleration = 3;
     public static final double kElevatorHomeVelocity = 3;
     
@@ -191,26 +197,29 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = .0075;//.0075
+    public static final double kElbowP = .008;//.0075
     public static final double kElbowI = 0;
-    public static final double kElbowD = 0.0;
-    public static final double kElbowF = 0.0;
-    public static final double kElbowS = 0.04;
-    public static final double kElbowMaxVelocity = 600;
-    public static final double kElbowMaxAcceleration = 600;
+    public static final double kElbowD = 0.004;
+    public static final double kElbowF = 0.0005;
+    public static final double kElbowS = 0.0;
+    public static final double kElbowMaxVelocity = 400;
+    public static final double kElbowMaxAcceleration = 720;
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
     public static final double kElbowStowBackwards = 220;//when wrist faces backwards
     public static final double kElbowStowForwards = 212;// when wrist faces forwards
     public static final double kElbowSaftey = 190;//maximum safe value for rotating wrist
-    public static final double kElbowLift = 190;
+    public static final double kElbowLift = 190;// use to get elbow off elevator, it don't like 200 for some reason
+    public static final double kElbowLifted = 205;// when the elbow is not resting on elevator
     public static final double kElbowPlaceBack = 110; // for placing on ground
-    public static final double kElbowUp = 175;// about 90 degrees up
+    public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
+    public static final double kElbowShelf = 250;// stright forwards
     public static final double kElbowPrepareDrop = 250;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 90;// straight back
-
+    public static final double kElbowShelfBack = 90;
+    public static final double kElbowShelfBackPrep = 72;
     public static final double kElbowTolerance = 1;
   }
   
@@ -237,10 +246,12 @@ public final class Constants {
   }
 
   public static final class GlobalConstants{
+    public static final int kUnknownPickMode = -1;
     public static final int kPickBackGroundMode = 0;
-    public static final int kPickForwardsShelfMode = 1;
-    public static final int kPickForwardsGroundMode = 2;
-
+    public static final int kPickForwardsGroundMode = 1;
+    public static final int kPickForwardsShelfMode = 2;
+    public static final int kPickBackShelfMode = 3;
+    
     public static final int kStowGroundMode = 0;
     public static final int kStowShelfMode = 1;
 
@@ -250,6 +261,15 @@ public final class Constants {
 
     public static final boolean kConeMode = true;
     public static final boolean kCubeMode = false;
+
+    public static final int kUnknownIntakeKey = -1;
+    public static final int kGroundBackCube = 0;
+    public static final int kGroundBackCone = 1;
+    public static final int kGroundForwardsCone = 2;
+    public static final int kShelfForwardsCube = 3;
+    public static final int kShelfForwardsCone = 4;
+    public static final int kShelfBackCone = 5;
+    public static final int kShelfBackCube = 6;
   }
 
 

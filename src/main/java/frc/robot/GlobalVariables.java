@@ -12,7 +12,8 @@ public class GlobalVariables extends SubsystemBase {
   private boolean m_intakeState = true;// true for cone mode, false for cube mode
   private int m_dropLevel = 2;// 1 is ground, 2 is second level, 3 is third level
   private int m_stowLocation = 1;// 0 is ground, 1 is shelf
-  private int m_pickMode = 0;// 0 is ground, 1 is shelf
+  private int m_pickMode = -1;// 0 is groundBack, 1 is groundForwards, 2 shelfBack, 3 shelfForwards
+  private int m_intakeCommandKey = -1; 
 
 
   public GlobalVariables() {}
@@ -47,9 +48,19 @@ public class GlobalVariables extends SubsystemBase {
   public int getPickMode(){
     return m_pickMode;
   }
+
+  public int getIntakeCommandKey(){
+    return m_intakeCommandKey;
+  }
+
+  public void setIntakeCommandKey(int p_command){
+    m_intakeCommandKey = p_command;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("IntakeCommandKey", m_intakeCommandKey);
     SmartDashboard.putBoolean("IntakeMode", m_intakeState);
     SmartDashboard.putNumber("DropLevel", m_dropLevel);
     SmartDashboard.putNumber("StowLocation", m_stowLocation);

@@ -152,6 +152,6 @@ public class SUB_Wrist extends SubsystemBase {
       // m_goal = new TrapezoidProfile.State(m_wantedPosition, 0);
       // // m_wristMotorPIDController.setReference(m_wantedPosition, ControlType.kSmartMotion, 1);
   
-      SmartDashboard.putNumber("output", m_wristMotor.getAppliedOutput());
+      // SmartDashboard.putNumber("output", m_wristMotor.getAppliedOutput());
     }
 }

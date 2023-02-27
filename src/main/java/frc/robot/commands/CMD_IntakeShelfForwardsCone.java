@@ -16,30 +16,29 @@ import frc.robot.Constants.WristConstants;
 import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
 import frc.robot.subsystems.SUB_FiniteStateMachine;
+import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 import frc.robot.subsystems.SUB_Intake;
 import frc.robot.subsystems.SUB_Wrist;
-import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CMD_IntakeGroundBack extends SequentialCommandGroup {
-  public CMD_IntakeGroundBack(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Wrist p_wrist,
-   SUB_FiniteStateMachine p_finiteStamchine, GlobalVariables p_variables) {
+public class CMD_IntakeShelfForwardsCone extends SequentialCommandGroup {
+  public CMD_IntakeShelfForwardsCone(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Wrist p_wrist,
+   SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables
+   ) {
     addCommands(
-      new CMD_setState(p_finiteStamchine, RobotState.INTAKE),
+      new CMD_setState(p_finiteStateMachine, RobotState.INTAKE),
       new ParallelCommandGroup(
-        new ParallelDeadlineGroup(
-          new SequentialCommandGroup(
-            new CMD_CheckWristSafe(p_elbow, p_elevator),
-            new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround)
-          ),
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp)     
-        ),
-        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround)
-      ),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards),
-      new CMD_IntakeOn(p_intake, p_variables)
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfCone),
+        
+        new SequentialCommandGroup(
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
+          new WaitCommand(.2),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelf)
+        )
+      ),      
+      new CMD_IntakeOn(p_intake, p_variables) 
     );
   }
 }

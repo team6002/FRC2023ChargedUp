@@ -1,11 +1,12 @@
 //NOTE THE RADIO IS LOOSING  CONNECTION
 package frc.robot;
 
+import java.util.Map;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.GlobalConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.auto.AUTO_BalanceStation;
 import frc.robot.auto.AUTO_CubeRun;
 import frc.robot.auto.AUTO_Trajectories;
 import frc.robot.commands.*;
@@ -16,8 +17,10 @@ import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_Intake;
 import frc.robot.subsystems.SUB_Wrist;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -67,27 +70,23 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_driverController.leftBumper().onTrue(new ConditionalCommand(
-      new SequentialCommandGroup(
-        new CMD_IntakeShelf(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables),
-        new CMD_IntakeCheck(m_intake, m_driverController),
-        new CMD_HoldShelf(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)
-      ),
-      new SequentialCommandGroup(
-        new CMD_IntakeGroundBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables),
-        new CMD_IntakeCheck(m_intake, m_driverController),
-        new CMD_HoldGround(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)
-      )
-        ,IntakeToggle)
-      );
+    m_driverController.leftBumper().onTrue(new SequentialCommandGroup(
+      DeployIntakeCommand,
+      new CMD_IntakeCheck(m_intake, m_driverController),
+      HoldIntakeCommand
+      ));
     m_driverController.rightBumper().onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.a().onTrue(new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables));
-    m_driverController.b().onTrue(new CMD_PrepIntakeGroundForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables));
-    m_driverController.y().onTrue(new CMD_PrepIntakeShelf(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables));
-    m_driverController.x().onTrue(new CMD_PlaceForwards(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables));
+    m_driverController.a().onTrue(new CMD_selectIntakeMode(m_variables));
+    m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
+    m_driverController.y().onTrue(new CMD_TogglePickMode(m_variables));
+    m_driverController.x().onTrue(new SequentialCommandGroup(
+      new CMD_PlaceForwards(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables),
+      new WaitCommand(.5),
+      StowIntakeCommand
+    ));
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.pov(90).onTrue(new CMD_ToggleIntakeState(m_variables));
-    // m_driverController.start().onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
+    m_driverController.pov(90).onTrue(PrepIntakeCommand);
+    // m_driverController.start().onTrue(new CMD_AdjustBalanceBackwards(m_drivetrain));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
 
@@ -109,4 +108,69 @@ public class RobotContainer {
     m_elevator.elevatorInit();
     m_wrist.wristInit();
   }
+
+  private int getIntakeType() {
+    return m_variables.getIntakeCommandKey();
+  };
+
+  public final Command PrepIntakeCommand  = 
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
+      Map.entry(GlobalConstants.kGroundBackCube, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackCone, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfBackCone, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfBackCube, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables))
+    )
+    ,this::getIntakeType
+  );
+
+  public final Command DeployIntakeCommand  = 
+    new SelectCommand(
+      Map.ofEntries(
+        Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
+        Map.entry(GlobalConstants.kGroundBackCube, new CMD_IntakeGroundBackCube(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
+        Map.entry(GlobalConstants.kGroundBackCone, new CMD_IntakeGroundBackCone(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
+        Map.entry(GlobalConstants.kGroundForwardsCone, new PrintCommand("2")),
+        Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_IntakeShelfForwardsCube(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
+        Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_IntakeShelfForwardsCone(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
+        Map.entry(GlobalConstants.kShelfBackCone, new CMD_IntakeShelfBackCone(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
+        Map.entry(GlobalConstants.kShelfBackCube, new CMD_IntakeShelfBackCone(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables))
+        )
+      ,this::getIntakeType
+    );
+
+    public final Command HoldIntakeCommand  = 
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
+      Map.entry(GlobalConstants.kGroundBackCube, new CMD_HoldGroundBack(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackCone, new CMD_HoldGroundBack(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundForwardsCone, new PrintCommand("2")),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_HoldShelfForwards(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_HoldShelfForwards(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfBackCone, new CMD_HoldShelfBack(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfBackCube, new CMD_HoldShelfBack(m_intake, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables))
+    )
+    ,this::getIntakeType
+  );
+
+  public final Command StowIntakeCommand  = 
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
+      Map.entry(GlobalConstants.kGroundBackCube, new CMD_StowGround(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kGroundBackCone, new CMD_StowGround(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kGroundForwardsCone, new PrintCommand("2")),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_Stow(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_Stow(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kShelfBackCone, new CMD_StowShelfBack(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kShelfBackCube, new CMD_StowShelfBack(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine))
+    )
+    ,this::getIntakeType
+  );  
 }
+

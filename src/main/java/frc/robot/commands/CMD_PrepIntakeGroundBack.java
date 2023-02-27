@@ -34,7 +34,8 @@ public class CMD_PrepIntakeGroundBack extends SequentialCommandGroup {
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)
       ),
-      new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround)
+      new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround),
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)
     );
   }
 }

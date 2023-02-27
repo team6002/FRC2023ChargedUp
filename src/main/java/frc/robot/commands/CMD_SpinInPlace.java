@@ -11,7 +11,7 @@ public class CMD_SpinInPlace extends CommandBase {
   /** Creates a new CMD_SpinInPlace. */
   SUB_Drivetrain m_drivetrain;
   double m_angle;
-  double m_tolerance = 5;
+  double m_tolerance = 7;
   public CMD_SpinInPlace(SUB_Drivetrain p_drivetrain, double p_angle) {
     m_drivetrain = p_drivetrain;
     m_angle = p_angle;
@@ -26,7 +26,7 @@ public class CMD_SpinInPlace extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.drive(0, 0, Math.copySign(.5, m_angle), false, false);
+    m_drivetrain.drive(0, 0, Math.copySign(.7, m_angle), false, false);
    }
 
   // Called once the command ends or is interrupted.

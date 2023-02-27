@@ -12,6 +12,7 @@ public class CMD_ElevatorSafteyCheck extends CommandBase {
   /** Creates a new CMD_ElevatorCheck. */
   SUB_Elevator m_elevator;
   double m_wantedPosition;
+  boolean m_finished;
   double m_tolerance = ElevatorConstants.kElevatorTolerance;
   public CMD_ElevatorSafteyCheck(SUB_Elevator p_elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -20,11 +21,15 @@ public class CMD_ElevatorSafteyCheck extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_finished = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_finished = (m_elevator.getPosition() >= ElevatorConstants.kElevatorSafety);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -33,6 +38,6 @@ public class CMD_ElevatorSafteyCheck extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_elevator.getPosition() > ElevatorConstants.kElevatorPrep;
+    return m_finished;
   }
 }
