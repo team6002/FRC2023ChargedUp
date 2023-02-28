@@ -197,13 +197,14 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = .008;//.0075
+    public static final double kElbowP = 0.012817;//.008;
     public static final double kElbowI = 0;
-    public static final double kElbowD = 0.004;
-    public static final double kElbowF = 0.0005;
-    public static final double kElbowS = 0.0;
+    public static final double kElbowD = 0.0049261;
+    public static final double kElbowF = 0.00;
+    public static final double kElbowS = 0.0062947;
+    public static final double kElbowV = 0.03199;
     public static final double kElbowMaxVelocity = 400;
-    public static final double kElbowMaxAcceleration = 720;
+    public static final double kElbowMaxAcceleration = 400;
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
