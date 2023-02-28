@@ -10,6 +10,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.auto.AUTO_CubeRun;
 import frc.robot.auto.AUTO_Trajectories;
 import frc.robot.commands.*;
+import frc.robot.subsystems.SUB_Blinkin;
 import frc.robot.subsystems.SUB_Drivetrain;
 import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
@@ -34,6 +35,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems
   private final SUB_Drivetrain m_drivetrain = new SUB_Drivetrain();
+  private final SUB_Blinkin m_blinkin = new SUB_Blinkin();
   private final AUTO_Trajectories m_trajectories = new AUTO_Trajectories(m_drivetrain);
   private final SUB_Elevator m_elevator = new SUB_Elevator();
   private final SUB_Elbow m_elbow = new SUB_Elbow();
@@ -76,7 +78,7 @@ public class RobotContainer {
       HoldIntakeCommand
       ));
     m_driverController.rightBumper().onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.a().onTrue(new CMD_selectIntakeMode(m_variables));
+    m_driverController.a().onTrue(new CMD_selectIntakeMode(m_variables, m_blinkin));
     m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
     m_driverController.y().onTrue(new CMD_TogglePickMode(m_variables));
     m_driverController.x().onTrue(new SequentialCommandGroup(

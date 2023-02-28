@@ -26,7 +26,7 @@ public class AUTO_CubeRun extends SequentialCommandGroup {
           new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.CubeRunTrajectory),
           new InstantCommand(() -> p_variables.setIntakeState(Constants.GlobalConstants.kCubeMode)),
           new InstantCommand(() -> p_variables.setDropLevel(Constants.GlobalConstants.kElevator3rdLevel)),
-          new CMD_PlaceForwardsAuto(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
+          new CMD_PlaceForwardsCubeAuto(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
           new InstantCommand(() -> p_variables.setDropLevel(Constants.GlobalConstants.kElevator2ndLevel)),
           new ParallelCommandGroup(
             new CMD_IntakeGroundBackAuto(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables),

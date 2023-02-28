@@ -157,7 +157,6 @@ public final class Constants {
     public static final double kHoldCurrent = 5;
 
     public static final double kIntakeConeDetectedCurrent = 30;
-
   }
 
   public static final class ElevatorConstants{
@@ -191,8 +190,7 @@ public final class Constants {
     public static final double kElevatorMaxVelocity = 60;
     public static final double kElevatorMaxAcceleration = 80;
     public static final double kElevatorHomeAcceleration = 3;
-    public static final double kElevatorHomeVelocity = 3;
-    
+    public static final double kElevatorHomeVelocity = 3;    
   }
 
   public static final class ElbowConstants{
@@ -222,8 +220,6 @@ public final class Constants {
     public static final double kElbowShelfBackPrep = 72;
     public static final double kElbowTolerance = 1;
   }
-  
-  
 
   public static final class WristConstants{
     public static final int kWristMotorCanID = 10;
@@ -272,5 +268,15 @@ public final class Constants {
     public static final int kShelfBackCube = 6;
   }
 
-
+  public static final class BlinkinConstants{
+    public static final double kColor1Chase = 0.01;
+    public static final double kConeModeColor = 0.89;
+    public static final double kColor1ShelfForwards = 0.07;
+    public static final double kColor1ShelfBackwards = 0.15;
+    public static final double kColor2Chase = 0.19;
+    public static final double kCubeModeColor = 0.69;
+    public static final double kColor2ShelfForwards = 0.27;
+    public static final double kColor2ShelfBackwards = 0.35;
+    public static final double kFire = -0.57;
+  }
 }
