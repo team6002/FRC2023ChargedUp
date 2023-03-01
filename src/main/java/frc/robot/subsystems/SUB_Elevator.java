@@ -57,7 +57,7 @@ public class SUB_Elevator extends SubsystemBase {
       m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
       m_goal = m_setpoint;
      
-      m_elevatorOn = false;
+      m_elevatorOn = true;
     }
     
     public void elevatorInit(){
@@ -78,7 +78,7 @@ public class SUB_Elevator extends SubsystemBase {
       // m_elevatorMotorPIDController.setReference(m_elevatorEncoder.getPosition(), ControlType.kSmartMotion);
     }
 
-    public void setElevatorConstraints(double p_acceleration, double p_velocity){
+    public void setElevatorConstraints(double p_velocity, double p_acceleration){
       m_constraints = new TrapezoidProfile.Constraints(p_velocity, p_acceleration);
     }
 
@@ -89,16 +89,18 @@ public class SUB_Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // updates elevator telemetry
-    telemetry(); 
-      var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
-      m_setpoint = profile.calculate(deltaTime);
-      
-      m_elevatorMotorPIDController.setReference(
-        m_setpoint.position, 
-        CANSparkMax.ControlType.kPosition,(1)
-        // m_feedForward.calculate(m_setpoint.velocity)
-      );
+      // updates elevator telemetry
+      telemetry(); 
+      if (m_elevatorOn){
+        var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
+        m_setpoint = profile.calculate(deltaTime);
+        
+        m_elevatorMotorPIDController.setReference(
+          m_setpoint.position, 
+          CANSparkMax.ControlType.kPosition,(1)
+          // m_feedForward.calculate(m_setpoint.velocity)
+        );
+      }
     }
 
   public void setPower(double p_power){
@@ -126,6 +128,7 @@ public class SUB_Elevator extends SubsystemBase {
   // double m_wantedPosition = 0;
   public void telemetry(){
     // SmartDashboard.putNumber("elevatorCurrent", getElevatorCurrent());
+    SmartDashboard.putNumber("goal", m_goal.position);
     SmartDashboard.putNumber("elevator Position", m_elevatorEncoder.getPosition());
     // m_P = SmartDashboard.getNumber("P", m_P);
     // m_I = SmartDashboard.getNumber("I", m_I);

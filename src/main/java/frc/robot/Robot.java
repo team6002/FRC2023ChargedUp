@@ -5,8 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -16,7 +19,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private Command m_auto1 = new PrintCommand("1");
+  private Command m_auto2 = new PrintCommand("2");
+  private final SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   private RobotContainer m_robotContainer;
 
   /**
@@ -29,6 +34,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_robotContainer.SubsystemsInit();
+    m_Chooser.setDefaultOption("ChargeStation", m_auto1);
+    m_Chooser.addOption("CubeRun", m_auto2);
+    SmartDashboard.putData("AUTO", m_Chooser);
   }
 
   /**
@@ -59,7 +67,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_robotContainer.SubsystemsInit();
     m_robotContainer.zeroHeading();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_Chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

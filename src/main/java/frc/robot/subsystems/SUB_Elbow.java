@@ -73,6 +73,8 @@ public class SUB_Elbow extends SubsystemBase {
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
         m_goal = m_setpoint;
         m_elbowOn = false;
+
+        m_elbowMotor.burnFlash();
     }
 
     public void elbowInit(){

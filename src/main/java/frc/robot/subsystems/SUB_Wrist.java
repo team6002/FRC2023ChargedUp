@@ -66,6 +66,7 @@ public class SUB_Wrist extends SubsystemBase {
       m_goal = m_setpoint;
       
       m_wristOn = false;
+      m_wristMotor.burnFlash();
     }
 
     public void wristInit(){

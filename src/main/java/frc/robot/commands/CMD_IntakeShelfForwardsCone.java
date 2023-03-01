@@ -30,15 +30,14 @@ public class CMD_IntakeShelfForwardsCone extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.INTAKE),
       new ParallelCommandGroup(
-        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfCone),
-        
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfCone),       
         new SequentialCommandGroup(
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
-          new WaitCommand(.2),
+          new WaitCommand(.3),
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelf)
         )
-      ),      
-      new CMD_IntakeOn(p_intake, p_variables) 
+      )     
+      // new CMD_IntakeOn(p_intake, p_variables) 
     );
   }
 }

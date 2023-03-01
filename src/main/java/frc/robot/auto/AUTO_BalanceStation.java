@@ -31,7 +31,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
-      new CMD_PlaceForwards(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
+      new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
       new WaitCommand(0.5),
       new ParallelCommandGroup(
         new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),

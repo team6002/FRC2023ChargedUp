@@ -26,6 +26,7 @@ public class SUB_Intake extends SubsystemBase {
     m_sensor = new DigitalInput(1);
     m_intakeMotor.setIdleMode(IdleMode.kBrake);
     m_cubeDetected = false;
+    m_intakeMotor.burnFlash();
   }
 
   public void setIntakeForward(){

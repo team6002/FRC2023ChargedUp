@@ -47,13 +47,8 @@ public class RobotContainer {
   private final SUB_FiniteStateMachine m_finiteStateMachine = new SUB_FiniteStateMachine();
   private final GlobalVariables m_variables = new GlobalVariables();
   
-  
-  private final BooleanSupplier IntakeToggle = () -> m_variables.getPickMode() == 1;
-  // The driver's controller
-
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -75,22 +70,19 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_driverController.leftBumper().onTrue(new SequentialCommandGroup(
-      DeployIntakeCommand,
-      new CMD_IntakeCheck(m_intake, m_driverController),
-      HoldIntakeCommand
-      ));
-    m_driverController.rightBumper().onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.a().onTrue(new CMD_selectIntakeMode(m_variables));
+    m_driverController.leftBumper().onTrue(CycleCommand);
+    m_driverController.x().onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
     m_driverController.y().onTrue(new CMD_TogglePickMode(m_variables));
-    m_driverController.x().onTrue(new SequentialCommandGroup(
-      new CMD_PlaceForwards(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables),
-      new WaitCommand(.5),
-      StowIntakeCommand
-    ));
-    m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.pov(90).onTrue(PrepIntakeCommand);
+    m_driverController.rightBumper().onTrue(
+      new SequentialCommandGroup(
+        new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
+        new CMD_selectIntakeMode(m_variables),
+        PrepIntakeCommand
+      )
+    );
+    m_driverController.pov(0).onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
+    // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
     // m_driverController.start().onTrue(new CMD_AdjustBalanceBackwards(m_drivetrain));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
@@ -116,8 +108,16 @@ public class RobotContainer {
 
   private int getIntakeType() {
     return m_variables.getIntakeCommandKey();
-  };
+  }
 
+  private int getRobotStage(){
+    return m_variables.getStage();
+  }
+
+  private boolean getIntakeState(){
+    return m_variables.getIntakeState();
+  }
+  
   public final Command PrepIntakeCommand  = 
   new SelectCommand(
     Map.ofEntries(
@@ -176,6 +176,47 @@ public class RobotContainer {
       Map.entry(GlobalConstants.kShelfBackCube, new CMD_StowShelfBack(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine))
     )
     ,this::getIntakeType
-  );  
+  );
+  
+  public final Command ExtendCommand  = 
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
+      Map.entry(GlobalConstants.kConeMode, new CMD_PlaceForwardsCone(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kCubeMode, new CMD_PlaceForwardsCube(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables))
+    )
+    ,this::getIntakeState
+  );
+  
+
+  public final Command CycleCommand = 
+  new SelectCommand(
+    Map.ofEntries(   
+      Map.entry(GlobalConstants.kIntakeStage, 
+        new SequentialCommandGroup(
+        DeployIntakeCommand,
+        new CMD_IntakeElement(m_intake, m_variables, m_driverController),
+        HoldIntakeCommand,
+        new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
+      )
+    ),
+      Map.entry(GlobalConstants.kExtendStage,
+        new SequentialCommandGroup(
+          ExtendCommand,
+          new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
+        )
+      ),    
+      Map.entry(GlobalConstants.kDropStage, 
+        new SequentialCommandGroup(
+          new CMD_IntakeDrop(m_intake, m_variables),
+          new WaitCommand(.5),
+          StowIntakeCommand,
+          new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage)
+        )
+      )  
+    ), 
+    this::getRobotStage
+    );
+
 }
 

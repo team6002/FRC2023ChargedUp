@@ -32,8 +32,8 @@ public class CMD_IntakeShelfBackCone extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfBack),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelfBack)
-      ),
-      new CMD_IntakeOn(p_intake, p_variables)
+      )
+      // new CMD_IntakeOn(p_intake, p_variables)
     );
   }
 }

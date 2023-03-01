@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.ElbowConstants;
@@ -28,12 +29,17 @@ public class CMD_PrepIntakeShelfForwards extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStatechine, RobotState.PREPINTAKE),
-      new CMD_setPickUpMode(m_variables, GlobalConstants.kPickForwardsShelfMode),
       new ParallelCommandGroup(
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
-        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorStow)
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorStow),
+        new ParallelDeadlineGroup(
+          new CMD_CheckWristPosition(p_wrist, WristConstants.kWristShelf),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
+            new SequentialCommandGroup(
+            new CMD_CheckWristSafe(p_elbow, p_elevator),
+            new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
+            )
+          )
       ),
-      new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)
     );
   }
