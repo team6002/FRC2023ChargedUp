@@ -18,6 +18,7 @@ import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_Intake;
 import frc.robot.subsystems.SUB_Wrist;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -50,6 +51,7 @@ public class RobotContainer {
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -90,6 +92,13 @@ public class RobotContainer {
     m_driverController.pov(90).onTrue(PrepIntakeCommand);
     // m_driverController.start().onTrue(new CMD_AdjustBalanceBackwards(m_drivetrain));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
+
+    //operator controller commands
+    m_operatorController.a().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel));
+    m_operatorController.b().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel));
+    m_operatorController.x().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel));
+    m_operatorController.leftBumper().onTrue(new InstantCommand(() -> m_variables.setIntakeState(GlobalConstants.kConeMode)));
+    m_operatorController.rightBumper().onTrue(new InstantCommand(() -> m_variables.setIntakeState(GlobalConstants.kCubeMode)));
   }
 
   /**
