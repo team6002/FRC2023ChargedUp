@@ -31,8 +31,8 @@ public class CMD_IntakeGroundBackCone extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround)
-      ),
-      new CMD_IntakeOn(p_intake, p_variables)
+      )
+      // new CMD_IntakeOn(p_intake, p_variables)
     );
   }
 }

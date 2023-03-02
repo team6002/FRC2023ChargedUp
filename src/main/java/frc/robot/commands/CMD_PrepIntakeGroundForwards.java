@@ -28,7 +28,6 @@ public class CMD_PrepIntakeGroundForwards extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStatechine, RobotState.PREPINTAKE),
-      new CMD_setPickUpMode(m_variables, GlobalConstants.kPickForwardsGroundMode),
       new ParallelCommandGroup(
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)

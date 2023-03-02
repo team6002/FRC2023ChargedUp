@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.GlobalVariables;
@@ -29,13 +30,16 @@ public class CMD_PrepIntakeGroundBack extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStatemachine, RobotState.PREPINTAKE),
-      new CMD_setPickUpMode(m_Variables, GlobalConstants.kPickBackGroundMode),
       new ParallelCommandGroup(
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
-      new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)
+      new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome),
+      new ParallelDeadlineGroup(
+        new CMD_CheckWristPosition(p_wrist, WristConstants.kWristGround),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
+        new CMD_CheckWristSafe(p_elbow, p_elevator),
+        new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround)
+        )
       ),
-      new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStowBackwards)
     );
   }
 }

@@ -31,11 +31,14 @@ public class CMD_PrepIntakeShelfBack extends SequentialCommandGroup {
       new CMD_setState(p_finiteStateMachine, RobotState.PREPINTAKE),
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfBack),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards)
-      ),
-      new SequentialCommandGroup( 
-        new CMD_CheckWristSafe(p_elbow, p_elevator),
-        new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
+        new ParallelDeadlineGroup(
+          new CMD_CheckWristPosition(p_wrist, WristConstants.kWristShelf),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards),
+          new SequentialCommandGroup( 
+            new CMD_CheckWristSafe(p_elbow, p_elevator),
+            new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
+          )
+        )
       ),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelfBackPrep)
     );

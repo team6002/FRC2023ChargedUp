@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -22,7 +23,8 @@ public class SUB_Elbow extends SubsystemBase {
 
     private final CANSparkMax m_elbowMotor;
     private final SparkMaxPIDController m_elbowMotorPIDController;
-    private final AbsoluteEncoder m_elbowEncoder;
+    private final AbsoluteEncoder m_elbowAbsoluteEncoder;
+    private final RelativeEncoder m_elbowEncoder;
     double m_wantedPosition;
     private SimpleMotorFeedforward m_feedForward;
     private TrapezoidProfile.Constraints m_constraints;
@@ -35,15 +37,20 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowMotor = new CANSparkMax(ElbowConstants.kElbowMotorCanID, MotorType.kBrushless);
         m_elbowMotorPIDController = m_elbowMotor.getPIDController();
 
-        m_elbowEncoder = m_elbowMotor.getAbsoluteEncoder(Type.kDutyCycle);
-        m_elbowEncoder.setPositionConversionFactor(360);
-        m_elbowEncoder.setVelocityConversionFactor(6);
-        m_elbowEncoder.setInverted(true);
+        m_elbowAbsoluteEncoder = m_elbowMotor.getAbsoluteEncoder(Type.kDutyCycle);
+        m_elbowAbsoluteEncoder.setPositionConversionFactor(360);
+        m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
+        m_elbowAbsoluteEncoder.setInverted(true);
+        
+        m_elbowEncoder = m_elbowMotor.getEncoder();
+        m_elbowEncoder.setPositionConversionFactor(5.128);
+        m_elbowEncoder.setVelocityConversionFactor(5.128/60);
+        m_elbowEncoder.setPosition(getAbsolutePosition());
 
         m_elbowMotorPIDController.setP(ElbowConstants.kElbowP,1);
         m_elbowMotorPIDController.setI(ElbowConstants.kElbowI,1);
         m_elbowMotorPIDController.setD(ElbowConstants.kElbowD,1);
-        m_elbowMotorPIDController.setFF(ElbowConstants.kElbowF,1);
+        m_elbowMotorPIDController.setFF(0,1);
         m_elbowMotorPIDController.setFeedbackDevice(m_elbowEncoder);
 
         m_elbowMotor.setIdleMode(IdleMode.kCoast);
@@ -61,11 +68,13 @@ public class SUB_Elbow extends SubsystemBase {
         // SmartDashboard.putNumber("Elbow D", ElbowConstants.kElbowD);
         // SmartDashboard.putNumber("Elbow F", ElbowConstants.kElbowF);
 
-        m_feedForward = new SimpleMotorFeedforward(1, 1.5);
+        m_feedForward = new SimpleMotorFeedforward(ElbowConstants.kElbowS, ElbowConstants.kElbowV);
         m_constraints = new TrapezoidProfile.Constraints(ElbowConstants.kElbowMaxVelocity, ElbowConstants.kElbowMaxAcceleration);
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
         m_goal = m_setpoint;
         m_elbowOn = false;
+
+        m_elbowMotor.burnFlash();
     }
 
     public void elbowInit(){
@@ -74,14 +83,16 @@ public class SUB_Elbow extends SubsystemBase {
     }
     public void setReference(double p_reference){
         m_wantedPosition = p_reference;
-        double m_F = Math.cos(Units.degreesToRadians(p_reference - 90))* ElbowConstants.kElbowF;
-        m_elbowMotorPIDController.setFF((m_F),1);
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0);
         m_goal = new TrapezoidProfile.State(p_reference, 0);
     }
 
     public double getPosition(){
         return m_elbowEncoder.getPosition();
+    }
+
+    public double getAbsolutePosition(){
+        return m_elbowAbsoluteEncoder.getPosition();
     }
 
     public double getElbowWantedPosition(){
@@ -95,14 +106,6 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowOn = p_state;
     }
 
-    // public boolean checkPosition(){
-    //     if(m_wantedPosition == getElbowPosition()){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
-
     @Override
     public void periodic() {
         telemetry();
@@ -112,8 +115,8 @@ public class SUB_Elbow extends SubsystemBase {
 
         m_elbowMotorPIDController.setReference(
             m_setpoint.position,
-            CANSparkMax.ControlType.kPosition, (1)
-            // m_feedForward.calculate(m_setpoint.velocity)
+            CANSparkMax.ControlType.kPosition, (1),
+            m_feedForward.calculate(m_setpoint.velocity)
         );
     }
 
@@ -128,11 +131,12 @@ public class SUB_Elbow extends SubsystemBase {
     public void telemetry(){
 
       SmartDashboard.putNumber("elbow position", m_elbowEncoder.getPosition());
+    //   SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
     //   m_P = SmartDashboard.getNumber("P", m_P);
     //   m_I = SmartDashboard.getNumber("I", m_I);
     //   m_D = SmartDashboard.getNumber("D", m_D);
     //   m_S = SmartDashboard.getNumber("S", m_S);
-    // //   m_V = SmartDashboard.getNumber("V", m_V);
+    //   m_V = SmartDashboard.getNumber("V", m_V);
     //   m_acceleration = SmartDashboard.getNumber("acceleration", m_acceleration);
     //   m_velocity = SmartDashboard.getNumber("velocity", m_velocity);
     //   m_wantedPosition = SmartDashboard.getNumber("wantedPosition", m_wantedPosition);
@@ -141,7 +145,7 @@ public class SUB_Elbow extends SubsystemBase {
     //   SmartDashboard.putNumber("I", m_I);
     //   SmartDashboard.putNumber("D", m_D);
     //   SmartDashboard.putNumber("S", m_S);
-    // //   SmartDashboard.putNumber("V", m_V);
+    //   SmartDashboard.putNumber("V", m_V);
     //   SmartDashboard.putNumber("acceleration", m_acceleration);
     //   SmartDashboard.putNumber("velocity", m_velocity);
     //   SmartDashboard.putNumber("wantedPosition", m_wantedPosition);
@@ -149,8 +153,7 @@ public class SUB_Elbow extends SubsystemBase {
     //   m_elbowMotorPIDController.setP(m_P,1);
     //   m_elbowMotorPIDController.setI(m_I,1);
     //   m_elbowMotorPIDController.setD(m_D,1);
-    //   m_elbowMotorPIDController.setFF(Math.cos(Units.degreesToRadians(m_wantedPosition - 90))* m_S);
-    // //   m_feedForward = new SimpleMotorFeedforward(m_S, m_V);
+    //   m_feedForward = new SimpleMotorFeedforward(m_S, m_V);
     //   m_constraints = new TrapezoidProfile.Constraints(m_velocity, m_acceleration);
     //   m_goal = new TrapezoidProfile.State(m_wantedPosition, 0);
       

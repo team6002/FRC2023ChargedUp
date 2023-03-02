@@ -22,7 +22,7 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CMD_PlaceForwards extends SequentialCommandGroup {
+public class CMD_PlaceForwardsCone extends SequentialCommandGroup {
   /** Creates a new CMD_PlaceThirdLevel. */
   SUB_Elevator m_elevator;
   SUB_Intake m_intake;
@@ -30,7 +30,7 @@ public class CMD_PlaceForwards extends SequentialCommandGroup {
   SUB_Wrist m_wrist;
   GlobalVariables m_variables;
   SUB_FiniteStateMachine m_finiteStateMachine;
-  public CMD_PlaceForwards(SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Wrist p_wrist, 
+  public CMD_PlaceForwardsCone(SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Wrist p_wrist, 
   SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables
   ) {
     m_elevator = p_elevator;
@@ -55,8 +55,8 @@ public class CMD_PlaceForwards extends SequentialCommandGroup {
           new CMD_CheckWristSafe(p_elbow, p_elevator),
           new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
         )
-      ),
-      new CMD_IntakeDrop(m_intake, m_variables)
+      )
+      // new CMD_IntakeDrop(m_intake, m_variables)
       // new WaitCommand(.5),
       // new CMD_Stow(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)
     );

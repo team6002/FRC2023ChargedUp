@@ -196,21 +196,22 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = .008;//.0075
+    public static final double kElbowP = 0.012817;//.008;
     public static final double kElbowI = 0;
-    public static final double kElbowD = 0.004;
-    public static final double kElbowF = 0.0005;
-    public static final double kElbowS = 0.0;
+    public static final double kElbowD = 0.0049261;
+    public static final double kElbowF = 0.00;
+    public static final double kElbowS = 0.0062947;
+    public static final double kElbowV = 0.03199;
     public static final double kElbowMaxVelocity = 400;
-    public static final double kElbowMaxAcceleration = 720;
+    public static final double kElbowMaxAcceleration = 400;
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
-    public static final double kElbowStowBackwards = 220;//when wrist faces backwards
-    public static final double kElbowStowForwards = 212;// when wrist faces forwards
+    public static final double kElbowStowBackwards = 210;//when wrist faces backwards(Ground)
+    public static final double kElbowStowForwards = 205;// when wrist faces forwards(Shelf)
     public static final double kElbowSaftey = 190;//maximum safe value for rotating wrist
     public static final double kElbowLift = 190;// use to get elbow off elevator, it don't like 200 for some reason
-    public static final double kElbowLifted = 205;// when the elbow is not resting on elevator
+    public static final double kElbowLifted = 200;// when the elbow is not resting on elevator
     public static final double kElbowPlaceBack = 110; // for placing on ground
     public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
@@ -267,6 +268,10 @@ public final class Constants {
     public static final int kShelfForwardsCone = 4;
     public static final int kShelfBackCone = 5;
     public static final int kShelfBackCube = 6;
+
+    public static final int kIntakeStage = 0;
+    public static final int kExtendStage = 1;
+    public static final int kDropStage = 2;
   }
 
   public static final class BlinkinConstants{

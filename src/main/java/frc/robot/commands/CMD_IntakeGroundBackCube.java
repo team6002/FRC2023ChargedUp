@@ -29,17 +29,10 @@ public class CMD_IntakeGroundBackCube extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStamchine, RobotState.INTAKE),
       new ParallelCommandGroup(
-        new ParallelDeadlineGroup(
-          new SequentialCommandGroup(
-            new CMD_CheckWristSafe(p_elbow, p_elevator),
-            new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround)
-          ),
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp)     
-        ),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround)
-      ),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards),
-      new CMD_IntakeOn(p_intake, p_variables)
+      )
+      // new CMD_IntakeOn(p_intake, p_variables)
     );
   }
 }

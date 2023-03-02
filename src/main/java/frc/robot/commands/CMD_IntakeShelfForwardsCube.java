@@ -34,11 +34,11 @@ public class CMD_IntakeShelfForwardsCube extends SequentialCommandGroup {
         
         new SequentialCommandGroup(
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
-          new WaitCommand(.2),
+          new WaitCommand(.3),
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelf)
         )
-      ),      
-      new CMD_IntakeOn(p_intake, p_variables) 
+      )
+      // new CMD_IntakeOn(p_intake, p_variables) 
     );
   }
 }

@@ -66,6 +66,7 @@ public class SUB_Wrist extends SubsystemBase {
       m_goal = m_setpoint;
       
       m_wristOn = false;
+      m_wristMotor.burnFlash();
     }
 
     public void wristInit(){
@@ -99,8 +100,7 @@ public class SUB_Wrist extends SubsystemBase {
 
         m_wristMotorPIDController.setReference(
           m_setpoint.position, 
-          CANSparkMax.ControlType.kPosition,(1) 
-          // m_feedForward.calculate(m_setpoint.velocity)
+          CANSparkMax.ControlType.kPosition,(1)
         );
 
     }
@@ -117,13 +117,13 @@ public class SUB_Wrist extends SubsystemBase {
     }
     // double m_P,m_I,m_D,m_F, m_minOutput, m_maxOutput;
     
-    double m_P = 0;//elbowConstants.kelbowP;
-    double m_I = 0;//elbowConstants.kelbowI;
-    double m_D = 0;//elbowConstants.kelbowD;
-    double m_S = 0;//elbowConstants.kelbowF;
-    double m_V = 0;
-    double m_acceleration = 0;
-    double m_velocity = 0;
+    // double m_P = 0;//elbowConstants.kelbowP;
+    // double m_I = 0;//elbowConstants.kelbowI;
+    // double m_D = 0;//elbowConstants.kelbowD;
+    // double m_S = 0;//elbowConstants.kelbowF;
+    // double m_V = 0;
+    // double m_acceleration = 0;
+    // double m_velocity = 0;
     public void telemetry(){
       SmartDashboard.putNumber("wrist position", m_wristEncoder.getPosition());
       // m_P = SmartDashboard.getNumber("P", m_P);

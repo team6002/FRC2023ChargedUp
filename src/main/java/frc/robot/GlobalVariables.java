@@ -13,7 +13,8 @@ public class GlobalVariables extends SubsystemBase {
   private int m_dropLevel = 2;// 1 is ground, 2 is second level, 3 is third level
   private int m_stowLocation = 1;// 0 is ground, 1 is shelf
   private int m_pickMode = -1;// 0 is groundBack, 1 is groundForwards, 2 shelfBack, 3 shelfForwards
-  private int m_intakeCommandKey = -1; 
+  private int m_intakeCommandKey = -1;
+  private int m_stage = 0;// 0 is intake, 2 is drop, 3 is dropped
 
 
   public GlobalVariables() {}
@@ -55,6 +56,14 @@ public class GlobalVariables extends SubsystemBase {
 
   public void setIntakeCommandKey(int p_command){
     m_intakeCommandKey = p_command;
+  }
+
+  public int getStage(){
+    return m_stage;
+  }
+
+  public void setStage(int p_state){
+    m_stage = p_state;
   }
 
   @Override
