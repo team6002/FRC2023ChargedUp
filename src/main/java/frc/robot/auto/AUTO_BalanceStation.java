@@ -39,7 +39,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain)
       ),
-      new CMD_PlaceForwards(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
+      new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
       new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
       new CMD_SpinInPlace(p_drivetrain, 180),
       new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)

@@ -2,7 +2,6 @@
 package frc.robot;
 
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.GlobalConstants;
@@ -77,7 +76,7 @@ public class RobotContainer {
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
-        new CMD_selectIntakeMode(m_variables),
+        new CMD_selectIntakeMode(m_variables, m_blinkin),
         PrepIntakeCommand
       )
     );
