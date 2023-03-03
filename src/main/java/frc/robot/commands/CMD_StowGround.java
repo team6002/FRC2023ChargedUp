@@ -34,6 +34,6 @@ public class CMD_StowGround extends SequentialCommandGroup {
         new CMD_CheckWristSafe(p_elbow, p_elevator),
         new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround)
       ),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted));
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStowBackwards));
   }
 }

@@ -35,6 +35,7 @@ public class CMD_PrepIntakeShelfBack extends SequentialCommandGroup {
           new CMD_CheckWristPosition(p_wrist, WristConstants.kWristShelf),
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards),
           new SequentialCommandGroup( 
+            new WaitCommand(.2),
             new CMD_CheckWristSafe(p_elbow, p_elevator),
             new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
           )

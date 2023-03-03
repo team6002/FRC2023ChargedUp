@@ -71,9 +71,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     m_driverController.leftBumper().onTrue(CycleCommand);
-    m_driverController.x().onTrue(new CMD_ToggleDropLevel(m_variables));
+    m_driverController.y().onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
-    m_driverController.y().onTrue(new CMD_TogglePickMode(m_variables));
+    m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
@@ -83,7 +83,7 @@ public class RobotContainer {
     );
     m_driverController.pov(0).onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    // m_driverController.start().onTrue(new CMD_AdjustBalanceBackwards(m_drivetrain));
+    m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
 

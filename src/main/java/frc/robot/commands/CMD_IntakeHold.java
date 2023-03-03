@@ -23,9 +23,9 @@ public class CMD_IntakeHold extends CommandBase {
   public void initialize() {
     m_intake.setHoldCurrent();
     if(m_variables.getIntakeState() == GlobalConstants.kConeMode){
-      m_intake.setPower(-IntakeConstants.kIntakeHoldPower);    
+      m_intake.setPower(IntakeConstants.kIntakeHoldPower);    
     }else{
-      m_intake.setPower(IntakeConstants.kIntakeHoldPower);
+      m_intake.setPower(-IntakeConstants.kIntakeHoldPower);
     }
 
   }

@@ -31,9 +31,9 @@ public class CMD_HoldShelfBack extends SequentialCommandGroup {
       new CMD_IntakeHold(p_intake, p_variables),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfBackAway),
       new ParallelCommandGroup(
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift),
         new SequentialCommandGroup(
-          new WaitCommand(.3),
+          new WaitCommand(.5),
           new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)
         )
       )

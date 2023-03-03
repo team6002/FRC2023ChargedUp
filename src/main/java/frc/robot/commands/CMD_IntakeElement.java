@@ -58,9 +58,9 @@ public class CMD_IntakeElement extends CommandBase {
     }
 
     if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
-      m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
-    }else if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
       m_intake.setPower(IntakeConstants.kIntakeForwardPower);
+    }else if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
+      m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
     }
   }
 

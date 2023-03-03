@@ -24,6 +24,7 @@ public class SUB_Intake extends SubsystemBase {
     m_intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorCanID, MotorType.kBrushless);
     m_intakeMotorPIDController = m_intakeMotor.getPIDController();
     m_sensor = new DigitalInput(1);
+    m_intakeMotor.restoreFactoryDefaults();
     m_intakeMotor.setIdleMode(IdleMode.kBrake);
     m_cubeDetected = false;
     m_intakeMotor.burnFlash();

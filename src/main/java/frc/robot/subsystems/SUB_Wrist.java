@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -21,7 +22,8 @@ public class SUB_Wrist extends SubsystemBase {
 
     private final CANSparkMax m_wristMotor;
     private final SparkMaxPIDController m_wristMotorPIDController;
-    private final AbsoluteEncoder m_wristEncoder;
+    private final AbsoluteEncoder m_wristAbsoluteEncoder;
+    private final RelativeEncoder m_wristEncoder;
     double m_wantedPosition;
     double m_tolerance = 6;
 
@@ -35,11 +37,21 @@ public class SUB_Wrist extends SubsystemBase {
     public SUB_Wrist() {
       m_wristMotor = new CANSparkMax(WristConstants.kWristMotorCanID, MotorType.kBrushless);
       m_wristMotorPIDController = m_wristMotor.getPIDController();
-      m_wristEncoder = m_wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
+      m_wristMotor.restoreFactoryDefaults();
+      m_wristAbsoluteEncoder = m_wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
+      m_wristEncoder = m_wristMotor.getEncoder();
+
       m_wristMotor.setInverted(false);
-      m_wristEncoder.setPositionConversionFactor(360);
-      m_wristEncoder.setVelocityConversionFactor(6);
-      m_wristEncoder.setInverted(false);
+      m_wristAbsoluteEncoder.setPositionConversionFactor(360);
+      m_wristAbsoluteEncoder.setVelocityConversionFactor(6);
+      m_wristAbsoluteEncoder.setInverted(false);
+
+      m_wristEncoder.setPositionConversionFactor(2.43);
+      m_wristEncoder.setVelocityConversionFactor(.04);
+      m_wristEncoder.setPosition(m_wristAbsoluteEncoder.getPosition());
+
+      m_wristMotor.setSmartCurrentLimit(30);
+
       // m_wristMotor.setSoftLimit(null, 80);
       m_wristMotorPIDController.setP(WristConstants.kWristP,1);
       m_wristMotorPIDController.setI(WristConstants.kWristI,1);
@@ -81,6 +93,10 @@ public class SUB_Wrist extends SubsystemBase {
     }
 
     public double getWristPosition(){
+      return m_wristEncoder.getPosition();
+    }
+
+    public double getWristAbsolutePosition(){
       return m_wristEncoder.getPosition();
     }
 
@@ -126,6 +142,7 @@ public class SUB_Wrist extends SubsystemBase {
     // double m_velocity = 0;
     public void telemetry(){
       SmartDashboard.putNumber("wrist position", m_wristEncoder.getPosition());
+      SmartDashboard.putNumber("Wrist absolute position", m_wristAbsoluteEncoder.getPosition());
       // m_P = SmartDashboard.getNumber("P", m_P);
       // m_I = SmartDashboard.getNumber("I", m_I);
       // m_D = SmartDashboard.getNumber("D", m_D);

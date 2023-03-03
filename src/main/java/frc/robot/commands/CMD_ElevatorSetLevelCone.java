@@ -12,12 +12,12 @@ import frc.robot.Constants.GlobalConstants;
 import frc.robot.subsystems.SUB_Elevator;
 
 /*This is for setting the elevator to the respective scoring level */
-public class CMD_ElevatorSetLevel extends CommandBase {
+public class CMD_ElevatorSetLevelCone extends CommandBase {
   /** Creates a new CMD_ElevatorSetLevel. */
   SUB_Elevator m_elevator;
   GlobalVariables m_variables;
   double m_wantedPosition;
-  public CMD_ElevatorSetLevel(SUB_Elevator p_elevator, GlobalVariables p_variables) {
+  public CMD_ElevatorSetLevelCone(SUB_Elevator p_elevator, GlobalVariables p_variables) {
     m_elevator = p_elevator;
     m_variables = p_variables;
     // Use addRequirements() here to declare subsystem dependencies.

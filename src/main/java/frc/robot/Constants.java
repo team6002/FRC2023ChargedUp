@@ -162,7 +162,7 @@ public final class Constants {
 
   public static final class ElevatorConstants{
     public static final int kElevatorMotorCanID = 17;
-    public static final double kElevatorP = 0.5;
+    public static final double kElevatorP = 0.65;
     public static final double kElevatorI = 0;
     public static final double kElevatorD = 0.;
     public static final double kElevatorF = 0.0;
@@ -172,11 +172,11 @@ public final class Constants {
     public static final double kElevatorShelfCone = 33.5;
     public static final double kElevatorShelfCube = 33.5;
     public static final double kElevatorFirstConeLevel = 21;// for placeing forwards
-    public static final double kElevatorSecondConeLevel = 26;  
-    public static final double kElevatorThirdConeLevel = 43;
+    public static final double kElevatorSecondConeLevel = 24;  
+    public static final double kElevatorThirdConeLevel = 41;
     public static final double kElevatorFirstCubeLevel = 21;// for placeing forwards
-    public static final double kElevatorSecondCubeLevel = 26;  
-    public static final double kElevatorThirdCubeLevel = 43;
+    public static final double kElevatorSecondCubeLevel = 19;  
+    public static final double kElevatorThirdCubeLevel = 28;
     public static final double kElevatorHome = 0;
     public static final double kElevatorStow = 0;
     public static final double kElevatorGround = 0;
@@ -219,7 +219,8 @@ public final class Constants {
     public static final double kElbowShelf = 250;// stright forwards
     public static final double kElbowPrepareDrop = 250;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 100;// straight back
-    public static final double kElbowShelfBack = 90;
+    public static final double kElbowShootCube = 210;//for shooting cubes
+    public static final double kElbowShelfBack = 95;
     public static final double kElbowShelfBackPrep = 72;
     public static final double kElbowTolerance = 1;
   }
@@ -228,7 +229,7 @@ public final class Constants {
 
   public static final class WristConstants{
     public static final int kWristMotorCanID = 10;
-    public static final double kWristP = 0.011;
+    public static final double kWristP = 0.008;
     public static final double kWristI = 0;
     public static final double kWristD = 0.0;
     public static final double kWristF = 0.0;
@@ -239,9 +240,9 @@ public final class Constants {
     public static final double kWristShelf = 270;//front
     
     public static final double kWristTolerance = 5;
-  
-    public static final double kWristMaxVelocity = 800;
-    public static final double kWristMaxAcceleration = 800;
+   
+    public static final double kWristMaxVelocity = 500;
+    public static final double kWristMaxAcceleration = 500;
     public static final double kWristTestVelocity = 1;
     public static final double kWristTestAcceleration = 1;
   }

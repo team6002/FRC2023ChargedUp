@@ -45,7 +45,7 @@ public class CMD_PlaceForwardsCone extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
       new ParallelCommandGroup(
-        new CMD_ElevatorSetLevel(p_elevator, p_variables),
+        new CMD_ElevatorSetLevelCone(p_elevator, p_variables),
         new SequentialCommandGroup(
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
           new WaitCommand(.2),

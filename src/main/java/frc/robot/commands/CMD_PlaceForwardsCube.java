@@ -45,20 +45,17 @@ public class CMD_PlaceForwardsCube extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
       new ParallelCommandGroup(
-        new CMD_ElevatorSetLevel(p_elevator, p_variables),
+        new CMD_ElevatorSetLevelCube(p_elevator, p_variables),
         new SequentialCommandGroup(
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted),
           new WaitCommand(.2),
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelf)
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShootCube)
         ),
         new SequentialCommandGroup(
           new CMD_CheckWristSafe(p_elbow, p_elevator),
           new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
         )
       )
-      // new CMD_IntakeDrop(m_intake, m_variables)
-      // new WaitCommand(.5),
-      // new CMD_Stow(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine)
     );
   }
 }

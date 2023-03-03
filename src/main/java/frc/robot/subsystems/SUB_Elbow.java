@@ -36,13 +36,14 @@ public class SUB_Elbow extends SubsystemBase {
     public SUB_Elbow() {
         m_elbowMotor = new CANSparkMax(ElbowConstants.kElbowMotorCanID, MotorType.kBrushless);
         m_elbowMotorPIDController = m_elbowMotor.getPIDController();
-
+        m_elbowMotor.restoreFactoryDefaults();
         m_elbowAbsoluteEncoder = m_elbowMotor.getAbsoluteEncoder(Type.kDutyCycle);
+        m_elbowEncoder = m_elbowMotor.getEncoder();
+        
         m_elbowAbsoluteEncoder.setPositionConversionFactor(360);
         m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
         m_elbowAbsoluteEncoder.setInverted(true);
         
-        m_elbowEncoder = m_elbowMotor.getEncoder();
         m_elbowEncoder.setPositionConversionFactor(5.128);
         m_elbowEncoder.setVelocityConversionFactor(5.128/60);
         m_elbowEncoder.setPosition(getAbsolutePosition());
@@ -54,6 +55,7 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowMotorPIDController.setFeedbackDevice(m_elbowEncoder);
 
         m_elbowMotor.setIdleMode(IdleMode.kCoast);
+        m_elbowMotor.setSmartCurrentLimit(30);
 
         m_elbowMotorPIDController.setPositionPIDWrappingEnabled(false);
         m_elbowMotorPIDController.setOutputRange(ElbowConstants.kElbowMinOutput, ElbowConstants.kElbowMaxOutput, 1);
