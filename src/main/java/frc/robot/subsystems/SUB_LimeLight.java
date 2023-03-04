@@ -4,30 +4,27 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 
-import frc.robot.Constants.LimeLightConstants;
+// import frc.robot.Constants.LimeLightConstants;
 
 public class SUB_LimeLight extends SubsystemBase {
-  SUB_Blinkin m_blinkin;
-  double[] target1 = LimeLightConstants.kTarget1Constants;
-  double[] target2 = LimeLightConstants.kTarget2Constants;
-  double[] target3 = LimeLightConstants.kTarget3Constants;
-  double[] target4 = LimeLightConstants.kTarget4Constants;
-  double[] target5 = LimeLightConstants.kTarget5Constants;
-  double[] target6 = LimeLightConstants.kTarget6Constants;
-  double[] target7 = LimeLightConstants.kTarget7Constants;
-  double[] target8 = LimeLightConstants.kTarget8Constants;
+  // // SUB_Blinkin m_blinkin;
+  // double[] target1 = LimeLightConstants.kTarget1Constants;
+  // double[] target2 = LimeLightConstants.kTarget2Constants;
+  // double[] target3 = LimeLightConstants.kTarget3Constants;
+  // double[] target4 = LimeLightConstants.kTarget4Constants;
+  // double[] target5 = LimeLightConstants.kTarget5Constants;
+  // double[] target6 = LimeLightConstants.kTarget6Constants;
+  // double[] target7 = LimeLightConstants.kTarget7Constants;
+  // double[] target8 = LimeLightConstants.kTarget8Constants;
   SUB_FiniteStateMachine m_finiteStateMachine;
-  public SUB_LimeLight(SUB_Blinkin p_blinkin, SUB_FiniteStateMachine p_finiteStateMachine) {
-    m_blinkin = p_blinkin;
-    m_finiteStateMachine = p_finiteStateMachine;
+  public SUB_LimeLight() {
   }
   private double[] dv = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
   public double[] botpose;
@@ -45,16 +42,7 @@ public class SUB_LimeLight extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // botpose =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose").getDoubleArray(dv);
-    botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("targetpose_robotspace").getDoubleArray(dv);
-    // if(m_finiteStateMachine.getState() == RobotState.SCORING){  
-    //   if(hasTarget()){
-    //     m_blinkin.setHasTarget();
-    //   }
-    //   else{
-    //     m_blinkin.setHasNoTarget();
-    //   }
-    // }
+    botpose =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(dv);
     telemetry();
   }
 
@@ -87,23 +75,15 @@ public class SUB_LimeLight extends SubsystemBase {
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
   }
 
-  public Pose2d getRobotPoseInTargetSpace() {
-    System.out.println("botpose[4]= " + botpose[4]);
-    System.out.println(Rotation2d.fromDegrees(botpose[4]));
-    // Pose2d pose = new Pose2d(botpose[2], -botpose[0], Rotation2d.fromDegrees(0));
-    Pose2d pose = new Pose2d(-botpose[2], botpose[0], Rotation2d.fromDegrees(-botpose[4]));
-
-    return pose;
-  }
-
+  
   public double getTargetX(){
-    // return Units.metersToInches(-botpose[2]);
-    return -botpose[2];
+    return Units.metersToInches(-botpose[2]);
+    // return -botpose[2];
   }
 
   public double getTargetY(){
-    // return Units.metersToInches(botpose[0]);
-    return botpose[0];
+    return Units.metersToInches(botpose[0]);
+    // return botpose[0];
   }
 
   public double getTargetZ(){
@@ -116,7 +96,7 @@ public class SUB_LimeLight extends SubsystemBase {
   }
 
   public double getTargetYaw(){
-    return -botpose[4];
+    return botpose[4];
   }
 
   public double getWantedX(){
