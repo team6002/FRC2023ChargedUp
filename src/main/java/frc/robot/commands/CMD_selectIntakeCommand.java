@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.GlobalConstants;
 
-public class CMD_selectIntakeMode extends CommandBase {
+public class CMD_selectIntakeCommand extends CommandBase {
   /** Creates a new CMD_selectIntakeMode. */
   GlobalVariables m_variables;
-  public CMD_selectIntakeMode(GlobalVariables p_variables) {
+  public CMD_selectIntakeCommand(GlobalVariables p_variables) {
     m_variables = p_variables;
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -19,8 +19,8 @@ public class CMD_selectIntakeMode extends CommandBase {
     if (m_variables.getIntakeState() == GlobalConstants.kConeMode ){
       if (m_variables.getPickMode() == GlobalConstants.kPickBackGroundMode) {
         m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackCone);
-      } else if (m_variables.getPickMode() == GlobalConstants.kPickForwardsGroundMode){
-        m_variables.setIntakeCommandKey(GlobalConstants.kGroundForwardsCone);
+      // } else if (m_variables.getPickMode() == GlobalConstants.kPickForwardsGroundMode){
+      //   m_variables.setIntakeCommandKey(GlobalConstants.kGroundForwardsCone);
       } else  if (m_variables.getPickMode() == GlobalConstants.kPickForwardsShelfMode){
         m_variables.setIntakeCommandKey(GlobalConstants.kShelfForwardsCone);
       } else if (m_variables.getPickMode() == GlobalConstants.kPickBackShelfMode){

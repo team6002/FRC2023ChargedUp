@@ -14,6 +14,7 @@ public class CMD_AdjustBalanceForwards extends CommandBase {
   /** Creates a new CMD_AdjustBalance. */
   SUB_Drivetrain m_drivetrain;
   Timer m_timer = new Timer();
+  double m_timeLimit;
   public CMD_AdjustBalanceForwards(SUB_Drivetrain p_drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = p_drivetrain;
@@ -25,15 +26,15 @@ public class CMD_AdjustBalanceForwards extends CommandBase {
   public void initialize() {
     m_timer.start();
     m_timer.reset();
+    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.077);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_drivetrain.getRoll() < 12){
       m_drivetrain.drive(0.17, 0, 0, true, false);
-    }else m_drivetrain.drive(0, 0, 0, false, false);
     //use the Navx if availbe
+
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +47,6 @@ public class CMD_AdjustBalanceForwards extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_drivetrain.getRoll()) < 12) && m_timer.get() < 2 ;
+    return (m_timer.get() > m_timeLimit);
   }
 }

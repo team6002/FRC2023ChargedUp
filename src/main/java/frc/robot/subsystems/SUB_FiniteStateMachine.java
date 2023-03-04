@@ -39,7 +39,7 @@ public class SUB_FiniteStateMachine extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putString("Robot state", getState().toString());
+        // SmartDashboard.putString("Robot state", getState().toString());
     }
 
 }

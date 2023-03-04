@@ -55,7 +55,7 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowMotorPIDController.setFeedbackDevice(m_elbowEncoder);
 
         m_elbowMotor.setIdleMode(IdleMode.kCoast);
-        m_elbowMotor.setSmartCurrentLimit(30);
+        m_elbowMotor.setSmartCurrentLimit(50);
 
         m_elbowMotorPIDController.setPositionPIDWrappingEnabled(false);
         m_elbowMotorPIDController.setOutputRange(ElbowConstants.kElbowMinOutput, ElbowConstants.kElbowMaxOutput, 1);
@@ -110,7 +110,7 @@ public class SUB_Elbow extends SubsystemBase {
 
     @Override
     public void periodic() {
-        telemetry();
+        // telemetry();
         var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
         
         m_setpoint = profile.calculate(deltaTime);

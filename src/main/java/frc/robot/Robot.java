@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import frc.robot.commands.CMD_setAutoKey;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_robotContainer.SubsystemsInit();
+    SmartDashboard.putNumber("AUTOKEY", 0);
     m_Chooser.setDefaultOption("ChargeStation", m_auto1);
     m_Chooser.addOption("CubeRun", m_auto2);
     SmartDashboard.putData("AUTO", m_Chooser);
@@ -65,9 +67,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_robotContainer.setAutoKey((int) SmartDashboard.getNumber("AUTOKEY", 0));
+    System.out.println((int)SmartDashboard.getNumber("AUTOKEY", 0));
     m_robotContainer.SubsystemsInit();
     m_robotContainer.zeroHeading();
-    m_autonomousCommand = m_Chooser.getSelected();
+    m_autonomousCommand = m_robotContainer.getAutonomusCommand;
+    //m_Chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

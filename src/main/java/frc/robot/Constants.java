@@ -125,8 +125,8 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 4;
-    public static final double kChargeStationSpeed = 1.1;
-    public static final double kChargeStationAcceleration = 1.1;
+    public static final double kChargeStationSpeed = 1.12;
+    public static final double kChargeStationAcceleration = 1.12;
 
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -138,6 +138,10 @@ public final class Constants {
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+  
+    public static final int kBalanceStationKey = 0;
+    public static final int kCubeRunKey = 1;
+
   }
 
   public static final class NeoMotorConstants {
@@ -149,11 +153,11 @@ public final class Constants {
     //intake powers
     public static final double kIntakeForwardPower = .7;
     public static final double kIntakeHoldPower = .07;
-    public static final double kIntakeDropCone = -0.7;
+    public static final double kIntakeDropCone = -0.6;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
     public static final double kIntakeShoot = 1;
     //intake currents
-    public static final double kIntakeCurrent = 35;
+    public static final double kIntakeCurrent = 40;
     public static final double kHoldCurrent = 5;
 
     public static final double kIntakeConeDetectedCurrent = 30;
@@ -171,11 +175,11 @@ public final class Constants {
     public static final double kElevatorMax = 48;
     public static final double kElevatorShelfCone = 33.5;
     public static final double kElevatorShelfCube = 33.5;
-    public static final double kElevatorFirstConeLevel = 21;// for placeing forwards
-    public static final double kElevatorSecondConeLevel = 24;  
-    public static final double kElevatorThirdConeLevel = 41;
-    public static final double kElevatorFirstCubeLevel = 21;// for placeing forwards
-    public static final double kElevatorSecondCubeLevel = 19;  
+    public static final double kElevatorFirstConeLevel = 0;// for placeing forwards
+    public static final double kElevatorSecondConeLevel = 21;  
+    public static final double kElevatorThirdConeLevel = 40;
+    public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
+    public static final double kElevatorSecondCubeLevel = 10;  
     public static final double kElevatorThirdCubeLevel = 28;
     public static final double kElevatorHome = 0;
     public static final double kElevatorStow = 0;
@@ -213,12 +217,12 @@ public final class Constants {
     public static final double kElbowSaftey = 190;//maximum safe value for rotating wrist
     public static final double kElbowLift = 190;// use to get elbow off elevator, it don't like 200 for some reason
     public static final double kElbowLifted = 200;// when the elbow is not resting on elevator
-    public static final double kElbowPlaceBack = 110; // for placing on ground
+    public static final double kElbowPlaceBack = 105; // for placing on ground
     public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
     public static final double kElbowShelf = 250;// stright forwards
-    public static final double kElbowPrepareDrop = 250;// Not quite all the way forwards, allows cones to clear the pole
-    public static final double kElbowBackwards = 100;// straight back
+    public static final double kElbowPrepareDrop = 249;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowBackwards = 110;// straight back
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;
     public static final double kElbowShelfBackPrep = 72;
@@ -229,7 +233,7 @@ public final class Constants {
 
   public static final class WristConstants{
     public static final int kWristMotorCanID = 10;
-    public static final double kWristP = 0.008;
+    public static final double kWristP = 0.009;
     public static final double kWristI = 0;
     public static final double kWristD = 0.0;
     public static final double kWristF = 0.0;
@@ -250,9 +254,9 @@ public final class Constants {
   public static final class GlobalConstants{
     public static final int kUnknownPickMode = -1;
     public static final int kPickBackGroundMode = 0;
-    public static final int kPickForwardsGroundMode = 1;
-    public static final int kPickForwardsShelfMode = 2;
-    public static final int kPickBackShelfMode = 3;
+    // public static final int kPickForwardsGroundMode = 1;
+    public static final int kPickForwardsShelfMode = 1;
+    public static final int kPickBackShelfMode = 2;
     
     public static final int kStowGroundMode = 0;
     public static final int kStowShelfMode = 1;
@@ -272,6 +276,18 @@ public final class Constants {
     public static final int kShelfForwardsCone = 4;
     public static final int kShelfBackCone = 5;
     public static final int kShelfBackCube = 6;
+
+    public static final int kUnknownExtendKey = -1;
+    public static final int k1stLevelBackCone = 0;
+    public static final int k1stLevelBackCube = 1;
+    public static final int k1stLevelForwardCone = 2;
+    public static final int k1stLevelForwardCube = 3;
+    public static final int k2ndLevelCone = 4;
+    public static final int k2ndLevelCube = 5;
+    public static final int k3rdLevelCone = 6;
+    public static final int k3rdLevelCube = 7;
+
+
 
     public static final int kIntakeStage = 0;
     public static final int kExtendStage = 1;

@@ -43,7 +43,7 @@ public class SUB_Elevator extends SubsystemBase {
       // m_elevatorMotorPIDController.setFF(ElevatorConstants.kElevatorF,1);
       m_elevatorMotorPIDController.setFeedbackDevice(m_elevatorEncoder);
       m_elevatorMotor.setIdleMode(IdleMode.kCoast);
-      m_elevatorMotor.setSmartCurrentLimit(30);
+      m_elevatorMotor.setSmartCurrentLimit(50);
       m_elevatorMotorPIDController.setPositionPIDWrappingEnabled(false);
       m_elevatorMotorPIDController.setOutputRange(-1, 1, 1);
       m_elevatorMotorPIDController.setSmartMotionMaxVelocity(50, 1);
@@ -91,7 +91,7 @@ public class SUB_Elevator extends SubsystemBase {
   @Override
   public void periodic() {
       // updates elevator telemetry
-      telemetry(); 
+      // telemetry(); 
       if (m_elevatorOn){
         var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
         m_setpoint = profile.calculate(deltaTime);

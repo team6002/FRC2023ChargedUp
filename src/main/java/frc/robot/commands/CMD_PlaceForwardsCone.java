@@ -47,9 +47,9 @@ public class CMD_PlaceForwardsCone extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new CMD_ElevatorSetLevelCone(p_elevator, p_variables),
         new SequentialCommandGroup(
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
+          // new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted), 
           new WaitCommand(.2),
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelf)
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)
         ),
         new SequentialCommandGroup(
           new CMD_CheckWristSafe(p_elbow, p_elevator),

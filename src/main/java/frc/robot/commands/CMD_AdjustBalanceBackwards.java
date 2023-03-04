@@ -26,7 +26,7 @@ public class CMD_AdjustBalanceBackwards extends CommandBase {
   public void initialize() {
     m_timer.start();
     m_timer.reset();
-    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.07);
+    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.077);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

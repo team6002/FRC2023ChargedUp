@@ -7,20 +7,20 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.GlobalVariables;
 
-public class CMD_TogglePickMode extends CommandBase {
-  /** Creates a new CMD_ToggleIntakeLocation. */
+public class CMD_setIntakeMode extends CommandBase {
   GlobalVariables m_variables;
-  public CMD_TogglePickMode(GlobalVariables p_variables) {
+  boolean m_intakeMode;
+  /** Creates a new CMD_PickUpMode. */
+  public CMD_setIntakeMode(GlobalVariables p_variables, boolean p_intakeMode) {
     m_variables = p_variables;
+    m_intakeMode = p_intakeMode;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (m_variables.getPickMode() >= 2){
-      m_variables.setPickMode(0);
-    }else m_variables.setPickMode(m_variables.getPickMode()+1);
+    m_variables.setIntakeState(m_intakeMode);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

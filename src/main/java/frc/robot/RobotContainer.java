@@ -7,18 +7,12 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.auto.AUTO_BalanceStation;
-import frc.robot.auto.AUTO_DriveOverChargingStation;
-import frc.robot.auto.AUTO_Trajectories;
+import frc.robot.auto.*;
 import frc.robot.commands.*;
-import frc.robot.subsystems.SUB_Drivetrain;
-import frc.robot.subsystems.SUB_Elbow;
-import frc.robot.subsystems.SUB_Elevator;
-import frc.robot.subsystems.SUB_FiniteStateMachine;
-import frc.robot.subsystems.SUB_Intake;
-import frc.robot.subsystems.SUB_Wrist;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -77,13 +71,13 @@ public class RobotContainer {
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
-        new CMD_selectIntakeMode(m_variables),
+        new CMD_selectIntakeCommand(m_variables),
         PrepIntakeCommand
       )
     );
     m_driverController.pov(0).onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
+    // m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
 
@@ -92,14 +86,17 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables);
-  }
+  // public Command getAutonomousCommand() {
+  //   return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables, m_driverController);
+  // }
 
   public void zeroHeading(){
     m_drivetrain.zeroHeading();
   }
 
+  public void setAutoKey(int p_key){
+    m_variables.setAutoKey(p_key);
+  }
   public void SubsystemsInit(){
     m_elbow.elbowInit();
     m_elevator.elevatorInit();
@@ -118,6 +115,25 @@ public class RobotContainer {
     return m_variables.getIntakeState();
   }
   
+  private int getAutonomousCommandKey(){
+    return m_variables.getAutoKey();
+  }
+
+  private int getExtendKey(){
+    return m_variables.getExtendKey();
+  }
+  public final Command getAutonomusCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      // Map.entry(AutoConstants.kBalanceStationKey, new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables, m_driverController)),
+      // Map.entry(AutoConstants.kCubeRunKey, new AUTO_CubeRun(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController))
+    
+      Map.entry(AutoConstants.kBalanceStationKey, new PrintCommand("1")),
+      Map.entry(AutoConstants.kCubeRunKey, new PrintCommand("2"))
+    ), 
+    this::getAutonomousCommandKey
+  );
+
   public final Command PrepIntakeCommand  = 
   new SelectCommand(
     Map.ofEntries(
@@ -181,12 +197,16 @@ public class RobotContainer {
   public final Command ExtendCommand  = 
   new SelectCommand(
     Map.ofEntries(
-      Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-      Map.entry(GlobalConstants.kConeMode, new CMD_PlaceForwardsCone(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kCubeMode, new CMD_PlaceForwardsCube(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables))
+      Map.entry(GlobalConstants.kUnknownExtendKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
+      Map.entry(GlobalConstants.k1stLevelForwardCone, new CMD_PlaceForwardsGroundCone(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.k1stLevelForwardCube, new CMD_PlaceForwardsGroundCube(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.k2ndLevelCone, new CMD_PlaceForwardsCone(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.k2ndLevelCube, new CMD_PlaceSecondLevelCube(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.k3rdLevelCone, new CMD_PlaceForwardsCone(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.k3rdLevelCube, new CMD_PlaceForwardsCube(m_elevator, m_intake, m_elbow, m_wrist, m_finiteStateMachine, m_variables))
     )
-    ,this::getIntakeState
-  );
+    ,this::getExtendKey
+    );
   
 
   public final Command CycleCommand = 
@@ -202,6 +222,7 @@ public class RobotContainer {
     ),
       Map.entry(GlobalConstants.kExtendStage,
         new SequentialCommandGroup(
+          new CMD_SelectExtendCommand(m_variables),
           ExtendCommand,
           new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
         )
@@ -209,7 +230,7 @@ public class RobotContainer {
       Map.entry(GlobalConstants.kDropStage, 
         new SequentialCommandGroup(
           new CMD_IntakeDrop(m_intake, m_variables),
-          new WaitCommand(.5),
+          new WaitCommand(.3),
           StowIntakeCommand,
           new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage)
         )

@@ -51,7 +51,7 @@ public class SUB_Intake extends SubsystemBase {
   public void Off(){}
 
   public void setIntakeCurrent(){
-    m_intakeMotor.setSmartCurrentLimit(35);
+    m_intakeMotor.setSmartCurrentLimit(50);
   }
 
   public void setHoldCurrent(){
