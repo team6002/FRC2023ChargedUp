@@ -67,8 +67,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_robotContainer.SubsystemsInit();
     m_robotContainer.zeroHeading();
-    m_autonomousCommand = m_Chooser.getSelected();
-
+    // m_autonomousCommand = m_Chooser.getSelected();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

@@ -83,7 +83,7 @@ public class RobotContainer {
     );
     m_driverController.pov(0).onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
+    // m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
 

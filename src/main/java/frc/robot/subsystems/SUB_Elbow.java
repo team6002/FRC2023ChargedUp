@@ -55,7 +55,7 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowMotorPIDController.setFeedbackDevice(m_elbowEncoder);
 
         m_elbowMotor.setIdleMode(IdleMode.kCoast);
-        m_elbowMotor.setSmartCurrentLimit(30);
+        m_elbowMotor.setSmartCurrentLimit(50);
 
         m_elbowMotorPIDController.setPositionPIDWrappingEnabled(false);
         m_elbowMotorPIDController.setOutputRange(ElbowConstants.kElbowMinOutput, ElbowConstants.kElbowMaxOutput, 1);

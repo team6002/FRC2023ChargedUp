@@ -35,8 +35,10 @@ public class CMD_PrepIntakeGroundBack extends SequentialCommandGroup {
       new ParallelDeadlineGroup(
         new CMD_CheckWristPosition(p_wrist, WristConstants.kWristGround),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
+        new SequentialCommandGroup(
         new CMD_CheckWristSafe(p_elbow, p_elevator),
         new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround)
+        )
         )
       ),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStowBackwards)

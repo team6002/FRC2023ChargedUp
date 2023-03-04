@@ -9,7 +9,6 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import frc.robot.Constants.WristConstants;
@@ -46,11 +45,11 @@ public class SUB_Wrist extends SubsystemBase {
       m_wristAbsoluteEncoder.setVelocityConversionFactor(6);
       m_wristAbsoluteEncoder.setInverted(false);
 
-      m_wristEncoder.setPositionConversionFactor(2.43);
+      m_wristEncoder.setPositionConversionFactor(2.34);
       m_wristEncoder.setVelocityConversionFactor(.04);
       m_wristEncoder.setPosition(m_wristAbsoluteEncoder.getPosition());
 
-      m_wristMotor.setSmartCurrentLimit(30);
+      m_wristMotor.setSmartCurrentLimit(20);
 
       // m_wristMotor.setSoftLimit(null, 80);
       m_wristMotorPIDController.setP(WristConstants.kWristP,1);

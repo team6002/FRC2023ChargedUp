@@ -229,7 +229,7 @@ public final class Constants {
 
   public static final class WristConstants{
     public static final int kWristMotorCanID = 10;
-    public static final double kWristP = 0.008;
+    public static final double kWristP = 0.009;
     public static final double kWristI = 0;
     public static final double kWristD = 0.0;
     public static final double kWristF = 0.0;
