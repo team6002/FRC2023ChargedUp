@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -229,8 +231,33 @@ public final class Constants {
     public static final double kElbowTolerance = 1;
   }
   
-  
+  public static final class LimeLightConstants{
+    public static final double[] kTarget1Constants = {1, 1, 0};
+    public static final double[] kTarget2Constants = {2, 2, 0};
+    public static final double[] kTarget3Constants = {3, 3, 0};
+    public static final double[] kTarget4Constants = {4, 4, 0};
+    public static final double[] kTarget5Constants = {5, 5, 180};
+    public static final double[] kTarget6Constants = {6, 6, 180};
+    public static final double[] kTarget7Constants = {7, 7, 180};
+    public static final double[] kTarget8Constants = {8, 8, 180};
+  }
 
+  public static final class AutoAlignConstants{
+    /* X and Y drive constraints (in meters/s) */
+    public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(4, 4);
+    public static final double driveKp = 0.6;
+    public static final double driveKi = 0.;
+    public static final double driveKd = 0.;
+
+    /* Turn constraints (in rads/s) */
+    public static final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(Math.PI / 4., Math.PI / 4.);
+    public static final double turnKp = 0.035;
+    public static final double turnKi = 0.;
+    public static final double turnKd = 0.;
+
+    public static final Pose2d goalPose = new Pose2d(-0.8, 0., new Rotation2d());
+  }
+  
   public static final class WristConstants{
     public static final int kWristMotorCanID = 10;
     public static final double kWristP = 0.009;
