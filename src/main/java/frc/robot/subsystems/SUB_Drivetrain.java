@@ -145,11 +145,11 @@ public class SUB_Drivetrain extends SubsystemBase {
       double currentTime = WPIUtilJNI.now() * 1e-6;
       double elapsedTime = currentTime - m_prevTime;
       double angleDif = SwerveUtils.AngleDifference(inputTranslationDir, m_currentTranslationDir);
-      if (angleDif < 0.45* Math.PI) {
+      if (angleDif < 0.45*Math.PI) {
         m_currentTranslationDir = SwerveUtils.StepTowardsCircular(m_currentTranslationDir, inputTranslationDir, directionSlewRate * elapsedTime);
         m_currentTranslationMag = m_magLimiter.calculate(inputTranslationMag);
       }
-      else if (angleDif > 0.85* Math.PI) {
+      else if (angleDif > 0.85*Math.PI) {
         if (m_currentTranslationMag > 1e-4) { //some small number to avoid floating-point errors with equality checking
           // keep currentTranslationDir unchanged
           m_currentTranslationMag = m_magLimiter.calculate(0.0);

@@ -11,7 +11,7 @@ public class CMD_SpinInPlace extends CommandBase {
   /** Creates a new CMD_SpinInPlace. */
   SUB_Drivetrain m_drivetrain;
   double m_angle;
-  double m_tolerance = 10;
+  double m_tolerance = 7;
   public CMD_SpinInPlace(SUB_Drivetrain p_drivetrain, double p_angle) {
     m_drivetrain = p_drivetrain;
     m_angle = p_angle;

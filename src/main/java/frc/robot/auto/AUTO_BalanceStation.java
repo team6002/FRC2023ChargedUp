@@ -31,14 +31,15 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
-      // new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
+      new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
       new WaitCommand(0.5),
       new ParallelCommandGroup(
-        // new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
+        new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain)
       ),
       new CMD_SpinInPlace(p_drivetrain, 180),
       new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain),
+      //do a until hit angle and then run the set distance
       new WaitCommand(1),
       new CMD_AdjustBalanceBackwards(p_drivetrain)
       // new WaitCommand(1),
