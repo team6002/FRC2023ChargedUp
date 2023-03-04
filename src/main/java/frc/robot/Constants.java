@@ -228,28 +228,29 @@ public final class Constants {
   }
   
   public static final class LimeLightConstants{
-    public static final double[] kTarget1Constants = {1, 1, 0};
-    public static final double[] kTarget2Constants = {2, 2, 0};
-    public static final double[] kTarget3Constants = {3, 3, 0};
-    public static final double[] kTarget4Constants = {4, 4, 0};
-    public static final double[] kTarget5Constants = {5, 5, 180};
-    public static final double[] kTarget6Constants = {6, 6, 180};
-    public static final double[] kTarget7Constants = {7, 7, 180};
-    public static final double[] kTarget8Constants = {8, 8, 180};
+    // x, y, angle, in meters and degrees
+    public static final double[] kTarget1Constants = {15.5135, 1.0716, 180};
+    public static final double[] kTarget2Constants = {15.5135, 2.748, 180};
+    public static final double[] kTarget3Constants = {15.5135, 4.4244, 180};
+    public static final double[] kTarget4Constants = {16.1787, 6.75, 180};
+    public static final double[] kTarget5Constants = {0.362, 6.75, 0};
+    public static final double[] kTarget6Constants = {1.02743, 4.4244, 0};
+    public static final double[] kTarget7Constants = {1.02743, 2.748, 0};
+    public static final double[] kTarget8Constants = {1.02743, 1.0716, 0};
   }
 
   public static final class AutoAlignConstants{
     /* X and Y drive constraints (in meters/s) */
     public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(4, 4);
     public static final double driveKp = 0.6;
-    public static final double driveKi = 0.;
-    public static final double driveKd = 0.;
+    public static final double driveKi = 0.0;
+    public static final double driveKd = 0.0;
 
     /* Turn constraints (in rads/s) */
     public static final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(Math.PI / 4., Math.PI / 4.);
     public static final double turnKp = 0.035;
-    public static final double turnKi = 0.;
-    public static final double turnKd = 0.;
+    public static final double turnKi = 0.0;
+    public static final double turnKd = 0.0;
 
     public static final Pose2d goalPose = new Pose2d(-0.8, 0., new Rotation2d());
   }
