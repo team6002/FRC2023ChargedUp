@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.GlobalVariables;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.SUB_Drivetrain;
