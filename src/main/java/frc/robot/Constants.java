@@ -121,6 +121,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
     public static final double kDriveDeadband = 0.15;
   }
 
@@ -252,7 +253,15 @@ public final class Constants {
     public static final double turnKi = 0.0;
     public static final double turnKd = 0.0;
 
-    public static final Pose2d goalPose = new Pose2d(-0.8, 0., new Rotation2d());
+    public static enum AlignPositon{
+      LEFT, 
+      MIDDLE,
+      RIGHT
+    }
+
+    public static final Pose2d leftGoalPose = new Pose2d(-0.75, 0.56, new Rotation2d());
+    public static final Pose2d midGoalPose = new Pose2d(-0.75, 0.0, new Rotation2d());
+    public static final Pose2d rightGoalPose = new Pose2d(-0.75, -0.56, new Rotation2d());
   }
   
   public static final class WristConstants{

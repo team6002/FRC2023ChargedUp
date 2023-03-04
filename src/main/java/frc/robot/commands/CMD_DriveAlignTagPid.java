@@ -9,6 +9,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Constants.AutoAlignConstants.AlignPositon;
 import frc.robot.subsystems.SUB_Drivetrain;
 import frc.robot.subsystems.SUB_LimeLight;
 
@@ -22,11 +23,14 @@ public class CMD_DriveAlignTagPid extends CommandBase {
 
   private boolean end;
 
+  private AlignPositon m_wantedAlignPositon;
+
   private double xSpeed, ySpeed, turnSpeed;
 
-  public CMD_DriveAlignTagPid(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight) {
+  public CMD_DriveAlignTagPid(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, AlignPositon p_alignPosition) {
     m_drivetrain = p_drivetrain;
     m_limeLight = p_limeLight;
+    m_wantedAlignPositon = p_alignPosition;
 
     xController = new ProfiledPIDController(Constants.AutoAlignConstants.driveKp,
       Constants.AutoAlignConstants.driveKi,
@@ -57,10 +61,22 @@ public class CMD_DriveAlignTagPid extends CommandBase {
     }
 
     // m_drivetrain.resetOdometryPose2d(m_limeLight.getRobotPoseInTargetSpace());
-
-    xController.setGoal(Constants.AutoAlignConstants.goalPose.getX());
-    yController.setGoal(Constants.AutoAlignConstants.goalPose.getY());
-    turnController.setGoal(m_drivetrain.getAngle() - m_limeLight.getTargetYaw() + Constants.AutoAlignConstants.goalPose.getRotation().getDegrees());
+    if(m_wantedAlignPositon == AlignPositon.LEFT){
+      xController.setGoal(Constants.AutoAlignConstants.leftGoalPose.getX());
+      yController.setGoal(Constants.AutoAlignConstants.leftGoalPose.getY());
+      turnController.setGoal(m_drivetrain.getAngle() - m_limeLight.getTargetYaw() + Constants.AutoAlignConstants.leftGoalPose.getRotation().getDegrees());
+    }else if(m_wantedAlignPositon == AlignPositon.MIDDLE){
+      xController.setGoal(Constants.AutoAlignConstants.midGoalPose.getX());
+      yController.setGoal(Constants.AutoAlignConstants.midGoalPose.getY());
+      turnController.setGoal(m_drivetrain.getAngle() - m_limeLight.getTargetYaw() + Constants.AutoAlignConstants.midGoalPose.getRotation().getDegrees());
+    }else if (m_wantedAlignPositon == AlignPositon.RIGHT){
+      xController.setGoal(Constants.AutoAlignConstants.rightGoalPose.getX());
+      yController.setGoal(Constants.AutoAlignConstants.rightGoalPose.getY());
+      turnController.setGoal(m_drivetrain.getAngle() - m_limeLight.getTargetYaw() + Constants.AutoAlignConstants.rightGoalPose.getRotation().getDegrees());
+    }else{
+      end = true;
+      //If an invalid Align Position is given, end command immediately
+    }
 
     xController.setTolerance(.05);
     yController.setTolerance(.05);
@@ -110,7 +126,7 @@ public class CMD_DriveAlignTagPid extends CommandBase {
     SmartDashboard.putNumber("AutoAlignTurnSpeed: ", turnSpeed);
     SmartDashboard.putNumber("AutoAlignTurnGoal", turnController.getGoal().position);
 
-    m_drivetrain.drive(xSpeed, ySpeed, -turnSpeed, false, false);
+    m_drivetrain.drive(xSpeed, ySpeed, turnSpeed, false, false);
   }
 
   @Override

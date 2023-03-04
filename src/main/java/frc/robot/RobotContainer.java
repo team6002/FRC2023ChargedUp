@@ -6,15 +6,11 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.AutoAlignConstants.AlignPositon;
 import frc.robot.auto.AUTO_BalanceStation;
 import frc.robot.auto.AUTO_Trajectories;
 import frc.robot.commands.*;
-import frc.robot.subsystems.SUB_Drivetrain;
-import frc.robot.subsystems.SUB_Elbow;
-import frc.robot.subsystems.SUB_Elevator;
-import frc.robot.subsystems.SUB_FiniteStateMachine;
-import frc.robot.subsystems.SUB_Intake;
-import frc.robot.subsystems.SUB_Wrist;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
@@ -33,16 +29,19 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems
   private final SUB_Drivetrain m_drivetrain = new SUB_Drivetrain();
-  private final AUTO_Trajectories m_trajectories = new AUTO_Trajectories(m_drivetrain);
   private final SUB_Elevator m_elevator = new SUB_Elevator();
   private final SUB_Elbow m_elbow = new SUB_Elbow();
   private final SUB_Wrist m_wrist = new SUB_Wrist();
   private final SUB_Intake m_intake = new SUB_Intake();
-  private final SUB_FiniteStateMachine m_finiteStateMachine = new SUB_FiniteStateMachine();
   private final GlobalVariables m_variables = new GlobalVariables();
-  
+  private final SUB_FiniteStateMachine m_finiteStateMachine = new SUB_FiniteStateMachine();
+  private final SUB_Blinkin m_blinkin = new SUB_Blinkin();
+  private final AUTO_Trajectories m_trajectories = new AUTO_Trajectories(m_drivetrain);
+  private final SUB_LimeLight m_limeLight = new SUB_LimeLight(m_blinkin, m_finiteStateMachine);
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  // The operator's controller
+  CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -79,6 +78,10 @@ public class RobotContainer {
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
     // m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
+
+    m_operatorController.povLeft().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limeLight, AlignPositon.LEFT));
+    m_operatorController.povUp().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limeLight, AlignPositon.MIDDLE));
+    m_operatorController.povRight().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limeLight, AlignPositon.RIGHT));
   }
 
   /**
