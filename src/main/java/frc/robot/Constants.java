@@ -325,5 +325,18 @@ public final class Constants {
     public static final int kDropStage = 2;
   }
 
+  public static final class BlinkinConstants {
+    public static final int kBlinkinPortId = 9; /* PWM input port on RoboRio */
 
+    /*
+     * The Blinkin module been setup with the following colors:
+     * Color 1: Yellow (Cone)
+     * Color 2: Violet (Cube)
+     */
+    public static final double kBlinkinConeGround = 0.69; /* Yellow */
+    public static final double kBlinkinConeShelf = 0.11; /* Color 1 Pattern Breath Fast */
+
+    public static final double kBlinkinCubeGround = 0.91; /* Violet */
+    public static final double kBlinkinCubeShelf = 0.31; /* Color 2 Pattern Breath Fast */
+  }
 }

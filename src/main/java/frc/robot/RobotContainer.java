@@ -40,7 +40,8 @@ public class RobotContainer {
   private final SUB_Intake m_intake = new SUB_Intake();
   private final SUB_FiniteStateMachine m_finiteStateMachine = new SUB_FiniteStateMachine();
   private final GlobalVariables m_variables = new GlobalVariables();
-  
+  private final SUB_Blinkin m_blinkin = new SUB_Blinkin(m_variables);
+
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
   /**
