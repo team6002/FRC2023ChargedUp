@@ -70,7 +70,7 @@ public class RobotContainer {
     m_driverController.y().onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
-    m_driverController.a().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limelight));
+    m_driverController.a().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, Constants.AutoAlignConstants.AlignPosition.LEFT));
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
