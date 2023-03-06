@@ -51,7 +51,7 @@ public class SUB_Blinkin extends SubsystemBase {
 
         /* UNKNOWN CASE */
         default:    
-          m_blinkin.set(0);
+          m_blinkin.set(0.75);
           break;
     }
   }
