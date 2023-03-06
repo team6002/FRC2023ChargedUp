@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems
   private final SUB_Drivetrain m_drivetrain = new SUB_Drivetrain();
+  private final SUB_LimeLight m_limelight = new SUB_LimeLight();
   private final AUTO_Trajectories m_trajectories = new AUTO_Trajectories(m_drivetrain);
   private final SUB_Elevator m_elevator = new SUB_Elevator();
   private final SUB_Elbow m_elbow = new SUB_Elbow();
@@ -69,6 +70,7 @@ public class RobotContainer {
     m_driverController.y().onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
+    m_driverController.a().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limelight));
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
