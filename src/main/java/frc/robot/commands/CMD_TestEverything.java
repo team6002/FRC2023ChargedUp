@@ -10,7 +10,6 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
-import frc.robot.subsystems.SUB_Intake;
 import frc.robot.subsystems.SUB_Wrist;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

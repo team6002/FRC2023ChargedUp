@@ -6,7 +6,6 @@ package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.CMD_SetInitalOdometry;
-import frc.robot.commands.CMD_setState;
 import frc.robot.subsystems.SUB_Drivetrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
