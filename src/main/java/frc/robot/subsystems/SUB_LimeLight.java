@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimeLightConstants;
 
 public class SUB_LimeLight extends SubsystemBase {
-  SUB_Blinkin m_blinkin;
+  // SUB_Blinkin m_blinkin;
   double[] target1 = LimeLightConstants.kTarget1Constants;
   double[] target2 = LimeLightConstants.kTarget2Constants;
   double[] target3 = LimeLightConstants.kTarget3Constants;
@@ -25,8 +25,10 @@ public class SUB_LimeLight extends SubsystemBase {
   double[] target7 = LimeLightConstants.kTarget7Constants;
   double[] target8 = LimeLightConstants.kTarget8Constants;
   SUB_FiniteStateMachine m_finiteStateMachine;
-  public SUB_LimeLight(SUB_Blinkin p_blinkin, SUB_FiniteStateMachine p_finiteStateMachine) {
-    m_blinkin = p_blinkin;
+  public SUB_LimeLight(
+    // SUB_Blinkin p_blinkin,
+    SUB_FiniteStateMachine p_finiteStateMachine) {
+    // m_blinkin = p_blinkin;
     m_finiteStateMachine = p_finiteStateMachine;
   }
   private double[] dv = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};

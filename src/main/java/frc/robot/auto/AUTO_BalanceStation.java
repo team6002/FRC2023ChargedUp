@@ -65,9 +65,9 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.3),
-      new CMD_AdjustBalanceBackwards(p_drivetrain),
+      new CMD_AdjustBalance(p_drivetrain),
       new WaitCommand(.5),
-      new CMD_AdjustBalanceForwards(p_drivetrain)
+      new CMD_AdjustBalance(p_drivetrain)
     );
   }
 }

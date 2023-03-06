@@ -71,7 +71,8 @@ public class Robot extends TimedRobot {
     System.out.println((int)SmartDashboard.getNumber("AUTOKEY", 0));
     m_robotContainer.SubsystemsInit();
     m_robotContainer.zeroHeading();
-    m_autonomousCommand = m_robotContainer.getAutonomusCommand;
+    m_autonomousCommand = m_robotContainer.getAutonomousCommandManual();
+    // m_robotContainer.getAutonomusCommand;
     //m_Chooser.getSelected();
 
     /*

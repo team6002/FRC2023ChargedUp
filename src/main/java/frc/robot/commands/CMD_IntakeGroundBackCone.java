@@ -29,7 +29,7 @@ public class CMD_IntakeGroundBackCone extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStamchine, RobotState.INTAKE),
       new ParallelCommandGroup(
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowGroundCone),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround)
       )
       // new CMD_IntakeOn(p_intake, p_variables)

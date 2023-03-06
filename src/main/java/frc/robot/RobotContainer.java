@@ -77,7 +77,7 @@ public class RobotContainer {
     );
     m_driverController.pov(0).onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    // m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
+    m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
   }
 
@@ -86,9 +86,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  //   return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables, m_driverController);
-  // }
+  public Command getAutonomousCommandManual() {
+    return new AUTO_CubeRun(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController); 
+      // new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables, m_driverController);
+  }
 
   public void zeroHeading(){
     m_drivetrain.zeroHeading();

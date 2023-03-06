@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.SUB_Drivetrain;
 
 
-public class CMD_AdjustBalanceForwards extends CommandBase {
+public class CMD_AdjustBalance extends CommandBase {
   /** Creates a new CMD_AdjustBalance. */
   SUB_Drivetrain m_drivetrain;
   Timer m_timer = new Timer();
   double m_timeLimit;
-  public CMD_AdjustBalanceForwards(SUB_Drivetrain p_drivetrain) {
+  public CMD_AdjustBalance(SUB_Drivetrain p_drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = p_drivetrain;
     
@@ -32,7 +32,7 @@ public class CMD_AdjustBalanceForwards extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_drivetrain.drive(0.17, 0, 0, true, false);
+      m_drivetrain.drive(Math.copySign(0.17, -m_drivetrain.getRoll()), 0, 0, true, false);
     //use the Navx if availbe
 
   }

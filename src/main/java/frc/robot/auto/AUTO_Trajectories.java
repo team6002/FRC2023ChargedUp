@@ -6,10 +6,13 @@ package frc.robot.auto;
 
 import java.util.List;
 
+import javax.swing.plaf.TreeUI;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
@@ -25,9 +28,10 @@ public class AUTO_Trajectories {
     public Trajectory OverChargeStationTrajectory;
     public Trajectory BackOnChargeStationTrajectory;
     public Trajectory OverChargeStationTrajectory2;
-    public Trajectory CubeRunTrajectory;
-    public Trajectory CubePlaceTrajectory;
-    public Trajectory CubeGrabTrajectory;
+    public Trajectory CubeRunTrajectory1;
+    public Trajectory CubePlaceTrajectory1;
+    public Trajectory CubePlaceTrajectory2;
+    public Trajectory CubeRunTrajectory2;
     Trajectory FirstRedBall = new Trajectory();
     private SUB_Drivetrain m_drivetrain;
 
@@ -63,6 +67,23 @@ public class AUTO_Trajectories {
                 // Add kinematics to ensure max speed is actually obeyed
                 .setKinematics(DriveConstants.kDriveKinematics)
                 .setReversed(true);
+
+        
+        TrajectoryConfig configHalfSpeed =
+        new TrajectoryConfig(
+            AutoConstants.kHalfSpeed,
+            AutoConstants.kHalfAcceleration)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics);
+    
+        TrajectoryConfig configHalfSpeedReversed =
+        new TrajectoryConfig(
+            AutoConstants.kHalfSpeed,
+            AutoConstants.kHalfAcceleration)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics)
+            .setReversed(true);    
+                    
         //Rotation2d uses RADIANS NOT DEGREES!
         //Use Rotation2d.fromDegrees(desiredDegree) instead
       
@@ -83,24 +104,29 @@ public class AUTO_Trajectories {
             new Pose2d(Units.inchesToMeters(-86), 0, new Rotation2d(Units.degreesToRadians(180))),
             ChargeStationConfigReversesd); //-68 was twisted devil
         
-        CubeRunTrajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.feetToMeters(17.5), 0, new Rotation2d(0)),
+        CubeRunTrajectory1 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(Units.inchesToMeters(0), 0, new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(0), Units.feetToMeters(-.75), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(-200), Units.inchesToMeters(-20), new Rotation2d(0)),
             configReversed);
     
-        CubePlaceTrajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.feetToMeters(0), Units.feetToMeters(-1.5), new Rotation2d(0)),
-            List.of(),
-            new Pose2d(Units.feetToMeters(17.5), Units.feetToMeters(0), new Rotation2d(0)),
+        CubePlaceTrajectory1 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(Units.inchesToMeters(-200), Units.inchesToMeters(-20), new Rotation2d(0)),
+            List.of(new Translation2d(Units.inchesToMeters(-120), Units.inchesToMeters(-12))),
+            new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(-12), new Rotation2d(0)),
             config);
 
-        CubeGrabTrajectory = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), new Rotation2d(0)),
-                List.of(),
-                new Pose2d(Units.feetToMeters(17.5), Units.feetToMeters(0), new Rotation2d(0)),
-                config);
-    
+        CubeRunTrajectory2 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(-12), new Rotation2d(0)),
+            List.of(new Translation2d(Units.inchesToMeters(-130), Units.inchesToMeters(0))),
+            new Pose2d(Units.inchesToMeters(-215), Units.inchesToMeters(-56), new Rotation2d(Units.degreesToRadians(90))),
+            configReversed);
+
+        CubePlaceTrajectory2 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(Units.inchesToMeters(-215), Units.inchesToMeters(-56), new Rotation2d(Units.degreesToRadians(90))),
+            List.of(new Translation2d(Units.inchesToMeters(-130), Units.inchesToMeters(0))),
+            new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(-25), new Rotation2d(Units.degreesToRadians(0))),
+            config);
     }
   
     public Command driveTrajectory(Trajectory trajectory) {

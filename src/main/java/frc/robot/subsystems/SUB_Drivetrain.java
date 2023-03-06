@@ -46,8 +46,8 @@ public class SUB_Drivetrain extends SubsystemBase {
       DriveConstants.kBackRightChassisAngularOffset);
 
   // The gyro sensor
-  private final AHRS m_gyro = new AHRS(Port.kMXP);
-  // private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+  // private final AHRS m_gyro = new AHRS(Port.kMXP);
+  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
@@ -265,8 +265,8 @@ public class SUB_Drivetrain extends SubsystemBase {
   }
 
   public double getRoll(){
-    // double r = 1;
-  //  return r; 
-   return m_gyro.getRoll();
+    double r = 1;
+    return r; 
+  //  return m_gyro.getRoll();
   }
 }

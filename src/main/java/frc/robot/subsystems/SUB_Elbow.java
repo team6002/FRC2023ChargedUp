@@ -110,7 +110,7 @@ public class SUB_Elbow extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // telemetry();
+        telemetry();
         var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
         
         m_setpoint = profile.calculate(deltaTime);

@@ -129,13 +129,15 @@ public final class Constants {
     public static final double kMaxAccelerationMetersPerSecondSquared = 4;
     public static final double kChargeStationSpeed = 1.12;
     public static final double kChargeStationAcceleration = 1.12;
+    public static final double kHalfSpeed = 2;
+    public static final double kHalfAcceleration = 2;
 
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
     public static final double kPXController = 1.5;
-    public static final double kPYController = 1;
-    public static final double kPThetaController = 1.5;
+    public static final double kPYController = 1.5;
+    public static final double kPThetaController = 2;
 
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
@@ -181,7 +183,7 @@ public final class Constants {
     public static final double kElevatorSecondConeLevel = 21;  
     public static final double kElevatorThirdConeLevel = 40;
     public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
-    public static final double kElevatorSecondCubeLevel = 10;  
+    public static final double kElevatorSecondCubeLevel = 5;  
     public static final double kElevatorThirdCubeLevel = 28;
     public static final double kElevatorHome = 0;
     public static final double kElevatorStow = 0;
@@ -224,7 +226,9 @@ public final class Constants {
     public static final double kElbowForwards = 270;// stright forwards
     public static final double kElbowShelf = 250;// stright forwards
     public static final double kElbowPrepareDrop = 249;// Not quite all the way forwards, allows cones to clear the pole
-    public static final double kElbowBackwards = 110;// straight back
+    public static final double kElbowBackwards = 105;// straight back
+    public static final double kElbowGroundCone = 107;// straight back
+    public static final double kElbowGroundCube = 95;// straight back
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;
     public static final double kElbowShelfBackPrep = 72;

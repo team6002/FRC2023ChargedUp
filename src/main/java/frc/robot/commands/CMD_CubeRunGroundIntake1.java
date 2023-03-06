@@ -23,13 +23,18 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CMD_IntakeGroundBackCube extends SequentialCommandGroup {
-  public CMD_IntakeGroundBackCube(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Wrist p_wrist,
+public class CMD_CubeRunGroundIntake1 extends SequentialCommandGroup {
+  public CMD_CubeRunGroundIntake1(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Wrist p_wrist,
    SUB_FiniteStateMachine p_finiteStamchine, GlobalVariables p_variables) {
     addCommands(
       new CMD_setState(p_finiteStamchine, RobotState.INTAKE),
       new ParallelCommandGroup(
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowGroundCube),
+        new SequentialCommandGroup(
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
+          new WaitCommand(.2),
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowBackwards)
+        ),
+        new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround)
       )
       // new CMD_IntakeOn(p_intake, p_variables)
