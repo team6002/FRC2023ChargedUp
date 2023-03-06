@@ -29,28 +29,30 @@ public class SUB_Blinkin extends SubsystemBase {
     switch(m_variables.getIntakeCommandKey()) {
         /* CONE */
         case GlobalConstants.kGroundBackCone:
-            m_blinkin.set(Constants.BlinkinConstants.kBlinkinConeGround);
-            break;
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinConeGround);
+          break;
         case GlobalConstants.kShelfForwardsCone:
-            /* FALLTHROUGH */
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinConeShelf);
+          break;
         case GlobalConstants.kShelfBackCone:
-            m_blinkin.set(Constants.BlinkinConstants.kBlinkinConeShelf);
-            break;
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinConeBackShelf);
+          break;
 
         /* CUBE */
         case GlobalConstants.kPickBackGroundMode:
-            m_blinkin.set(Constants.BlinkinConstants.kBlinkinCubeGround);
-            break;
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinCubeGround);
+          break;
         case GlobalConstants.kShelfForwardsCube:
-            /* FALLTHROUGH */
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinCubeShelf);
+          break;
         case GlobalConstants.kShelfBackCube:
-            m_blinkin.set(Constants.BlinkinConstants.kBlinkinCubeShelf);
-            break;
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinCubeBackShelf);
+          break;
 
         /* UNKNOWN CASE */
         default:    
-            m_blinkin.set(0);
-            break;
+          m_blinkin.set(0);
+          break;
     }
   }
 }
