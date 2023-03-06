@@ -247,21 +247,21 @@ public final class Constants {
   }
 
   public static final class AutoAlignConstants{
-    /* X and Y drive constraints (in meters/s) */
-    public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(4, 4);
-    public static final double driveKp = 0.6;
+    /* X and Y drive constraints. Output ranges [-1, 1] */
+    public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(1, 1);
+    public static final double driveKp = 1.2;
     public static final double driveKi = 0.;
     public static final double driveKd = 0.;
 
-    /* Turn constraints (in rads/s) */
-    public static final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(Math.PI / 4., Math.PI / 4.);
-    public static final double turnKp = 0.035;
+    /* Turn constraints. Output ranges [-1, 1] */
+    public static final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(1, 1);
+    public static final double turnKp = 0.01;
     public static final double turnKi = 0.;
     public static final double turnKd = 0.;
 
     public static final Pose2d goalPose = new Pose2d(-0.8, 0., new Rotation2d());
   }
-  
+
   public static final class WristConstants{
     public static final int kWristMotorCanID = 10;
     public static final double kWristP = 0.009;

@@ -5,7 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.*;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -18,7 +19,7 @@ public class CMD_DriveAlignTagPid extends CommandBase {
 
   private final ProfiledPIDController xController;
   private final ProfiledPIDController yController;
-  private final ProfiledPIDController turnController;
+  private final PIDController turnController;
 
   private boolean end;
 
@@ -38,10 +39,10 @@ public class CMD_DriveAlignTagPid extends CommandBase {
       Constants.AutoAlignConstants.driveKd,
       Constants.AutoAlignConstants.driveConstraints);
 
-    turnController = new ProfiledPIDController(Constants.AutoAlignConstants.turnKp,
+    turnController = new PIDController(Constants.AutoAlignConstants.turnKp,
       Constants.AutoAlignConstants.turnKi,
-      Constants.AutoAlignConstants.turnKd,
-      Constants.AutoAlignConstants.turnConstraints);
+      Constants.AutoAlignConstants.turnKd);
+      // Constants.AutoAlignConstants.turnConstraints);
 
     addRequirements(m_drivetrain, m_limeLight);
   }
@@ -60,15 +61,15 @@ public class CMD_DriveAlignTagPid extends CommandBase {
 
     xController.setGoal(Constants.AutoAlignConstants.goalPose.getX());
     yController.setGoal(Constants.AutoAlignConstants.goalPose.getY());
-    turnController.setGoal(m_drivetrain.getAngle() - m_limeLight.getTargetYaw() + Constants.AutoAlignConstants.goalPose.getRotation().getDegrees());
+    turnController.setSetpoint(m_drivetrain.getAngle() + m_limeLight.getTargetYaw() + Constants.AutoAlignConstants.goalPose.getRotation().getDegrees());
 
-    xController.setTolerance(.05);
-    yController.setTolerance(.05);
-    turnController.setTolerance(2);
+    xController.setTolerance(.01);
+    yController.setTolerance(.01);
+    turnController.setTolerance(1);
 
     xController.reset(m_limeLight.getTargetX());
     yController.reset(m_limeLight.getTargetY());
-    turnController.reset(m_drivetrain.getAngle());
+    turnController.reset();
 
     turnController.enableContinuousInput(-180, 180);
   }
@@ -84,33 +85,30 @@ public class CMD_DriveAlignTagPid extends CommandBase {
       end = true;
     }
 
-    if (xController.atGoal() && yController.atGoal() && turnController.atGoal()) {
-    // if (xController.atGoal()) {
+    xSpeed = xController.calculate(m_limeLight.getTargetX());
+    if (xController.atGoal()) {
+      xSpeed = 0.0;
+    }
+
+    ySpeed = yController.calculate(m_limeLight.getTargetY());
+    if (yController.atGoal()) {
+      ySpeed = 0.0;
+    }
+
+    turnSpeed = MathUtil.clamp(turnController.calculate(m_drivetrain.getAngle()), -0.5, 0.5);
+
+    SmartDashboard.putNumber("AutoAlignXSpeed: ", xSpeed);
+    SmartDashboard.putNumber("AutoAlignYSpeed: ", ySpeed);
+    SmartDashboard.putNumber("AutoAlignTurnSpeed: ", turnSpeed);
+    SmartDashboard.putNumber("AutoAlignTurnGoal", turnController.getSetpoint());
+
+    if (xController.atGoal() && yController.atGoal() && turnController.atSetpoint()) {
       System.out.println("At Goal " + Timer.getFPGATimestamp());
       end = true;
       return;
     }
 
-    if (xController.atGoal()) {
-      xSpeed = 0.;
-    } else {
-      xSpeed = xController.calculate(m_limeLight.getTargetX());
-    }
-    
-    if (yController.atGoal()) {
-      ySpeed = 0.;
-    } else {
-      ySpeed = yController.calculate(m_limeLight.getTargetY());
-    }
-
-    turnSpeed = turnController.calculate(m_drivetrain.getAngle());
-
-    SmartDashboard.putNumber("AutoAlignXSpeed: ", xSpeed);
-    SmartDashboard.putNumber("AutoAlignYSpeed: ", ySpeed);
-    SmartDashboard.putNumber("AutoAlignTurnSpeed: ", turnSpeed);
-    SmartDashboard.putNumber("AutoAlignTurnGoal", turnController.getGoal().position);
-
-    m_drivetrain.drive(xSpeed, ySpeed, -turnSpeed, false, false);
+    m_drivetrain.drive(xSpeed, ySpeed, turnSpeed, false, false);
   }
 
   @Override
