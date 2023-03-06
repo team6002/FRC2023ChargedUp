@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -259,7 +262,17 @@ public final class Constants {
     public static final double turnKi = 0.;
     public static final double turnKd = 0.;
 
-    public static final Pose2d goalPose = new Pose2d(-0.8, 0., new Rotation2d());
+    public static enum AlignPosition {
+      LEFT,
+      MIDDLE,
+      RIGHT
+    };
+
+    public static final EnumMap<AlignPosition, Pose2d> goalPose = new EnumMap<>(Map.of(
+      AlignPosition.LEFT, new Pose2d(-0.8, 0.6, new Rotation2d()),
+      AlignPosition.MIDDLE, new Pose2d(-0.8, 0.0, new Rotation2d()),
+      AlignPosition.RIGHT, new Pose2d(-0.8, -0.6, new Rotation2d())
+    ));
   }
 
   public static final class WristConstants{

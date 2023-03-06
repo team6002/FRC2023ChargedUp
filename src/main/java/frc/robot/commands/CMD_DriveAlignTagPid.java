@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.*;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -24,6 +25,8 @@ public class CMD_DriveAlignTagPid extends CommandBase {
   private boolean end;
 
   private double xSpeed, ySpeed, turnSpeed;
+
+  private Pose2d goalPose;
 
   public CMD_DriveAlignTagPid(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight) {
     m_drivetrain = p_drivetrain;
@@ -57,11 +60,11 @@ public class CMD_DriveAlignTagPid extends CommandBase {
       return;
     }
 
-    // m_drivetrain.resetOdometryPose2d(m_limeLight.getRobotPoseInTargetSpace());
+    goalPose = Constants.AutoAlignConstants.goalPose.get(Constants.AutoAlignConstants.AlignPosition.MIDDLE);
 
-    xController.setGoal(Constants.AutoAlignConstants.goalPose.getX());
-    yController.setGoal(Constants.AutoAlignConstants.goalPose.getY());
-    turnController.setSetpoint(m_drivetrain.getAngle() + m_limeLight.getTargetYaw() + Constants.AutoAlignConstants.goalPose.getRotation().getDegrees());
+    xController.setGoal(goalPose.getX());
+    yController.setGoal(goalPose.getY());
+    turnController.setSetpoint(m_drivetrain.getAngle() + m_limeLight.getTargetYaw() + goalPose.getRotation().getDegrees());
 
     xController.setTolerance(.01);
     yController.setTolerance(.01);
