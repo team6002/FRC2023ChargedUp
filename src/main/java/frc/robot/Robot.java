@@ -29,6 +29,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    DataLogger.start();
+
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
@@ -38,6 +40,8 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("CubeRunRed", m_robotContainer.getCubeRunRed());
     m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
+
+    DataLogger.log("robotInit() done");
   }
 
   /**
@@ -86,6 +90,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    DataLogger.log("autonomousInit() done");
   }
 
   /** This function is called periodically during autonomous. */
@@ -101,6 +107,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    DataLogger.log("teleopInit() done");
   }
 
   /** This function is called periodically during operator control. */
