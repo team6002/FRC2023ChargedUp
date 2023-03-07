@@ -265,8 +265,8 @@ public class SUB_Drivetrain extends SubsystemBase {
   }
 
   public double getRoll(){
-    double r = 1;
-    return r; 
-  //  return m_gyro.getRoll();
+    // double r = 1;
+    // return r; 
+   return m_gyro.getRoll();
   }
 }

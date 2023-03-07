@@ -20,8 +20,6 @@ import frc.robot.commands.CMD_setAutoKey;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private Command m_auto1 = new PrintCommand("1");
-  private Command m_auto2 = new PrintCommand("2");
   private final SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   private RobotContainer m_robotContainer;
 
@@ -36,8 +34,9 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_robotContainer.SubsystemsInit();
     SmartDashboard.putNumber("AUTOKEY", 0);
-    m_Chooser.setDefaultOption("ChargeStation", m_auto1);
-    m_Chooser.addOption("CubeRun", m_auto2);
+    m_Chooser.setDefaultOption("ChargeStation", m_robotContainer.getBalanceStation());
+    m_Chooser.addOption("CubeRunRed", m_robotContainer.getCubeRunRed());
+    m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
   }
 
@@ -71,9 +70,10 @@ public class Robot extends TimedRobot {
     System.out.println((int)SmartDashboard.getNumber("AUTOKEY", 0));
     m_robotContainer.SubsystemsInit();
     m_robotContainer.zeroHeading();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommandManual();
+    m_autonomousCommand = 
+    // m_robotContainer.getAutonomousCommandManual();
     // m_robotContainer.getAutonomusCommand;
-    //m_Chooser.getSelected();
+    m_Chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

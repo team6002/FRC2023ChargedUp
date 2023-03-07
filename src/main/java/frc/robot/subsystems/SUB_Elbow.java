@@ -46,7 +46,7 @@ public class SUB_Elbow extends SubsystemBase {
         
         m_elbowEncoder.setPositionConversionFactor(5.128);
         m_elbowEncoder.setVelocityConversionFactor(5.128/60);
-        m_elbowEncoder.setPosition(getAbsolutePosition());
+      
 
         m_elbowMotorPIDController.setP(ElbowConstants.kElbowP,1);
         m_elbowMotorPIDController.setI(ElbowConstants.kElbowI,1);
@@ -76,6 +76,8 @@ public class SUB_Elbow extends SubsystemBase {
         m_goal = m_setpoint;
         m_elbowOn = false;
 
+        m_elbowEncoder.setPosition(getAbsolutePosition());
+        
         m_elbowMotor.burnFlash();
     }
 
@@ -133,7 +135,7 @@ public class SUB_Elbow extends SubsystemBase {
     public void telemetry(){
 
       SmartDashboard.putNumber("elbow position", m_elbowEncoder.getPosition());
-    //   SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
+      SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
     //   m_P = SmartDashboard.getNumber("P", m_P);
     //   m_I = SmartDashboard.getNumber("I", m_I);
     //   m_D = SmartDashboard.getNumber("D", m_D);

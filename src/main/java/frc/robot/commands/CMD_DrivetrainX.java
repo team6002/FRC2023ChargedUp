@@ -5,47 +5,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.SUB_Drivetrain;
 
-
-public class CMD_AdjustBalance extends CommandBase {
-  /** Creates a new CMD_AdjustBalance. */
+public class CMD_DrivetrainX extends CommandBase {
+  /** Creates a new CMD_DrivetrainX. */
   SUB_Drivetrain m_drivetrain;
-  Timer m_timer = new Timer();
-  double m_timeLimit;
-  public CMD_AdjustBalance(SUB_Drivetrain p_drivetrain) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public CMD_DrivetrainX(SUB_Drivetrain p_drivetrain) {
     m_drivetrain = p_drivetrain;
-    
+    addRequirements(m_drivetrain);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_timer.start();
-    m_timer.reset();
-    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.07);
+    m_drivetrain.setX();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-      m_drivetrain.drive(Math.copySign(0.17, m_drivetrain.getRoll()), 0, 0, true, false);
-    //use the Navx if availbe
-
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_drivetrain.drive(0, 0, 0, interrupted, interrupted);
-    
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_timer.get() > m_timeLimit);
+    return true;
   }
 }
