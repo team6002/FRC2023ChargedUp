@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutoAlignConstants.*;
 
 public class GlobalVariables extends SubsystemBase {
   /** Creates a new GlobalVariables. */
@@ -18,6 +19,8 @@ public class GlobalVariables extends SubsystemBase {
   private int m_autoKey = 0;
   private int m_extendKey = -1;
 
+  private Constants.AutoAlignConstants.AlignPosition m_AlignPosition;
+
   public GlobalVariables() {}
 
   public void setIntakeState(boolean p_state){
@@ -26,6 +29,14 @@ public class GlobalVariables extends SubsystemBase {
 
   public boolean getIntakeState(){
     return m_intakeState;
+  }
+
+  public void setAlignPosition(Constants.AutoAlignConstants.AlignPosition p_alignPosition){
+    m_AlignPosition = p_alignPosition;
+  }
+
+  public Constants.AutoAlignConstants.AlignPosition getAlignPosition(){
+    return m_AlignPosition;
   }
 
   public void setDropLevel(int p_level){
@@ -92,5 +103,15 @@ public class GlobalVariables extends SubsystemBase {
     SmartDashboard.putNumber("DropLevel", m_dropLevel);
     SmartDashboard.putNumber("StowLocation", m_stowLocation);
     SmartDashboard.putNumber("PickMode", m_pickMode);
+
+    if(getAlignPosition() == AlignPosition.LEFT){
+      SmartDashboard.putString("AlignPosition", "LEFT");
+    }else if(getAlignPosition() == AlignPosition.MIDDLE){
+      SmartDashboard.putString("AlignPosition", "MIDDLE");
+    }else if(getAlignPosition() == AlignPosition.RIGHT){
+      SmartDashboard.putString("AlignPosition", "RIGHT");
+    }else{
+      SmartDashboard.putString("AlignPosition", "Not a valid align position");
+    }
   }
 }

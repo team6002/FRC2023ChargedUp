@@ -11,12 +11,15 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.GlobalVariables;
+import frc.robot.Constants.AutoAlignConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
 import frc.robot.subsystems.SUB_LimeLight;
 
 public class CMD_DriveAlignTagPidOdom extends CommandBase {
   private SUB_Drivetrain m_drivetrain;
   private SUB_LimeLight m_limeLight;
+  private GlobalVariables m_variables;
 
   private final ProfiledPIDController xController;
   private final ProfiledPIDController yController;
@@ -29,11 +32,9 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
   private Pose2d goalPose;
   private Pose2d robotOdom;
 
-  public CMD_DriveAlignTagPidOdom(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, Constants.AutoAlignConstants.AlignPosition p_position) {
+  public CMD_DriveAlignTagPidOdom(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, GlobalVariables p_variables) {
     m_drivetrain = p_drivetrain;
     m_limeLight = p_limeLight;
-
-    goalPose = Constants.AutoAlignConstants.goalPose.get(p_position);
 
     xController = new ProfiledPIDController(Constants.AutoAlignConstants.driveKp,
       Constants.AutoAlignConstants.driveKi,
@@ -54,6 +55,7 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
 
   @Override
   public void initialize() {
+    goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition());
     robotOdom = m_drivetrain.getPose();
 
     end = false;
