@@ -3,8 +3,9 @@ package frc.robot;
 
 import java.util.Map;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Constants.*;
-import frc.robot.Constants.AutoAlignConstants.AlignPosition;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.GlobalConstants;
+import frc.robot.Constants.OIConstants;
 import frc.robot.auto.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -38,7 +39,6 @@ public class RobotContainer {
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
-  CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -76,15 +76,6 @@ public class RobotContainer {
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
-    //operator controllers
-    m_operatorController.a().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.k1stLevelForwardCone));
-    m_operatorController.b().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.k2ndLevelCone));
-    m_operatorController.x().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.k3rdLevelCone));
-    m_operatorController.leftBumper().onTrue(new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode));
-    m_operatorController.rightBumper().onTrue(new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode));
-    m_operatorController.povUp().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limelight));
-    m_operatorController.povLeft().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, AlignPosition.LEFT));
-    m_operatorController.povRight().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, AlignPosition.RIGHT));
   }
 
   /**
