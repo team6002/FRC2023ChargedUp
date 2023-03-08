@@ -252,8 +252,11 @@ public final class Constants {
 
   public static final class AutoAlignConstants{
     /* X and Y drive constraints. Output ranges [-1, 1] */
+    public static final double kXTolerance = 0.01;
+    public static final double kYTolerance = 0.01;
+    public static final double kTurnTolerance = 5;
     public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(1, 1);
-    public static final double driveKp = 1.2;
+    public static final double driveKp = 1.5;
     public static final double driveKi = 0.;
     public static final double driveKd = 0.;
 

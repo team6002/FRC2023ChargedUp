@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.*;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.GlobalVariables;
+import frc.robot.Constants.AutoAlignConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
 import frc.robot.subsystems.SUB_LimeLight;
 
@@ -31,10 +33,13 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
   private Pose2d goalPose;
   private Pose2d robotOdom;
 
-  public CMD_DriveAlignTagPidOdom(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, GlobalVariables p_variables) {
+  CommandXboxController m_driverController;
+
+  public CMD_DriveAlignTagPidOdom(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, GlobalVariables p_variables, CommandXboxController p_driverController) {
     m_drivetrain = p_drivetrain;
     m_limeLight = p_limeLight;
     m_variables = p_variables;
+    m_driverController = p_driverController;
 
     xController = new ProfiledPIDController(Constants.AutoAlignConstants.driveKp,
       Constants.AutoAlignConstants.driveKi,
@@ -73,9 +78,9 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
     yController.setGoal(robotOdom.getY() + (goalPose.getY() - m_limeLight.getTargetY()));
     turnController.setSetpoint(m_drivetrain.getAngle() + m_limeLight.getTargetYaw() + goalPose.getRotation().getDegrees());
 
-    xController.setTolerance(.01);
-    yController.setTolerance(.01);
-    turnController.setTolerance(1);
+    xController.setTolerance(AutoAlignConstants.kXTolerance);
+    yController.setTolerance(AutoAlignConstants.kYTolerance);
+    turnController.setTolerance(AutoAlignConstants.kTurnTolerance);
 
     xController.reset(robotOdom.getX());
     yController.reset(robotOdom.getY());
@@ -87,6 +92,12 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
   @Override
   public void execute() {
     if (end) {
+      return;
+    }
+
+    if (Math.abs(m_driverController.getLeftY()) > 0.3 || Math.abs(m_driverController.getLeftX()) > 0.3 || Math.abs(m_driverController.getRightX()) > 0.3) {
+      end = true;
+      System.out.println("Abort by driver");
       return;
     }
 
