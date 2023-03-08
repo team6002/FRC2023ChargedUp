@@ -9,7 +9,6 @@ import frc.robot.Constants;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.GlobalConstants;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SUB_Blinkin extends SubsystemBase {
   Spark m_blinkin;

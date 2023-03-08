@@ -64,7 +64,7 @@ public class RobotContainer {
     m_driverController.y().onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
-    m_driverController.a().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limelight));
+    m_driverController.a().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, m_variables));
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
@@ -77,14 +77,71 @@ public class RobotContainer {
     m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
     //operator controllers
-    m_operatorController.a().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.k1stLevelForwardCone));
-    m_operatorController.b().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.k2ndLevelCone));
-    m_operatorController.x().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.k3rdLevelCone));
-    m_operatorController.leftBumper().onTrue(new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode));
-    m_operatorController.rightBumper().onTrue(new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode));
-    m_operatorController.povUp().onTrue(new CMD_DriveAlignTagPid(m_drivetrain, m_limelight));
-    m_operatorController.povLeft().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, AlignPosition.LEFT));
-    m_operatorController.povRight().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, AlignPosition.RIGHT));
+
+    m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
+
+    //autodrive right, bottom, numpad 1
+    m_operatorController.a().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT)
+    ));
+
+    //autodrive middle, bottom, numpad 2
+    m_operatorController.b().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE)
+    ));
+
+    //autodrive left, bottom, numpad 3
+    m_operatorController.x().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
+    ));
+
+    //autodrive right, 2nd level, numpad 4
+    m_operatorController.rightBumper().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT)
+    ));
+
+    //autodrive middle, 2nd level, numpad 5
+    m_operatorController.leftBumper().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE)
+    ));
+
+    //autodrive left, 2nd level, numpad 6
+    m_operatorController.y().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
+    ));
+
+    //autodrive right, 3rd level, numpad 7
+    m_operatorController.povRight().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT)
+    ));
+
+    //autodrive middle, 3rd level, numpad 8
+    m_operatorController.povUp().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE)
+    ));
+
+    //autodrive left, 3rd level, numpad 9
+    m_operatorController.povLeft().onTrue(new SequentialCommandGroup(
+      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
+    ));
   }
 
   /**
