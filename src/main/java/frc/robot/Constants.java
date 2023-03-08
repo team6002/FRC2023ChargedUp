@@ -160,7 +160,7 @@ public final class Constants {
     //intake powers
     public static final double kIntakeForwardPower = .7;
     public static final double kIntakeHoldPower = .07;
-    public static final double kIntakeDropCone = -0.3;
+    public static final double kIntakeDropCone = -.8;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
     public static final double kIntakeShoot = 1;
     //intake currents
@@ -184,16 +184,16 @@ public final class Constants {
     public static final double kElevatorShelfCube = 33.5;
     public static final double kElevatorFirstConeLevel = 0;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 21;  
-    public static final double kElevatorThirdConeLevel = 39.5;
+    public static final double kElevatorThirdConeLevel = 45;
     public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
-    public static final double kElevatorSecondCubeLevel = 8;  
+    public static final double kElevatorSecondCubeLevel = 6;  
     public static final double kElevatorThirdCubeLevel = 36;
     public static final double kElevatorHome = 0;
     public static final double kElevatorStow = 0;
     public static final double kElevatorGround = 0;
     public static final double kElevatorPrep = 19;//Position for safely moving elbow to score
     public static final double kElevatorSafety = 12;//maximum value to check if moving elbow endagers robot
-    public static final double kElevatorTolerance = 3;
+    public static final double kElevatorTolerance = 2;
     public static final double kElevatorShelfBack = 18;
     public static final double kElevatorShelfBackAway = 24;// moves the elevator up to avoid hitting the wall
 
@@ -228,9 +228,10 @@ public final class Constants {
     public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
     public static final double kElbowShelf = 250;// stright forwards
-    public static final double kElbowPrepareDrop = 249;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowPrepareDrop = 255;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 95;// straight back
-    public static final double kElbowGroundCone = 107;// straight back
+    public static final double kElbowThrow = 120;//BATTA BATTA SWING, swings it lower to the ground to throw it
+    public static final double kElbowGroundCone = 103;// straight back
     public static final double kElbowGroundCube = 95;// straight back
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;

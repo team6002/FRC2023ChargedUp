@@ -149,11 +149,11 @@ public class RobotContainer {
   new SelectCommand(
     Map.ofEntries(
       Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-      Map.entry(GlobalConstants.kGroundBackCube, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kGroundBackCone, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackCube, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackCone, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
       Map.entry(GlobalConstants.kShelfBackCone, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
       Map.entry(GlobalConstants.kShelfBackCube, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables))
     )

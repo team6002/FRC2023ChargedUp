@@ -91,7 +91,8 @@ public class SUB_Elevator extends SubsystemBase {
   @Override
   public void periodic() {
       // updates elevator telemetry
-      // telemetry(); 
+      telemetry(); 
+      
       if (m_elevatorOn){
         var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
         m_setpoint = profile.calculate(deltaTime);

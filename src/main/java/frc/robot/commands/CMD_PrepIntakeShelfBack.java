@@ -28,6 +28,7 @@ public class CMD_PrepIntakeShelfBack extends SequentialCommandGroup {
    ) {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.PREPINTAKE),
+      new CMD_IntakeOff(p_intake),
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfBack),
         new ParallelDeadlineGroup(

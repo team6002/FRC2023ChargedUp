@@ -11,6 +11,8 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
+import frc.robot.DataLogger;
 import frc.robot.Constants.ElbowConstants;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -82,6 +84,7 @@ public class SUB_Elbow extends SubsystemBase {
     }
 
     public void elbowInit(){
+        m_elbowEncoder.setPosition(getAbsolutePosition());
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
         m_goal = m_setpoint;  
     }

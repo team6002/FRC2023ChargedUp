@@ -4,11 +4,14 @@
 
 package frc.robot.auto;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.commands.*;
@@ -74,8 +77,8 @@ public class AUTO_CubeRunBlue extends SequentialCommandGroup {
         ),
         new CMD_IntakeDrop(p_intake, p_variables),
         new WaitCommand(0.2),
-        new CMD_IntakeOff(p_intake)
-
+        new CMD_IntakeOff(p_intake),
+        new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine)
     );
   }
 }

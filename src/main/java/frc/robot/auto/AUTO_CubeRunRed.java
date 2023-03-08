@@ -31,54 +31,55 @@ public class AUTO_CubeRunRed extends SequentialCommandGroup {
           new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
           new CMD_IntakeDrop(p_intake, p_variables),
           new WaitCommand(.3),
-          new CMD_IntakeOff(p_intake),
-          new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
-          new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode),
-          new ParallelDeadlineGroup(
-            new SequentialCommandGroup(
-              new WaitCommand(.5),
-              p_trajectories.driveTrajectory(p_trajectories.CubeRunTrajectoryRed1)   
-            ),
-            new SequentialCommandGroup(
-              new CMD_CubeRunGroundIntake1(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables),
-              new CMD_IntakeElement(p_intake,p_variables, p_controller)
-            )
-          ),
-          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.CubePlaceTrajectoryRed1),
-          new ParallelDeadlineGroup(
-            p_trajectories.driveTrajectory(p_trajectories.CubePlaceTrajectoryRed1),
-            new CMD_HoldGroundBack(p_intake, p_elbow, p_elevator, p_wrist, p_finiteStateMachine, p_variables)
-          ),
-          new CMD_PlaceForwardsCube(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables), 
-          new CMD_IntakeDrop(p_intake, p_variables),
-          new WaitCommand(.3)
-        ),
-        new CMD_IntakeOff(p_intake),
-        new CMD_setDropLevel(p_variables, GlobalConstants.kElevator1stLevel),
-        new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.CubeRunTrajectoryRed2),
-        new ParallelDeadlineGroup(
-          new SequentialCommandGroup(
-            new WaitCommand(.5),
-            p_trajectories.driveTrajectory(p_trajectories.CubeRunTrajectoryRed2)
-          ),
-          new SequentialCommandGroup(
-            new CMD_IntakeOn(p_intake, p_variables),
-            new CMD_CubeRunGroundIntake1(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables),
-            new CMD_IntakeElement(p_intake, p_variables, p_controller)
-          )
-        ),
-        new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.CubePlaceTrajectoryRed2),
-        new ParallelCommandGroup(
-          p_trajectories.driveTrajectory(p_trajectories.CubePlaceTrajectoryRed2),
-          new SequentialCommandGroup(  
-            new CMD_CubeRunSecondLevel1(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
-            new CMD_IntakeDrop(p_intake, p_variables)
-        )
-        ),
-        new CMD_IntakeDrop(p_intake, p_variables),
-        new WaitCommand(0.2),
-        new CMD_IntakeOff(p_intake),
-        new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine)
-    );
+          new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine)
+    //       new CMD_IntakeOff(p_intake),
+    //       new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
+    //       new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode),
+    //       new ParallelDeadlineGroup(
+    //         new SequentialCommandGroup(
+    //           new WaitCommand(.5),
+    //           p_trajectories.driveTrajectory(p_trajectories.CubeRunTrajectoryRed1)   
+    //         ),
+    //         new SequentialCommandGroup(
+    //           new CMD_CubeRunGroundIntake1(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables),
+    //           new CMD_IntakeElement(p_intake,p_variables, p_controller)
+    //         )
+    //       ),
+    //       new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.CubePlaceTrajectoryRed1),
+    //       new ParallelDeadlineGroup(
+    //         p_trajectories.driveTrajectory(p_trajectories.CubePlaceTrajectoryRed1),
+    //         new CMD_HoldGroundBack(p_intake, p_elbow, p_elevator, p_wrist, p_finiteStateMachine, p_variables)
+    //       ),
+    //       new CMD_PlaceForwardsCube(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables), 
+    //       new CMD_IntakeDrop(p_intake, p_variables),
+    //       new WaitCommand(.3)
+    //     ),
+    //     new CMD_IntakeOff(p_intake),
+    //     new CMD_setDropLevel(p_variables, GlobalConstants.kElevator1stLevel),
+    //     new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.CubeRunTrajectoryRed2),
+    //     new ParallelDeadlineGroup(
+    //       new SequentialCommandGroup(
+    //         new WaitCommand(.5),
+    //         p_trajectories.driveTrajectory(p_trajectories.CubeRunTrajectoryRed2)
+    //       ),
+    //       new SequentialCommandGroup(
+    //         new CMD_IntakeOn(p_intake, p_variables),
+    //         new CMD_CubeRunGroundIntake1(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables),
+    //         new CMD_IntakeElement(p_intake, p_variables, p_controller)
+    //       )
+    //     ),
+    //     new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.CubePlaceTrajectoryRed2),
+    //     new ParallelCommandGroup(
+    //       p_trajectories.driveTrajectory(p_trajectories.CubePlaceTrajectoryRed2),
+    //       new SequentialCommandGroup(  
+    //         new CMD_CubeRunSecondLevel1(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
+    //         new CMD_IntakeDrop(p_intake, p_variables)
+    //     )
+    //     ),
+    //     new CMD_IntakeDrop(p_intake, p_variables),
+    //     new WaitCommand(0.2),
+    //     new CMD_IntakeOff(p_intake),
+    //     new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine)
+    ));
   }
 }
