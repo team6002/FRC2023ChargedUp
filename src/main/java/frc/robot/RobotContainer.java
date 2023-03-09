@@ -34,7 +34,7 @@ public class RobotContainer {
   private final SUB_Intake m_intake = new SUB_Intake();
   private final SUB_FiniteStateMachine m_finiteStateMachine = new SUB_FiniteStateMachine();
   private final GlobalVariables m_variables = new GlobalVariables();
-  private final SUB_Blinkin m_blinkin = new SUB_Blinkin(m_variables);
+  private final SUB_Blinkin m_blinkin = new SUB_Blinkin();
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -63,13 +63,18 @@ public class RobotContainer {
     /* ==================DRIVER CONTROLS================== */
     m_driverController.leftBumper().onTrue(CycleCommand);
     m_driverController.y().onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
+    m_driverController.b().onTrue(new SequentialCommandGroup(
+        new CMD_ToggleIntakeState(m_variables),
+        new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
+      )
+    );
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
     m_driverController.a().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, m_variables, m_driverController));
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
         new CMD_selectIntakeCommand(m_variables),
+        new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables),
         PrepIntakeCommand
       )
     );
@@ -90,7 +95,11 @@ public class RobotContainer {
     /* ==================DRIVER CONTROLS END================== */
 
     /* ==================OPERATOR CONTROLS================== */
-    m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
+    m_operatorController.povDown().onTrue(new SequentialCommandGroup(
+        new CMD_ToggleIntakeState(m_variables),
+        new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
+      )
+    );
 
     //autodrive right, bottom, numpad 1
     m_operatorController.a().onTrue(new SequentialCommandGroup(

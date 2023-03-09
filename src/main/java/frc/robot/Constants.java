@@ -365,5 +365,7 @@ public final class Constants {
     public static final double kBlinkinCubeBackShelf = 0.19; // Color 2 Pattern Larson Scanner
 
     public static final double kBlinkinBalanceCelebrate = -0.57; // Fire Large, flexing, use only when balanced
+
+    public static final double kBlinkinUnknownIntakeState = 0.75; /* Dark Green */
   }
 }
