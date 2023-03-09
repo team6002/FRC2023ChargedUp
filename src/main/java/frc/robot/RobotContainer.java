@@ -60,6 +60,7 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
+    /* ==================DRIVER CONTROLS================== */
     m_driverController.leftBumper().onTrue(CycleCommand);
     m_driverController.y().onTrue(new CMD_ToggleDropLevel(m_variables));
     m_driverController.b().onTrue(new CMD_ToggleIntakeState(m_variables));
@@ -72,12 +73,23 @@ public class RobotContainer {
         PrepIntakeCommand
       )
     );
-    m_driverController.pov(0).onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
+    m_driverController.pov(0).onTrue(
+      new SequentialCommandGroup(
+        new CMD_SyncElbowPosition(m_elbow),
+        new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine)
+      )
+      );
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-    m_driverController.start().onTrue(new CMD_TestEverything(m_elevator, m_elbow, m_wrist));
-    m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
-    //operator controllers
+    // m_driverController.start().onTrue(new CMD_DrivetrainX(m_drivetrain));
+    m_driverController.pov(270).onTrue(
+      new SequentialCommandGroup(
+        new CMD_SyncElbowPosition(m_elbow),
+        new CMD_ResetGyro(m_drivetrain)
+      )
+      );
+    /* ==================DRIVER CONTROLS END================== */
 
+    /* ==================OPERATOR CONTROLS================== */
     m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
 
     //autodrive right, bottom, numpad 1
@@ -142,6 +154,7 @@ public class RobotContainer {
       new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
       new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
     ));
+    /* ==================OPERATOR CONTROLS END================== */
   }
 
   /**
@@ -150,10 +163,23 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommandManual() {
-    return new AUTO_CubeRun(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController); 
+    return 
+      new AUTO_CubeRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController); 
       // new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables, m_driverController);
   }
 
+  public Command getCubeRunBlue() {
+    return new AUTO_CubeRunBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getCubeRunRed() {
+    return new AUTO_CubeRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getBalanceStation() {
+    return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables, m_driverController);
+  }
+  
   public void zeroHeading(){
     m_drivetrain.zeroHeading();
   }
@@ -202,11 +228,11 @@ public class RobotContainer {
   new SelectCommand(
     Map.ofEntries(
       Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-      Map.entry(GlobalConstants.kGroundBackCube, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kGroundBackCone, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackCube, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackCone, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
       Map.entry(GlobalConstants.kShelfBackCone, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
       Map.entry(GlobalConstants.kShelfBackCube, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables))
     )

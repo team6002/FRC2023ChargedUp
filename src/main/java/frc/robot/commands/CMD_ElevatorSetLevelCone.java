@@ -48,7 +48,7 @@ public class CMD_ElevatorSetLevelCone extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   if (m_elevator.getPosition() >= m_wantedPosition - 3 && m_elevator.getPosition() <= m_wantedPosition + 3 ){
+   if (m_elevator.getPosition() >= m_wantedPosition - 2 && m_elevator.getPosition() <= m_wantedPosition + 2 ){
       return true;
     }
     return false;

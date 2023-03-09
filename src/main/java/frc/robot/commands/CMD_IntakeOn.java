@@ -23,9 +23,9 @@ public class CMD_IntakeOn extends CommandBase {
   public void initialize() {
     m_intake.setIntakeCurrent();
     if(m_variables.getIntakeState() == GlobalConstants.kConeMode){
-      m_intake.setIntakeReverse();
-    }else{
       m_intake.setIntakeForward();
+    }else{
+      m_intake.setIntakeReverse();
     }
   }
 

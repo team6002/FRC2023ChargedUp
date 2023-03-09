@@ -161,11 +161,11 @@ public final class Constants {
     //intake powers
     public static final double kIntakeForwardPower = .7;
     public static final double kIntakeHoldPower = .07;
-    public static final double kIntakeDropCone = -0.6;
+    public static final double kIntakeDropCone = -.8;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
     public static final double kIntakeShoot = 1;
     //intake currents
-    public static final double kIntakeCurrent = 40;
+    public static final double kIntakeCurrent = 50;
     public static final double kHoldCurrent = 5;
 
     public static final double kIntakeConeDetectedCurrent = 30;
@@ -185,16 +185,16 @@ public final class Constants {
     public static final double kElevatorShelfCube = 33.5;
     public static final double kElevatorFirstConeLevel = 0;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 21;  
-    public static final double kElevatorThirdConeLevel = 40;
+    public static final double kElevatorThirdConeLevel = 45;
     public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
-    public static final double kElevatorSecondCubeLevel = 5;  
-    public static final double kElevatorThirdCubeLevel = 28;
+    public static final double kElevatorSecondCubeLevel = 6;  
+    public static final double kElevatorThirdCubeLevel = 36;
     public static final double kElevatorHome = 0;
     public static final double kElevatorStow = 0;
     public static final double kElevatorGround = 0;
     public static final double kElevatorPrep = 19;//Position for safely moving elbow to score
     public static final double kElevatorSafety = 12;//maximum value to check if moving elbow endagers robot
-    public static final double kElevatorTolerance = 3;
+    public static final double kElevatorTolerance = 2;
     public static final double kElevatorShelfBack = 18;
     public static final double kElevatorShelfBackAway = 24;// moves the elevator up to avoid hitting the wall
 
@@ -220,19 +220,20 @@ public final class Constants {
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
-    public static final double kElbowStowBackwards = 210;//when wrist faces backwards(Ground)
+    public static final double kElbowStowBackwards = 215;//when wrist faces backwards(Ground)
     public static final double kElbowStowForwards = 205;// when wrist faces forwards(Shelf)
     public static final double kElbowSaftey = 190;//maximum safe value for rotating wrist
     public static final double kElbowLift = 190;// use to get elbow off elevator, it don't like 200 for some reason
-    public static final double kElbowLifted = 200;// when the elbow is not resting on elevator
+    public static final double kElbowLifted = 205;// when the elbow is not resting on elevator
     public static final double kElbowPlaceBack = 105; // for placing on ground
     public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
     public static final double kElbowShelf = 250;// stright forwards
-    public static final double kElbowPrepareDrop = 249;// Not quite all the way forwards, allows cones to clear the pole
-    public static final double kElbowBackwards = 105;// straight back
+    public static final double kElbowPrepareDrop = 255;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowBackwards = 95;// straight back
+    public static final double kElbowThrow = 120;//BATTA BATTA SWING, swings it lower to the ground to throw it
     public static final double kElbowGroundCone = 107;// straight back
-    public static final double kElbowGroundCube = 95;// straight back
+    public static final double kElbowGroundCube = 103;// straight back
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;
     public static final double kElbowShelfBackPrep = 72;
@@ -254,17 +255,20 @@ public final class Constants {
     /* X and Y drive constraints. Output ranges [-1, 1] */
     public static final double kXTolerance = 0.01;
     public static final double kYTolerance = 0.01;
-    public static final double kTurnTolerance = 5;
     public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(1, 1);
     public static final double driveKp = 1.5;
     public static final double driveKi = 0.;
     public static final double driveKd = 0.;
 
     /* Turn constraints. Output ranges [-1, 1] */
+    public static final double kTurnTolerance = 5;
     public static final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(1, 1);
     public static final double turnKp = 0.01;
     public static final double turnKi = 0.;
     public static final double turnKd = 0.;
+
+    /* Absolute joystick threshold for driver abort */
+    public static final double kAbortThreshold = 0.3;
 
     public static enum AlignPosition {
       LEFT,
@@ -281,20 +285,20 @@ public final class Constants {
 
   public static final class WristConstants{
     public static final int kWristMotorCanID = 10;
-    public static final double kWristP = 0.009;
+    public static final double kWristP = 0.0097;
     public static final double kWristI = 0;
     public static final double kWristD = 0.0;
     public static final double kWristF = 0.0;
     public static final double kWristMaxOutput = 1;
     public static final double kWristMinOutput = -1;
 
-    public static final double kWristGround = 90;//back
+    public static final double kWristGround = 89;//back
     public static final double kWristShelf = 270;//front
     
     public static final double kWristTolerance = 5;
    
-    public static final double kWristMaxVelocity = 500;
-    public static final double kWristMaxAcceleration = 500;
+    public static final double kWristMaxVelocity = 600;
+    public static final double kWristMaxAcceleration = 600;
     public static final double kWristTestVelocity = 1;
     public static final double kWristTestAcceleration = 1;
   }

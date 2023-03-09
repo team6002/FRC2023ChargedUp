@@ -27,10 +27,10 @@ public class CMD_IntakeDrop extends CommandBase {
   @Override
   public void initialize() {    
     m_intake.setIntakeCurrent();
-    if(m_variables.getIntakeState() == GlobalConstants.kCubeMode){
-      m_intake.setPower(-IntakeConstants.kIntakeDropCone);
+    if(m_variables.getIntakeState() == GlobalConstants.kConeMode){
+      m_intake.setPower(IntakeConstants.kIntakeDropCone);
     }else{
-      m_intake.setPower(-IntakeConstants.kIntakeShoot);
+      m_intake.setPower(IntakeConstants.kIntakeShoot);
       // m_intake.setPower(IntakeConstants.kIntakeDropCube);
     }
   }

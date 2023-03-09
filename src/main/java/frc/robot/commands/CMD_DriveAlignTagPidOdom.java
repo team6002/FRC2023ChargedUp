@@ -33,7 +33,7 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
   private Pose2d goalPose;
   private Pose2d robotOdom;
 
-  CommandXboxController m_driverController;
+  private CommandXboxController m_driverController;
 
   public CMD_DriveAlignTagPidOdom(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, GlobalVariables p_variables, CommandXboxController p_driverController) {
     m_drivetrain = p_drivetrain;
@@ -95,9 +95,9 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
       return;
     }
 
-    if (Math.abs(m_driverController.getLeftY()) > 0.3 || Math.abs(m_driverController.getLeftX()) > 0.3 || Math.abs(m_driverController.getRightX()) > 0.3) {
+    if (Math.abs(m_driverController.getLeftY()) > AutoAlignConstants.kAbortThreshold || Math.abs(m_driverController.getLeftX()) > AutoAlignConstants.kAbortThreshold || Math.abs(m_driverController.getRightX()) > AutoAlignConstants.kAbortThreshold) {
       end = true;
-      System.out.println("Abort by driver");
+      System.out.println("Aborted by driver");
       return;
     }
 

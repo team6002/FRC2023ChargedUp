@@ -26,6 +26,7 @@ public class CMD_CubeRunGroundIntake1 extends SequentialCommandGroup {
    SUB_FiniteStateMachine p_finiteStamchine, GlobalVariables p_variables) {
     addCommands(
       new CMD_setState(p_finiteStamchine, RobotState.INTAKE),
+      new CMD_IntakeOn(p_intake, p_variables),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
@@ -35,7 +36,6 @@ public class CMD_CubeRunGroundIntake1 extends SequentialCommandGroup {
         new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround)
       )
-      // new CMD_IntakeOn(p_intake, p_variables)
     );
   }
 }

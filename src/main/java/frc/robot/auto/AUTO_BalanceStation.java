@@ -39,6 +39,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(0.3),
+      new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode),
       new ParallelDeadlineGroup(
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
         new SequentialCommandGroup(
@@ -51,22 +52,24 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         new CMD_SpinInPlace(p_drivetrain, 180),
         new CMD_IntakeCheck(p_intake, p_controller)
       ),
+
       new ParallelCommandGroup(
-      new CMD_StowGround(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
-      new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
+        new CMD_BalanceStationHold(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
+        new ParallelDeadlineGroup(
+            new SequentialCommandGroup(    
+              new CMD_CheckOnCharge(p_drivetrain)
+              ,new WaitCommand(1.26)
+            ),
+            new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
+        )
       ),
+
       //do a until hit angle and then run the set distance
-      new CMD_setDropLevel(p_variables, 2),
-      // new CMD_PlaceForwardsCube(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
-      // new CMD_IntakeDrop(p_intake, p_variables),
-      // new WaitCommand(.5),
-      new CMD_Stow(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
-      new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode),
+      new CMD_DriveStop(p_drivetrain),
       new CMD_IntakeDrop(p_intake, p_variables),
-      new WaitCommand(.3),
-      new CMD_AdjustBalance(p_drivetrain),
-      new WaitCommand(.5),
+      new WaitCommand(1),
       new CMD_AdjustBalance(p_drivetrain)
+
     );
   }
 }

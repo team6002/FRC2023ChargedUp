@@ -5,12 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import frc.robot.commands.CMD_setAutoKey;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -20,10 +16,8 @@ import frc.robot.commands.CMD_setAutoKey;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private Command m_auto1 = new PrintCommand("1");
-  private Command m_auto2 = new PrintCommand("2");
-  private final SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   private RobotContainer m_robotContainer;
+  private AutoModeSelector m_autoModeSelector;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -31,14 +25,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    DataLogger.start();
+
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_robotContainer.SubsystemsInit();
-    SmartDashboard.putNumber("AUTOKEY", 0);
-    m_Chooser.setDefaultOption("ChargeStation", m_auto1);
-    m_Chooser.addOption("CubeRun", m_auto2);
-    SmartDashboard.putData("AUTO", m_Chooser);
+
+    m_autoModeSelector = new AutoModeSelector(m_robotContainer);
+    m_autoModeSelector.updateModeCreator();
+
+    DataLogger.log("robotInit() done");
   }
 
   /**
@@ -55,37 +52,43 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    m_autoModeSelector.outputToSmartDashboard();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_autoModeSelector.reset();
+    m_autoModeSelector.updateModeCreator();
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    m_autoModeSelector.updateModeCreator();
+
+    if (m_autoModeSelector.getAutoMode().isPresent() &&
+        m_autonomousCommand != m_autoModeSelector.getAutoMode().get()) {
+      System.out.println("Set auto mode to: " + m_autoModeSelector.getDesiredModeLabel());
+
+      m_autonomousCommand = m_autoModeSelector.getAutoMode().get();
+    }
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_robotContainer.setAutoKey((int) SmartDashboard.getNumber("AUTOKEY", 0));
-    System.out.println((int)SmartDashboard.getNumber("AUTOKEY", 0));
     m_robotContainer.SubsystemsInit();
     m_robotContainer.zeroHeading();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommandManual();
-    // m_robotContainer.getAutonomusCommand;
-    //m_Chooser.getSelected();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+    System.out.println("AUTO SCHEDULING " + m_autonomousCommand);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    DataLogger.log("autonomousInit() done");
   }
 
   /** This function is called periodically during autonomous. */
@@ -101,6 +104,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    DataLogger.log("teleopInit() done");
   }
 
   /** This function is called periodically during operator control. */

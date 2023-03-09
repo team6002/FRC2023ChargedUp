@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.GlobalVariables;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.WristConstants;
@@ -20,21 +19,20 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CMD_PrepIntakeGroundForwards extends SequentialCommandGroup {
-  /** Creates a new CMD_PrepIntakeShelf. */
-  public CMD_PrepIntakeGroundForwards(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Wrist p_wrist,
-  SUB_FiniteStateMachine p_finiteStatechine,SUB_Intake p_intake, GlobalVariables m_variables) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+public class CMD_BalanceStationHold extends SequentialCommandGroup {
+  public CMD_BalanceStationHold(SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Wrist p_wrist, SUB_FiniteStateMachine p_finiteStateMachine) {
+
     addCommands(
-      new CMD_setState(p_finiteStatechine, RobotState.PREPINTAKE),
+      new CMD_setState(p_finiteStateMachine, RobotState.STOW),
       new CMD_IntakeOff(p_intake),
       new ParallelCommandGroup(
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
-        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
+      new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorStow)
       ),
-      new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift)
-    );
+      new SequentialCommandGroup(
+        new CMD_CheckWristSafe(p_elbow, p_elevator),
+        new CMD_WristSetPosition(p_wrist, WristConstants.kWristGround)
+      ),
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted));
   }
 }

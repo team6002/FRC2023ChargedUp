@@ -1,0 +1,92 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="ElevatorWantedPositon" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="147"/>
+	</widget>
+	<widget field="absoluteElbow postion" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="172" y="120"/>
+	</widget>
+	<widget field="wrist position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="420"/>
+	</widget>
+	<widget field="target yaw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="399"/>
+	</widget>
+	<widget field="target pitch" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="378"/>
+	</widget>
+	<widget field="target Z" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="357"/>
+	</widget>
+	<widget field="target Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="336"/>
+	</widget>
+	<widget field="target x" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="315"/>
+	</widget>
+	<widget field="target ID" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="294"/>
+	</widget>
+	<widget field="limelight_Interface" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="273"/>
+	</widget>
+	<widget field="limelight_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="231"/>
+	</widget>
+	<widget field="limelight_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="189"/>
+	</widget>
+	<widget field="DO YOU SEE ANYTHING " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="168"/>
+	</widget>
+	<widget field="elbow position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="126"/>
+	</widget>
+	<widget field="AUTOKEY" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="252"/>
+	</widget>
+	<widget field="IntakeCommandKey" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="812" y="313"/>
+		<width>246</width>
+	</widget>
+	<widget field="roll" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="210"/>
+	</widget>
+	<widget field="PickMode" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="921" y="137"/>
+		<width>139</width>
+		<height>152</height>
+		<property name="Font Size" value="120"/>
+	</widget>
+	<widget field="DropLevel" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="796" y="133"/>
+		<width>118</width>
+		<height>152</height>
+		<property name="Font Size" value="120"/>
+	</widget>
+	<widget field="IntakeMode" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="607" y="-3"/>
+		<width>678</width>
+		<height>131</height>
+		<property name="Color to show when true" value="255.255.0.255"/>
+		<property name="Color to show when false" value="102.0.102.255"/>
+	</widget>
+	<widget field="StowLocation" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="341" y="187"/>
+	</widget>
+	<widget field="Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="105"/>
+	</widget>
+	<widget field="X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="84"/>
+	</widget>
+	<widget field="Yaw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="133" y="48"/>
+	</widget>
+	<widget field="AUTO" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="465" y="14"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
