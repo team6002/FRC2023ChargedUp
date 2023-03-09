@@ -9,10 +9,10 @@ import frc.robot.Constants.BlinkinConstants;
 import frc.robot.subsystems.SUB_Blinkin;
 import frc.robot.subsystems.SUB_Drivetrain;
 
-public class CMD_celebrate extends CommandBase {
+public class CMD_BlinkinCelebrate extends CommandBase {
   SUB_Drivetrain m_gyro;
   SUB_Blinkin m_blinkin;
-  public CMD_celebrate(SUB_Drivetrain p_gyro, SUB_Blinkin p_blinkin) {
+  public CMD_BlinkinCelebrate(SUB_Drivetrain p_gyro, SUB_Blinkin p_blinkin) {
     m_gyro = p_gyro;
     m_blinkin = p_blinkin;
   }
