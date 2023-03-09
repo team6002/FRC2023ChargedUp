@@ -16,7 +16,6 @@ public class GlobalVariables extends SubsystemBase {
   private int m_pickMode = -1;// 0 is groundBack, 1 is groundForwards, 2 shelfBack, 3 shelfForwards
   private int m_intakeCommandKey = -1;
   private int m_stage = 0;// 0 is intake, 2 is drop, 3 is dropped
-  private int m_autoKey = 0;
   private int m_extendKey = -1;
 
   private Constants.AutoAlignConstants.AlignPosition m_AlignPosition;
@@ -76,14 +75,6 @@ public class GlobalVariables extends SubsystemBase {
 
   public void setStage(int p_state){
     m_stage = p_state;
-  }
-
-  public int getAutoKey(){
-    return m_autoKey;
-  }
-
-  public void setAutoKey(int p_autoKey){
-    m_autoKey = p_autoKey;
   }
 
   public int getExtendKey(){

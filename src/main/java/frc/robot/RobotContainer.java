@@ -184,9 +184,6 @@ public class RobotContainer {
     m_drivetrain.zeroHeading();
   }
 
-  public void setAutoKey(int p_key){
-    m_variables.setAutoKey(p_key);
-  }
   public void SubsystemsInit(){
     m_elbow.elbowInit();
     m_elevator.elevatorInit();
@@ -204,25 +201,10 @@ public class RobotContainer {
   private boolean getIntakeState(){
     return m_variables.getIntakeState();
   }
-  
-  private int getAutonomousCommandKey(){
-    return m_variables.getAutoKey();
-  }
 
   private int getExtendKey(){
     return m_variables.getExtendKey();
   }
-  public final Command getAutonomusCommand =
-  new SelectCommand(
-    Map.ofEntries(
-      // Map.entry(AutoConstants.kBalanceStationKey, new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_wrist, m_variables, m_driverController)),
-      // Map.entry(AutoConstants.kCubeRunKey, new AUTO_CubeRun(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_variables, m_intake, m_driverController))
-    
-      Map.entry(AutoConstants.kBalanceStationKey, new PrintCommand("1")),
-      Map.entry(AutoConstants.kCubeRunKey, new PrintCommand("2"))
-    ), 
-    this::getAutonomousCommandKey
-  );
 
   public final Command PrepIntakeCommand  = 
   new SelectCommand(
