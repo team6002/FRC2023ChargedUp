@@ -232,8 +232,8 @@ public final class Constants {
     public static final double kElbowPrepareDrop = 255;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 95;// straight back
     public static final double kElbowThrow = 120;//BATTA BATTA SWING, swings it lower to the ground to throw it
-    public static final double kElbowGroundCone = 103;// straight back
-    public static final double kElbowGroundCube = 95;// straight back
+    public static final double kElbowGroundCone = 107;// straight back
+    public static final double kElbowGroundCube = 103;// straight back
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;
     public static final double kElbowShelfBackPrep = 72;

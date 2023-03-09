@@ -46,8 +46,8 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
         m_elbowAbsoluteEncoder.setInverted(true);
         
-        m_elbowEncoder.setPositionConversionFactor(5.128);
-        m_elbowEncoder.setVelocityConversionFactor(5.128/60);
+        m_elbowEncoder.setPositionConversionFactor(5.12);
+        m_elbowEncoder.setVelocityConversionFactor(5.12/60);
       
 
         m_elbowMotorPIDController.setP(ElbowConstants.kElbowP,1);
@@ -111,6 +111,10 @@ public class SUB_Elbow extends SubsystemBase {
     }
     public void setElbowOn(Boolean p_state){
         m_elbowOn = p_state;
+    }
+    
+    public void syncElbowPosition(){
+        m_elbowEncoder.setPosition(getAbsolutePosition());
     }
 
     @Override
