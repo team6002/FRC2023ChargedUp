@@ -73,10 +73,20 @@ public class RobotContainer {
         PrepIntakeCommand
       )
     );
-    m_driverController.pov(0).onTrue(new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine));
+    m_driverController.pov(0).onTrue(
+      new SequentialCommandGroup(
+        new CMD_SyncElbowPosition(m_elbow),
+        new CMD_HomeEverything(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine)
+      )
+      );
     // m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
     // m_driverController.start().onTrue(new CMD_DrivetrainX(m_drivetrain));
-    m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
+    m_driverController.pov(270).onTrue(
+      new SequentialCommandGroup(
+        new CMD_SyncElbowPosition(m_elbow),
+        new CMD_ResetGyro(m_drivetrain)
+      )
+      );
     /* ==================DRIVER CONTROLS END================== */
 
     /* ==================OPERATOR CONTROLS================== */
