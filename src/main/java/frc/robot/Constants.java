@@ -355,12 +355,15 @@ public final class Constants {
      * Color 1: Yellow (Cone)
      * Color 2: Violet (Cube)
      */
-    public static final double kBlinkinConeGround = 0.69; /* Yellow */
-    public static final double kBlinkinConeShelf = 0.11; /* Color 1 Pattern Breath Fast */
-    public static final double kBlinkinConeBackShelf = -0.01; /* Color 1 Pattern Larson Scanner */
 
-    public static final double kBlinkinCubeGround = 0.91; /* Violet */
-    public static final double kBlinkinCubeShelf = 0.31; /* Color 2 Pattern Breath Fast */
-    public static final double kBlinkinCubeBackShelf = 0.19; /* Color 2 Pattern Larson Scanner */
+    public static final double kBlinkinConeGround = 0.69; // Yellow
+    public static final double kBlinkinConeShelf = 0.11; // Color 1 Pattern Breath Fast
+    public static final double kBlinkinConeBackShelf = -0.01; // Color 1 Pattern Larson Scanner
+
+    public static final double kBlinkinCubeGround = 0.91; // Violet
+    public static final double kBlinkinCubeShelf = 0.31; // Color 2 Pattern Breath Fast
+    public static final double kBlinkinCubeBackShelf = 0.19; // Color 2 Pattern Larson Scanner
+
+    public static final double kBlinkinBalanceCelebrate = -0.57; // Fire Large, flexing, use only when balanced
   }
 }
