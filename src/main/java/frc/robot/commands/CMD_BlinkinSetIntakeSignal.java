@@ -25,20 +25,17 @@ public class CMD_BlinkinSetIntakeSignal extends CommandBase {
   public void initialize() {
     state = m_variables.getIntakeState();
 
-    switch(m_variables.getIntakeCommandKey()) {
+    switch(m_variables.getPickMode()) {
       /* GROUND */
-      case GlobalConstants.kGroundBackCone:
       case GlobalConstants.kPickBackGroundMode:
         m_blinkin.set((state == GlobalConstants.kConeMode) ? Constants.BlinkinConstants.kBlinkinConeGround : Constants.BlinkinConstants.kBlinkinCubeGround);
         break;
       /* DOUBLE SUBSTATION */
-      case GlobalConstants.kShelfForwardsCone:
-      case GlobalConstants.kShelfForwardsCube:
+      case GlobalConstants.kPickForwardsShelfMode:
         m_blinkin.set((state == GlobalConstants.kConeMode) ? Constants.BlinkinConstants.kBlinkinConeShelf : Constants.BlinkinConstants.kBlinkinCubeShelf);
         break;
       /* SINGLE SUBSTATION */
-      case GlobalConstants.kShelfBackCone:
-      case GlobalConstants.kShelfBackCube:
+      case GlobalConstants.kPickBackShelfMode:
         m_blinkin.set((state == GlobalConstants.kConeMode) ? Constants.BlinkinConstants.kBlinkinConeBackShelf : Constants.BlinkinConstants.kBlinkinCubeBackShelf);
         break;
       /* WHAT IZ YOU DOING */
