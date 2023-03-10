@@ -104,7 +104,7 @@ public class RobotContainer {
     //autodrive right, bottom, numpad 1
     m_operatorController.a().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
       new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT)
     ));
 
@@ -118,7 +118,7 @@ public class RobotContainer {
     //autodrive left, bottom, numpad 3
     m_operatorController.x().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
+      new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
       new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
     ));
 
