@@ -69,7 +69,8 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_DriveStop(p_drivetrain),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(1),
-      new CMD_AdjustBalance(p_drivetrain)
+      new CMD_AdjustBalance(p_drivetrain),
+      new CMD_ResetGyro(p_drivetrain)
 
     );
   }
