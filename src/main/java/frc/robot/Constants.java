@@ -181,7 +181,7 @@ public final class Constants {
     public static final double kElevatorOffset = -.487;
 
     public static final double kElevatorMax = 48;
-    public static final double kElevatorShelfCone = 33.5;
+    public static final double kElevatorShelfCone = 36;
     public static final double kElevatorShelfCube = 33.5;
     public static final double kElevatorFirstConeLevel = 0;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 24;  
@@ -228,11 +228,11 @@ public final class Constants {
     public static final double kElbowPlaceBack = 105; // for placing on ground
     public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
-    public static final double kElbowShelf = 250;// stright forwards
+    public static final double kElbowShelf = 260;// stright forwards
     public static final double kElbowPrepareDrop = 260;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 95;// straight back
     public static final double kElbowThrow = 120;//BATTA BATTA SWING, swings it lower to the ground to throw it
-    public static final double kElbowGroundCone = 107;// straight back
+    public static final double kElbowGroundCone = 111;// straight back
     public static final double kElbowGroundCube = 103;// straight back
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;
