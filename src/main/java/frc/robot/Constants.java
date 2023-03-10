@@ -163,7 +163,7 @@ public final class Constants {
     public static final double kIntakeHoldPower = .07;
     public static final double kIntakeDropCone = -.8;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
-    public static final double kIntakeShoot = 1;
+    public static final double kIntakeShoot = .6;
     //intake currents
     public static final double kIntakeCurrent = 50;
     public static final double kHoldCurrent = 5;
@@ -184,11 +184,11 @@ public final class Constants {
     public static final double kElevatorShelfCone = 33.5;
     public static final double kElevatorShelfCube = 33.5;
     public static final double kElevatorFirstConeLevel = 0;// for placeing forwards
-    public static final double kElevatorSecondConeLevel = 21;  
-    public static final double kElevatorThirdConeLevel = 45;
+    public static final double kElevatorSecondConeLevel = 24;  
+    public static final double kElevatorThirdConeLevel = 43;
     public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
-    public static final double kElevatorSecondCubeLevel = 6;  
-    public static final double kElevatorThirdCubeLevel = 36;
+    public static final double kElevatorSecondCubeLevel = 10;  
+    public static final double kElevatorThirdCubeLevel = 28;
     public static final double kElevatorHome = 0;
     public static final double kElevatorStow = 0;
     public static final double kElevatorGround = 0;
@@ -221,22 +221,22 @@ public final class Constants {
     public static final double kElbowMaxOutput = 1;
 
     public static final double kElbowStowBackwards = 215;//when wrist faces backwards(Ground)
-    public static final double kElbowStowForwards = 205;// when wrist faces forwards(Shelf)
+    public static final double kElbowStowForwards = 200;// when wrist faces forwards(Shelf)
     public static final double kElbowSaftey = 190;//maximum safe value for rotating wrist
     public static final double kElbowLift = 190;// use to get elbow off elevator, it don't like 200 for some reason
-    public static final double kElbowLifted = 205;// when the elbow is not resting on elevator
+    public static final double kElbowLifted = 200;// when the elbow is not resting on elevator
     public static final double kElbowPlaceBack = 105; // for placing on ground
     public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
     public static final double kElbowShelf = 250;// stright forwards
-    public static final double kElbowPrepareDrop = 255;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowPrepareDrop = 260;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 95;// straight back
     public static final double kElbowThrow = 120;//BATTA BATTA SWING, swings it lower to the ground to throw it
     public static final double kElbowGroundCone = 107;// straight back
     public static final double kElbowGroundCube = 103;// straight back
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;
-    public static final double kElbowShelfBackPrep = 72;
+    public static final double kElbowShelfBackPrep = 85;
     public static final double kElbowTolerance = 1;
   }
   
@@ -293,8 +293,8 @@ public final class Constants {
     public static final double kWristMaxOutput = 1;
     public static final double kWristMinOutput = -1;
 
-    public static final double kWristGround = 89;//back
-    public static final double kWristShelf = 270;//front
+    public static final double kWristGround = 87;//back
+    public static final double kWristShelf = 273;//front
     
     public static final double kWristTolerance = 5;
    

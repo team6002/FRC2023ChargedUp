@@ -41,7 +41,7 @@ public class CMD_PlaceSecondLevelCube extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorSecondCubeLevel),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift)
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)
       );
   }
 }

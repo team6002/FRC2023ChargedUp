@@ -59,7 +59,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
               new CMD_CheckOnCharge(p_drivetrain)
-              ,new WaitCommand(1.26)
+              ,new WaitCommand(1.03)
             ),
             new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
         )
