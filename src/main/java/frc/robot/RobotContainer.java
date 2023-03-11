@@ -105,63 +105,72 @@ public class RobotContainer {
     m_operatorController.a().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT)
+      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive middle, bottom, numpad 2
     m_operatorController.b().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE)
+      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive left, bottom, numpad 3
     m_operatorController.x().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
+      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive right, 2nd level, numpad 4
     m_operatorController.rightBumper().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT)
+      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive middle, 2nd level, numpad 5
     m_operatorController.leftBumper().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE)
+      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive left, 2nd level, numpad 6
     m_operatorController.y().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
+      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive right, 3rd level, numpad 7
     m_operatorController.povRight().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT)
+      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHT),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive middle, 3rd level, numpad 8
     m_operatorController.povUp().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kCubeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE)
+      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLE),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
 
     //autodrive left, 3rd level, numpad 9
     m_operatorController.povLeft().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
       new CMD_setIntakeMode(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT)
+      new CMD_setAlignPosition(m_variables, AlignPosition.LEFT),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
     /* ==================OPERATOR CONTROLS END================== */
   }

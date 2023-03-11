@@ -33,32 +33,32 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
-      new CMD_setPickUpMode(p_variables, GlobalConstants.kPickBackGroundMode),
-      new CMD_setIntakeMode(p_variables, GlobalConstants.kConeMode),
-      new CMD_selectIntakeCommand(p_variables),
-      new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel).withTimeout(3),
+      new CMD_setPickUpMode(p_variables, GlobalConstants.kPickBackGroundMode).withTimeout(3),
+      new CMD_setIntakeMode(p_variables, GlobalConstants.kConeMode).withTimeout(3),
+      new CMD_selectIntakeCommand(p_variables).withTimeout(3),
+      new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables).withTimeout(3),
+      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.3),
-      new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode),
+      new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
       new ParallelDeadlineGroup(
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
         new SequentialCommandGroup(
-          new CMD_StowGround(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
-          new CMD_IntakeGroundBackCube(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables),  
-          new CMD_IntakeOn(p_intake, p_variables)
+          new CMD_StowGround(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine).withTimeout(3),
+          new CMD_IntakeGroundBackCube(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables).withTimeout(3),  
+          new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
         )
       ),
       new ParallelDeadlineGroup(
-        new CMD_SpinInPlace(p_drivetrain, 180),
-        new CMD_IntakeCheck(p_intake, p_controller)
+        new CMD_SpinInPlace(p_drivetrain, 180).withTimeout(3),
+        new CMD_IntakeCheck(p_intake, p_controller).withTimeout(3)
       ),
 
       new ParallelCommandGroup(
-        new CMD_BalanceStationHold(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine),
+        new CMD_BalanceStationHold(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine).withTimeout(3),
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
-              new CMD_CheckOnCharge(p_drivetrain)
+              new CMD_CheckOnCharge(p_drivetrain).withTimeout(3)
               ,new WaitCommand(1.03)
             ),
             new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
@@ -66,11 +66,11 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       ),
 
       //do a until hit angle and then run the set distance
-      new CMD_DriveStop(p_drivetrain),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_DriveStop(p_drivetrain).withTimeout(3),
+      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(1),
-      new CMD_AdjustBalance(p_drivetrain),
-      new CMD_ResetGyro(p_drivetrain)
+      new CMD_AdjustBalance(p_drivetrain).withTimeout(3),
+      new CMD_ResetGyro(p_drivetrain).withTimeout(3)
 
     );
   }
