@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.GlobalVariables;
-import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.SUB_Drivetrain;
