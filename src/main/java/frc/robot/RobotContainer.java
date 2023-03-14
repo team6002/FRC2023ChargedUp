@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems
   private final SUB_Drivetrain m_drivetrain = new SUB_Drivetrain();
-  private final SUB_LimeLight m_limelight = new SUB_LimeLight();
+  private final SUB_Limelight m_limelight = new SUB_Limelight();
   private final AUTO_Trajectories m_trajectories = new AUTO_Trajectories(m_drivetrain);
   private final SUB_Elevator m_elevator = new SUB_Elevator();
   private final SUB_Elbow m_elbow = new SUB_Elbow();
@@ -248,11 +248,11 @@ public class RobotContainer {
       Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
       Map.entry(GlobalConstants.kGroundBackCube, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
       Map.entry(GlobalConstants.kGroundBackCone, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
-      Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
-      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
-      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables)),
-      Map.entry(GlobalConstants.kShelfBackCone, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kShelfBackCube, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables))
+      Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables, m_limelight)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables, m_limelight)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_wrist, m_finiteStateMachine, m_intake, m_variables, m_limelight)),
+      Map.entry(GlobalConstants.kShelfBackCone, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables, m_limelight)),
+      Map.entry(GlobalConstants.kShelfBackCube, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_wrist, m_finiteStateMachine, m_variables, m_limelight))
     )
     ,this::getIntakeType
   );
@@ -315,21 +315,38 @@ public class RobotContainer {
     )
     ,this::getExtendKey
     );
+
+    public final Command setIntakeCamera  = 
+    new SelectCommand(
+      Map.ofEntries(
+        Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
+        Map.entry(GlobalConstants.kShelfBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
+        Map.entry(GlobalConstants.kShelfBackCube, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
+        Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
+        Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
+        Map.entry(GlobalConstants.kGroundBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
+        Map.entry(GlobalConstants.kGroundBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
+        Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam))
+        )
+      ,this::getIntakeType
+    );
   
 
   public final Command CycleCommand = 
   new SelectCommand(
     Map.ofEntries(   
-      Map.entry(GlobalConstants.kIntakeStage, 
+      Map.entry(GlobalConstants.kIntakeStage,
         new SequentialCommandGroup(
-        DeployIntakeCommand,
-        new CMD_IntakeElement(m_intake, m_variables, m_driverController),
-        HoldIntakeCommand,
-        new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
-      )
-    ),
+          setIntakeCamera,
+          DeployIntakeCommand,
+          new CMD_IntakeElement(m_intake, m_variables, m_driverController),
+          HoldIntakeCommand,
+          new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
+        )
+      ),
       Map.entry(GlobalConstants.kExtendStage,
         new SequentialCommandGroup(
+          new CMD_setCamera(m_limelight, CameraConstants.kLimelight),
           new CMD_SelectExtendCommand(m_variables),
           ExtendCommand,
           new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
@@ -348,4 +365,3 @@ public class RobotContainer {
     );
 
 }
-

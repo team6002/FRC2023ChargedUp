@@ -368,4 +368,11 @@ public final class Constants {
 
     public static final double kBlinkinUnknownIntakeState = 0.75; /* Dark Green */
   }
+
+  public static final class CameraConstants{
+    public static final boolean kDriveCam = true;
+    public static final boolean kLimelight = false;
+    public static final int kDriveCamIndex = 2;
+    public static final int kLimelightIndex = 1;
+  }
 }

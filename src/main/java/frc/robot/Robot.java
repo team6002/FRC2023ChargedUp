@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-// import frc.robot.commands.CMD_setAutoKey;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,8 +29,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    DataLogger.start();
-
+    // DataLogger.start();
     /*
      * Forward limelight ports to allow access with USB tether.
      */
@@ -49,7 +47,7 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
 
-    DataLogger.log("robotInit() done");
+    // DataLogger.log("robotInit() done");
   }
 
   /**
@@ -100,7 +98,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    DataLogger.log("autonomousInit() done");
+    // DataLogger.log("autonomousInit() done");
   }
 
   /** This function is called periodically during autonomous. */
@@ -117,7 +115,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    DataLogger.log("teleopInit() done");
+    // DataLogger.log("teleopInit() done");
   }
 
   /** This function is called periodically during operator control. */

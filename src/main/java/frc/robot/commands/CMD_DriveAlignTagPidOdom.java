@@ -15,11 +15,11 @@ import frc.robot.Constants;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.AutoAlignConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
-import frc.robot.subsystems.SUB_LimeLight;
+import frc.robot.subsystems.SUB_Limelight;
 
 public class CMD_DriveAlignTagPidOdom extends CommandBase {
   private SUB_Drivetrain m_drivetrain;
-  private SUB_LimeLight m_limeLight;
+  private SUB_Limelight m_limeLight;
   private GlobalVariables m_variables;
 
   private final ProfiledPIDController xController;
@@ -35,7 +35,7 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
 
   private CommandXboxController m_driverController;
 
-  public CMD_DriveAlignTagPidOdom(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, GlobalVariables p_variables, CommandXboxController p_driverController) {
+  public CMD_DriveAlignTagPidOdom(SUB_Drivetrain p_drivetrain, SUB_Limelight p_limeLight, GlobalVariables p_variables, CommandXboxController p_driverController) {
     m_drivetrain = p_drivetrain;
     m_limeLight = p_limeLight;
     m_variables = p_variables;

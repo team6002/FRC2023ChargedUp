@@ -4,15 +4,24 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CameraConstants;
 
-public class SUB_LimeLight extends SubsystemBase {
-  public SUB_LimeLight() {}
+public class SUB_Limelight extends SubsystemBase {
+  public SUB_Limelight() {
+    /*
+    * 0 - Standard - Side-by-side streams if a webcam is attached to Limelight
+    * 1 - PiP Main - The secondary camera stream is placed in the lower-right corner of the primary camera stream
+    * 2 - PiP Secondary - The primary camera stream is placed in the lower-right corner of the secondary camera stream
+    */
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(CameraConstants.kLimelightIndex);
+  }
 
   private double[] dv = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
   public double[] botpose;
@@ -78,5 +87,13 @@ public class SUB_LimeLight extends SubsystemBase {
 
   public double getTargetYaw(){
     return -botpose[4];
+  }
+
+  public void useMainCamera(){
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(CameraConstants.kLimelightIndex);
+  }
+
+  public void useSecondaryCamera(){
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(CameraConstants.kDriveCamIndex);
   }
 }

@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.SUB_Drivetrain;
-import frc.robot.subsystems.SUB_LimeLight;
+import frc.robot.subsystems.SUB_Limelight;
 
 public class CMD_DriveAlignTagPid extends CommandBase {
   private SUB_Drivetrain m_drivetrain;
-  private SUB_LimeLight m_limeLight;
+  private SUB_Limelight m_limeLight;
 
   private final ProfiledPIDController xController;
   private final ProfiledPIDController yController;
@@ -28,7 +28,7 @@ public class CMD_DriveAlignTagPid extends CommandBase {
 
   private Pose2d goalPose;
 
-  public CMD_DriveAlignTagPid(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight) {
+  public CMD_DriveAlignTagPid(SUB_Drivetrain p_drivetrain, SUB_Limelight p_limeLight) {
     m_drivetrain = p_drivetrain;
     m_limeLight = p_limeLight;
 
