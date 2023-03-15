@@ -1,17 +1,7 @@
 //NOTE THE RADIO IS LOOSING  CONNECTION
 package frc.robot;
 
-import java.util.List;
 import java.util.Map;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.*;
 import frc.robot.Constants.AutoAlignConstants.AlignPosition;
@@ -22,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -337,8 +326,7 @@ public class RobotContainer {
         Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
         Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
         Map.entry(GlobalConstants.kGroundBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-        Map.entry(GlobalConstants.kGroundBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-        Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam))
+        Map.entry(GlobalConstants.kGroundBackCube, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam))
         )
       ,this::getIntakeType
     );

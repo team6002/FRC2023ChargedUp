@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.GlobalVariables;
 import frc.robot.subsystems.SUB_Drivetrain;
-import frc.robot.subsystems.SUB_LimeLight;
+import frc.robot.subsystems.SUB_Limelight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CMD_DriveAlignScoring extends SequentialCommandGroup {
   /** Creates a new CMD_DriveAlignScoring. */
-  public CMD_DriveAlignScoring(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight, GlobalVariables p_variables, CommandXboxController p_driverController) {
+  public CMD_DriveAlignScoring(SUB_Drivetrain p_drivetrain, SUB_Limelight p_limeLight, GlobalVariables p_variables, CommandXboxController p_driverController) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

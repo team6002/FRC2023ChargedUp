@@ -7,13 +7,13 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SUB_Drivetrain;
-import frc.robot.subsystems.SUB_LimeLight;
+import frc.robot.subsystems.SUB_Limelight;
 
 public class CMD_DriveSyncLimeLight extends CommandBase {
   /** Creates a new CMD_DriveSyncLimeLight. */
   SUB_Drivetrain m_drivetrain;
-  SUB_LimeLight m_limeLight;
-  public CMD_DriveSyncLimeLight(SUB_Drivetrain p_drivetrain, SUB_LimeLight p_limeLight) {
+  SUB_Limelight m_limeLight;
+  public CMD_DriveSyncLimeLight(SUB_Drivetrain p_drivetrain, SUB_Limelight p_limeLight) {
     m_drivetrain = p_drivetrain;
     m_limeLight = p_limeLight;
     // Use addRequirements() here to declare subsystem dependencies.
