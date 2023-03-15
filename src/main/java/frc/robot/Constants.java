@@ -253,17 +253,20 @@ public final class Constants {
 
   public static final class AutoAlignConstants{
     /* X and Y drive constraints. Output ranges [-1, 1] */
-    public static final double kXTolerance = 0.01;
-    public static final double kYTolerance = 0.01;
+    public static final double kXTolerance = 0.05;
+    public static final double kYTolerance = 0.05;
 
-    public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(1, 1);
+    public static final double kAutoAlignSpeed = 1;
+    public static final double kAutoAlignAcceleration = 1;
+
+    public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(0.5, .5);
     public static final double driveKp = 1.5;
     public static final double driveKi = 0.;
     public static final double driveKd = 0.;
 
     /* Turn constraints. Output ranges [-1, 1] */
     public static final double kTurnTolerance = 5;
-    public static final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(1, 1);
+    public static final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(.5, .5);
     public static final double turnKp = 0.01;
     public static final double turnKi = 0.;
     public static final double turnKd = 0.;
@@ -278,9 +281,10 @@ public final class Constants {
     };
 
     public static final EnumMap<AlignPosition, Pose2d> goalPose = new EnumMap<>(Map.of(
-      AlignPosition.LEFT, new Pose2d(-0.8, 0.6, new Rotation2d()),
-      AlignPosition.MIDDLE, new Pose2d(-0.8, 0.0, new Rotation2d()),
-      AlignPosition.RIGHT, new Pose2d(-0.8, -0.6, new Rotation2d())
+      AlignPosition.LEFT, new Pose2d(-1, 0.6, new Rotation2d()),
+      AlignPosition.MIDDLE, new Pose2d(-1, 0.0, new Rotation2d()),
+      AlignPosition.RIGHT, new Pose2d(-1, -0.6, new Rotation2d())
+      // 0.8 was the original position
     ));
   }
 
