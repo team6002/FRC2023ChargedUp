@@ -1,7 +1,17 @@
 //NOTE THE RADIO IS LOOSING  CONNECTION
 package frc.robot;
 
+import java.util.List;
 import java.util.Map;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.*;
 import frc.robot.Constants.AutoAlignConstants.AlignPosition;
@@ -12,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -69,7 +80,8 @@ public class RobotContainer {
       )
     );
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
-    m_driverController.a().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, m_variables, m_driverController));
+    // m_driverController.a().onTrue(new CMD_DriveAlignTagPidOdom(m_drivetrain, m_limelight, m_variables, m_driverController));
+    m_driverController.a().onTrue(new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController));
     m_driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
@@ -337,13 +349,13 @@ public class RobotContainer {
     Map.ofEntries(   
       Map.entry(GlobalConstants.kIntakeStage,
         new SequentialCommandGroup(
-          setIntakeCamera,
+            setIntakeCamera,
           DeployIntakeCommand,
-          new CMD_IntakeElement(m_intake, m_variables, m_driverController),
-          HoldIntakeCommand,
-          new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
-        )
-      ),
+            new CMD_IntakeElement(m_intake, m_variables, m_driverController),
+            HoldIntakeCommand,
+            new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
+          )
+        ),
       Map.entry(GlobalConstants.kExtendStage,
         new SequentialCommandGroup(
           new CMD_setCamera(m_limelight, CameraConstants.kLimelight),
@@ -363,5 +375,5 @@ public class RobotContainer {
     ), 
     this::getRobotStage
     );
-
+  
 }
