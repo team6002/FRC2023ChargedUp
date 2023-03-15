@@ -1,21 +1,22 @@
-//This only uses Odometry to align itself
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.*;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.GlobalVariables;
-import frc.robot.Constants.AutoAlignConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
-//This only uses Odometry to align itself
-public class CMD_DriveAlignOdometry extends CommandBase {
+import frc.robot.subsystems.SUB_Limelight;
+
+public class CMD_DriveAlignTagPid extends CommandBase {
   private SUB_Drivetrain m_drivetrain;
-  private GlobalVariables m_variables;
+  private SUB_Limelight m_limeLight;
 
   private final ProfiledPIDController xController;
   private final ProfiledPIDController yController;
@@ -26,14 +27,10 @@ public class CMD_DriveAlignOdometry extends CommandBase {
   private double xSpeed, ySpeed, turnSpeed;
 
   private Pose2d goalPose;
-  private Pose2d robotOdom;
 
-  private CommandXboxController m_driverController;
-//This only uses Odometry to align itself
-  public CMD_DriveAlignOdometry(SUB_Drivetrain p_drivetrain, GlobalVariables p_variables, CommandXboxController p_driverController) {
+  public CMD_DriveAlignTagPid(SUB_Drivetrain p_drivetrain, SUB_Limelight p_limeLight) {
     m_drivetrain = p_drivetrain;
-    m_variables = p_variables;
-    m_driverController = p_driverController;
+    m_limeLight = p_limeLight;
 
     xController = new ProfiledPIDController(Constants.AutoAlignConstants.driveKp,
       Constants.AutoAlignConstants.driveKi,
@@ -48,31 +45,33 @@ public class CMD_DriveAlignOdometry extends CommandBase {
     turnController = new PIDController(Constants.AutoAlignConstants.turnKp,
       Constants.AutoAlignConstants.turnKi,
       Constants.AutoAlignConstants.turnKd);
+      // Constants.AutoAlignConstants.turnConstraints);
 
-    addRequirements(m_drivetrain);
+    addRequirements(m_drivetrain, m_limeLight);
   }
 
   @Override
   public void initialize() {
-    goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition());
-    robotOdom = m_drivetrain.getPose();
-
     end = false;
 
+    if (!m_limeLight.hasTarget()) {
+      System.out.println("no limelight targets found, bailing");
+      end = true;
+      return;
+    }
 
-    /* TODO: maybe check that the  distance is within valid range for accuracy */
+    goalPose = Constants.AutoAlignConstants.goalPose.get(Constants.AutoAlignConstants.AlignPosition.MIDDLE);
 
-    /* Set the goals as an offset of the robot's current odometry */
     xController.setGoal(goalPose.getX());
     yController.setGoal(goalPose.getY());
-    turnController.setSetpoint(goalPose.getRotation().getDegrees());
+    turnController.setSetpoint(m_drivetrain.getAngle() + m_limeLight.getTargetYaw() + goalPose.getRotation().getDegrees());
 
-    xController.setTolerance(AutoAlignConstants.kXTolerance);
-    yController.setTolerance(AutoAlignConstants.kYTolerance);
-    turnController.setTolerance(AutoAlignConstants.kTurnTolerance);
+    xController.setTolerance(.01);
+    yController.setTolerance(.01);
+    turnController.setTolerance(1);
 
-    xController.reset(robotOdom.getX());
-    yController.reset(robotOdom.getY());
+    xController.reset(m_limeLight.getTargetX());
+    yController.reset(m_limeLight.getTargetY());
     turnController.reset();
 
     turnController.enableContinuousInput(-180, 180);
@@ -84,26 +83,21 @@ public class CMD_DriveAlignOdometry extends CommandBase {
       return;
     }
 
-    if (Math.abs(m_driverController.getLeftY()) > AutoAlignConstants.kAbortThreshold || Math.abs(m_driverController.getLeftX()) > AutoAlignConstants.kAbortThreshold || Math.abs(m_driverController.getRightX()) > AutoAlignConstants.kAbortThreshold) {
+    if (!m_limeLight.hasTarget()) {
+      System.out.println("Target lost, bailing");
       end = true;
-      System.out.println("Aborted by driver");
-      return;
     }
-    
-    
-    robotOdom = m_drivetrain.getPose();
 
-    xSpeed = xController.calculate(robotOdom.getX());
+    xSpeed = xController.calculate(m_limeLight.getTargetX());
     if (xController.atGoal()) {
       xSpeed = 0.0;
     }
 
-    ySpeed = yController.calculate(robotOdom.getY());
+    ySpeed = yController.calculate(m_limeLight.getTargetY());
     if (yController.atGoal()) {
       ySpeed = 0.0;
     }
 
-    // turnSpeed = 0;
     turnSpeed = MathUtil.clamp(turnController.calculate(m_drivetrain.getAngle()), -0.5, 0.5);
 
     SmartDashboard.putNumber("AutoAlignXSpeed: ", xSpeed);

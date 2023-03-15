@@ -55,17 +55,12 @@ public class CMD_IntakeElement extends CommandBase {
       m_detected = false;
       m_timer = 0;
     }
-    if (m_variables.getIntakeCommandKey() != -1){
-      if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
-        m_intake.setPower(IntakeConstants.kIntakeForwardPower);
-      }else if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
-        m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
-      }
-    }else{
-      //not nothing
-      m_pressed = true;
+
+    if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
+      m_intake.setPower(IntakeConstants.kIntakeForwardPower);
+    }else if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
+      m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
     }
-   
   }
 
   // Called once the command ends or is interrupted.

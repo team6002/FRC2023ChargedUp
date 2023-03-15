@@ -1,4 +1,7 @@
-// lines up straight to tag
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -57,14 +60,13 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
 
   @Override
   public void initialize() {
-    goalPose = Constants.AutoAlignConstants.goalPose.get(AutoAlignConstants.AlignPosition.MIDDLE);
+    goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition());
     robotOdom = m_drivetrain.getPose();
 
     end = false;
 
-    if (!m_limeLight.hasTarget() || (m_limeLight.getTargetX() < -1.7)) {
+    if (!m_limeLight.hasTarget()) {
       System.out.println("no limelight targets found, bailing");
-      // System.out.println("TARGET MISSING SWITCHING TO NOSE");
       end = true;
       return;
     }
@@ -98,8 +100,7 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
       System.out.println("Aborted by driver");
       return;
     }
-    
-    
+
     robotOdom = m_drivetrain.getPose();
 
     xSpeed = xController.calculate(robotOdom.getX());
@@ -112,7 +113,6 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
       ySpeed = 0.0;
     }
 
-    // turnSpeed = 0;
     turnSpeed = MathUtil.clamp(turnController.calculate(m_drivetrain.getAngle()), -0.5, 0.5);
 
     SmartDashboard.putNumber("AutoAlignXSpeed: ", xSpeed);
@@ -132,13 +132,6 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drivetrain.drive(0.0, 0.0, 0.0, true, false);
-    // if (m_limeLight.hasTarget()) {
-    //   m_drivetrain.resetOdometry(new Pose2d(m_limeLight.getTargetX(), m_limeLight.getTargetY(), robotOdom.getRotation()));
-    // } 
-    if (m_limeLight.getTargetX() > -1.2){
-      m_drivetrain.resetOdometry(new Pose2d(m_limeLight.getTargetX(), m_limeLight.getTargetY(), robotOdom.getRotation()));
-    }
-
   }
 
   @Override

@@ -17,7 +17,6 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import frc.robot.Constants.AutoAlignConstants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
@@ -38,8 +37,6 @@ public class AUTO_Trajectories {
     public Trajectory CubePlaceTrajectoryBlue1;
     public Trajectory CubePlaceTrajectoryBlue2;
     public Trajectory CubeRunTrajectoryBlue2;
-
-    public Trajectory AutoAlignTrajectory;
     
     Trajectory FirstRedBall = new Trajectory();
     private SUB_Drivetrain m_drivetrain;
@@ -91,7 +88,7 @@ public class AUTO_Trajectories {
             AutoConstants.kHalfAcceleration)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(DriveConstants.kDriveKinematics)
-            .setReversed(true);
+            .setReversed(true);    
                     
         //Rotation2d uses RADIANS NOT DEGREES!
         //Use Rotation2d.fromDegrees(desiredDegree) instead
@@ -163,6 +160,7 @@ public class AUTO_Trajectories {
             List.of(new Translation2d(Units.inchesToMeters(-130), Units.inchesToMeters(20))),
             new Pose2d(Units.inchesToMeters(-24), Units.inchesToMeters(20), new Rotation2d(Units.degreesToRadians(0))),
             config);
+    
     }
   
     public Command driveTrajectory(Trajectory trajectory) {
